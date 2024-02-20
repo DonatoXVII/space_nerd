@@ -1,18 +1,12 @@
 <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%!
-    String email = "";
-    String password ="";
-    boolean tipo = false;
+    String emailUtente = "";
 %>
 <%
     synchronized (session) {
         session = request.getSession();
-        if(session.getAttribute("email") != null) {
-            email = (String) session.getAttribute("email");
-            password = (String) session.getAttribute("password");
-            tipo = (Boolean) session.getAttribute("tipo");
-        }
+        emailUtente = (String) session.getAttribute("email");
     }
 %>
 
@@ -36,7 +30,7 @@
         </a>
     </div>
     <%
-        if(email != null){
+        if(emailUtente != null){
     %>
     <div class="logout">
         <a href="UtenteControl?action=logout">

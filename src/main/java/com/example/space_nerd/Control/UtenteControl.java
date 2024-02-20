@@ -4,7 +4,6 @@ import com.example.space_nerd.Model.UtenteBean;
 import com.example.space_nerd.Model.UtenteModel;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
 public class UtenteControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static UtenteModel utenteModel = new UtenteModel();
-    Logger logger = Logger.getLogger(UtenteControl.class.getName());
+    transient Logger logger = Logger.getLogger(UtenteControl.class.getName());
 
     public UtenteControl() {
         super();

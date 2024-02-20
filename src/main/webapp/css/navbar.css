@@ -5,7 +5,7 @@ body {
 
 nav {
     display: flex;
-    justify-content: flex-end; /* Allinea gli elementi a destra */
+    justify-content: flex-end;
     align-items: center;
     background-color: rgba(84, 10, 220, 0.51);
     padding: 10px 20px;
@@ -16,5 +16,5 @@ nav img {
 }
 
 .profilo, .logout {
-    margin-left: 10px; /* Aggiunge uno spazio tra le immagini */
+    margin-left: 10px;
 }

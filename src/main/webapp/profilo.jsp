@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
     <title>Title</title>
 </head>

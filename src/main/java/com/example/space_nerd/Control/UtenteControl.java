@@ -20,6 +20,7 @@ public class UtenteControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static UtenteModel utenteModel = new UtenteModel();
     transient Logger logger = Logger.getLogger(UtenteControl.class.getName());
+    private static final String INDEX_PAGE = "./index.jsp";
 
     public UtenteControl() {
         super();
@@ -31,28 +32,10 @@ public class UtenteControl extends HttpServlet {
         try {
             if(action != null) {
                 if(action.equalsIgnoreCase("login")) {
-                    UtenteBean utente;
-                    String email = request.getParameter("email");
-                    String password = request.getParameter("password");
-                    HttpSession session = request.getSession(true);
-                    if(email == null || password == null) {
-                        response.sendRedirect("./index.jsp");
-                    } else {
-                      utente = utenteModel.login(email, password);
-                      if(utente == null) {
-                          request.setAttribute("result", "Credenziali errate");
-                          RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/accesso.jsp");
-                          dispatcher.forward(request, response);
-                      } else {
-                          session.setAttribute("email", utente.getEmail());
-                          session.setAttribute("tipo", utente.isTipo());
-                          response.sendRedirect("./index.jsp");
-                      }
-                    }
+                    login(request, response);
                 }
                 if(action.equalsIgnoreCase("logout")) {
-                    request.getSession().invalidate();
-                    response.sendRedirect("./index.jsp");
+                    logout(request, response);
                 }
             }
         } catch (SQLException e) {
@@ -63,5 +46,30 @@ public class UtenteControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
+    }
+
+    private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        HttpSession session = request.getSession(true);
+        if (email == null || password == null) {
+            response.sendRedirect(INDEX_PAGE);
+        } else {
+            UtenteBean utente = utenteModel.login(email, password);
+            if (utente == null) {
+                request.setAttribute("result", "Credenziali errate");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/accesso.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                session.setAttribute("email", utente.getEmail());
+                session.setAttribute("tipo", utente.isTipo());
+                response.sendRedirect(INDEX_PAGE);
+            }
+        }
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().invalidate();
+        response.sendRedirect(INDEX_PAGE);
     }
 }

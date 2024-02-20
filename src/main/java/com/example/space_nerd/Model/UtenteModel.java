@@ -15,6 +15,9 @@ public class UtenteModel {
     private static Logger logger = Logger.getLogger(UtenteModel.class.getName());
     private static final String TABLE_NAME_UTENTE = "Utente";
     private static DataSource ds;
+    private static String msgCon = "Errore durante la chiusura della Connection";
+    private static String msgPs = "Errore durante la chiusura del PreparedStatement";
+    private static String msgRs = "Errore durante la chiusura del ResultSet";
 
     static {
         try {
@@ -53,24 +56,24 @@ public class UtenteModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del ResultSet", e);
+                logger.log(Level.WARNING, msgRs, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del PreparedStatement", e);
+                logger.log(Level.WARNING, msgPs, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura della Connection", e);
+                logger.log(Level.WARNING, msgCon, e);
             }
         }
-        if(utente == null || utente.getEmail() == null || utente.getEmail().trim().isEmpty()) {
+        if(utente.getEmail() == null || utente.getEmail().trim().isEmpty()) {
             return null;
         } else {
             return utente;
@@ -97,14 +100,14 @@ public class UtenteModel {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del PreparedStatement", e);
+                logger.log(Level.WARNING, msgPs, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura della Connection", e);
+                logger.log(Level.WARNING, msgCon, e);
             }
         }
     }
@@ -131,21 +134,21 @@ public class UtenteModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del ResultSet", e);
+                logger.log(Level.WARNING, msgRs, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del PreparedStatement", e);
+                logger.log(Level.WARNING, msgPs, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura della Connection", e);
+                logger.log(Level.WARNING, msgCon, e);
             }
         }
         return res;

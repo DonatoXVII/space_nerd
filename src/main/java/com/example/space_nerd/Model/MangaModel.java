@@ -50,8 +50,6 @@ public class MangaModel {
                 manga.setLingua(rs.getString("Lingua"));
                 manga.setNumPagine(rs.getInt("NumeroPagine"));
                 bestManga.add(manga);
-                System.out.println("Ecco i migliori manga: ");
-                System.out.println(manga);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

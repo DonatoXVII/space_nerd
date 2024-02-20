@@ -1,13 +1,34 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%!
+    String email = "";
+    String result = "";
+%>
+<%
+    synchronized (session) {
+        session = request.getSession();
+        email = (String) session.getAttribute("email");
+    }
+    result = (String) request.getAttribute("result");
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <title>JSP - Hello World</title>
+    <meta charset="ISO-8859-1">
+    <title>Space Nerd</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+    <form action="UtenteControl?action=login" method="post">
+        Email : <input type="email" name="email" placeholder="Email">
+        Password : <input type="password" name="password" placeholder="Password">
+        <%
+            if(result != null) {
+        %>
+        <h3><%=result%></h3>
+        <%
+            }
+        %>
+        <input type="submit">
+    </form>
 </body>
 </html>

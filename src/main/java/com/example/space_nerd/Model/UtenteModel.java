@@ -48,14 +48,26 @@ public class UtenteModel {
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
-            if (rs != null) {
-                rs.close();
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, "Errore durante la chiusura del ResultSet", e);
             }
-            if (ps != null) {
-                ps.close();
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, "Errore durante la chiusura del PreparedStatement", e);
             }
-            if (con != null) {
-                con.close();
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, "Errore durante la chiusura della Connection", e);
             }
         }
         if(utente == null || utente.getEmail() == null || utente.getEmail().trim().isEmpty()) {

@@ -8,6 +8,7 @@ public class MangaBean {
     String casaEditrice;
     String lingua;
     int numPagine;
+    String img;
 
     public MangaBean() {
         idManga = 0;
@@ -17,9 +18,10 @@ public class MangaBean {
         casaEditrice = "";
         lingua = "";
         numPagine = 0;
+        img = "";
     }
 
-    public MangaBean(int idManga, float prezzo, String descrizione, int numArticoli, String casaEditrice, String lingua, int numPagine) {
+    public MangaBean(int idManga, float prezzo, String descrizione, int numArticoli, String casaEditrice, String lingua, int numPagine, String img) {
         this.idManga = idManga;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -27,6 +29,7 @@ public class MangaBean {
         this.casaEditrice = casaEditrice;
         this.lingua = lingua;
         this.numPagine = numPagine;
+        this.img = img;
     }
 
     public int getIdManga() {
@@ -85,6 +88,10 @@ public class MangaBean {
         this.numPagine = numPagine;
     }
 
+    public String getImg() { return img; }
+
+    public void setImg(String img) { this.img = img; }
+
     @Override
     public String toString() {
         return "MangaBean{" +
@@ -95,6 +102,7 @@ public class MangaBean {
                 ", casaEditrice='" + casaEditrice + '\'' +
                 ", lingua='" + lingua + '\'' +
                 ", numPagine=" + numPagine +
+                ", img='" + img + '\'' +
                 '}';
     }
 }

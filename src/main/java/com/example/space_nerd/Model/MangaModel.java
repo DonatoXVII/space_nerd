@@ -16,6 +16,10 @@ import java.util.logging.Logger;
 public class MangaModel {
     private static Logger logger = Logger.getLogger(MangaModel.class.getName());
     private static final String TABLE_NAME_MANGA = "Manga";
+    private static final String TABLE_NAME_COMPRENDE = "ComprendeManga";
+    private static String msgCon = "Errore durante la chiusura della Connection";
+    private static String msgPs = "Errore durante la chiusura del PreparedStatement";
+    private static String msgRs = "Errore durante la chiusura del ResultSet";
     private static DataSource ds;
 
     static {
@@ -32,23 +36,23 @@ public class MangaModel {
 
     public List<MangaBean> miglioriManga() throws SQLException {
         List<MangaBean> bestManga = new ArrayList<>();
-        MangaBean manga = new MangaBean();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_MANGA + " WHERE IdManga = 1";
+            String query = "SELECT M.IdManga, M.Descrizione, M.Immagine, SUM(Cm.Quantita) as Tot FROM "
+                    + TABLE_NAME_MANGA
+                    + " M JOIN " + TABLE_NAME_COMPRENDE
+                    + " Cm ON M.IdManga = Cm.IdManga GROUP BY M.IdManga"
+                    + " ORDER BY Tot DESC LIMIT 3";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
+                MangaBean manga = new MangaBean();
                 manga.setIdManga(rs.getInt("IdManga"));
-                manga.setPrezzo(rs.getFloat("Prezzo"));
                 manga.setDescrizione(rs.getString("Descrizione"));
-                manga.setNumArticoli(rs.getInt("NumeroArticoli"));
-                manga.setCasaEditrice(rs.getString("CasaEditrice"));
-                manga.setLingua(rs.getString("Lingua"));
-                manga.setNumPagine(rs.getInt("NumeroPagine"));
+                manga.setImg(rs.getString("Immagine"));
                 bestManga.add(manga);
             }
         } catch (SQLException e) {
@@ -59,24 +63,23 @@ public class MangaModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del ResultSet", e);
+                logger.log(Level.WARNING, msgRs, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura del PreparedStatement", e);
+                logger.log(Level.WARNING, msgPs, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura della Connection", e);
+                logger.log(Level.WARNING, msgCon, e);
             }
         }
-
-        return  bestManga;
+        return bestManga;
     }
 }

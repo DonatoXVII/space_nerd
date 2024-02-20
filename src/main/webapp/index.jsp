@@ -25,11 +25,13 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Space Nerd</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>
 
 <h2>Best Manga</h2>
+<div class="manga-container">
 <%
     if(bestManga != null && bestManga.size()!=0) {
         Iterator<?> it = bestManga.iterator();
@@ -39,7 +41,11 @@
 <%
             if(manga != null) {
 %>
-            <%=manga.getDescrizione()%>
+            <div class="manga-item">
+                <img src="img/imgManga/<%=manga.getImg()%>" alt="errore immagine">
+                <%=manga.getDescrizione()%>
+            </div>
+
 <%
             }
 %>
@@ -47,5 +53,6 @@
             }
     }
 %>
+</div>
 </body>
 </html>

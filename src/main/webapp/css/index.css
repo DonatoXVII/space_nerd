@@ -1,0 +1,18 @@
+.manga-container {
+    display: flex;
+    justify-content: center; /* Centra i manga-items orizzontalmente */
+    overflow-x: auto; /* Aggiunge uno scorrimento orizzontale quando il contenuto supera la larghezza del contenitore */
+    padding: 0 10px; /* Aggiunge spazio ai lati per centrare i manga-items */
+}
+
+.manga-item {
+    margin: 10px;
+    text-align: center;
+    flex: 0 0 auto; /* Imposta la larghezza fissa per ogni manga-item */
+    width: 200px; /* Imposta una larghezza fissa per ogni manga-item */
+}
+
+.manga-item img {
+    width: 100%; /* Imposta la larghezza dell'immagine al 100% del manga-item */
+    height: auto;
+}

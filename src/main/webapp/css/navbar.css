@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end; /* Allinea gli elementi a destra */
+    align-items: center;
+    background-color: rgba(84, 10, 220, 0.51);
+    padding: 10px 20px;
+}
+
+nav img {
+    max-height: 50px;
+}
+
+.profilo, .logout {
+    margin-left: 10px; /* Aggiunge uno spazio tra le immagini */
+}

@@ -1,9 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    Loggato
+<%@include file="navbar.jsp"%>
+    Sei il super admin
 </body>
 </html>

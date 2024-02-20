@@ -42,14 +42,18 @@ public class UtenteControl extends HttpServlet {
                       utente = utenteModel.login(email, password);
                       if(utente == null) {
                           request.setAttribute("result", "Credenziali errate");
-                          RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                          RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/accesso.jsp");
                           dispatcher.forward(request, response);
                       } else {
                           session.setAttribute("email", utente.getEmail());
                           session.setAttribute("tipo", utente.isTipo());
-                          response.sendRedirect("./admin.jsp");
+                          response.sendRedirect("./index.jsp");
                       }
                     }
+                }
+                if(action.equalsIgnoreCase("logout")) {
+                    request.getSession().invalidate();
+                    response.sendRedirect("./index.jsp");
                 }
             }
         } catch (SQLException e) {

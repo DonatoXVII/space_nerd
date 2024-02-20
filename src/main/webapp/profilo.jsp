@@ -1,12 +1,10 @@
 <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Space Nerd</title>
+    <title>Title</title>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-QUI CI VA LA DASHBOARD
+    SEI LOGGATO
 </body>
 </html>

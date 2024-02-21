@@ -5,9 +5,9 @@ body {
 
 nav {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    background-color: rgba(84, 10, 220, 0.51);
+    background-color: #721773;
     padding: 10px 20px;
 }
 
@@ -15,6 +15,19 @@ nav img {
     max-height: 50px;
 }
 
-.profilo, .logout {
-    margin-left: 10px;
+.logo {
+    margin-right: auto;
+    transform: scale(1.5);
+}
+
+.profilo {
+    margin-left: auto;
+}
+
+.carrello {
+    margin-left: 20px;
+}
+
+.logout {
+    margin-left: 20px;
 }

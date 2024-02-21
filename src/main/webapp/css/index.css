@@ -1,56 +1,19 @@
-.manga-container {
+.manga-container, .pop-container, .figure-container {
     display: flex;
     justify-content: center;
     overflow-x: auto;
     padding: 0 10px;
+    background-color: #f1f2f4
 }
 
-.manga-item {
+.manga-item, .pop-item, .figure-item {
     margin: 10px;
     text-align: center;
     flex: 0 0 auto;
     width: 200px;
 }
 
-.manga-item img {
-    width: 100%;
-    height: auto;
-}
-
-.pop-container {
-    display: flex;
-    justify-content: center;
-    overflow-x: auto;
-    padding: 0 10px;
-}
-
-.pop-item {
-    margin: 10px;
-    text-align: center;
-    flex: 0 0 auto;
-    width: 200px;
-}
-
-.pop-item img {
-    width: 100%;
-    height: auto;
-}
-
-.figure-container {
-    display: flex;
-    justify-content: center;
-    overflow-x: auto;
-    padding: 0 10px;
-}
-
-.figure-item {
-    margin: 10px;
-    text-align: center;
-    flex: 0 0 auto;
-    width: 200px;
-}
-
-.figure-item img {
+.manga-item img, .pop-item img, .figure-item img {
     width: 100%;
     height: auto;
 }

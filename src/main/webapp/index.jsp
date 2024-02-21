@@ -2,7 +2,6 @@
 <%@ page import="com.example.space_nerd.Model.MangaBean" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="com.example.space_nerd.Model.PopBean" %>
-<%@ page import="com.example.space_nerd.Model.PopModel" %>
 <%@ page import="com.example.space_nerd.Model.FigureBean" %>
 <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
@@ -45,8 +44,8 @@
 <body>
 <%@include file="navbar.jsp"%>
 
-<h2>Best Manga</h2>
 <div class="manga-container">
+    <h2>Best Manga</h2>
 <%
     if(bestManga != null && bestManga.size()!=0) {
         Iterator<?> it = bestManga.iterator();
@@ -70,8 +69,8 @@
 %>
 </div>
 
-<h2>Best Pop</h2>
 <div class="pop-container">
+    <h2>Best Pop</h2>
     <%
         if(bestPop != null && bestPop.size()!=0) {
             Iterator<?> it = bestPop.iterator();
@@ -97,8 +96,8 @@
     %>
 </div>
 
-<h2>Best Figure</h2>
 <div class="figure-container">
+    <h2>Best Figure</h2>
     <%
         if(bestFigure != null && bestFigure.size()!=0) {
             Iterator<?> it = bestFigure.iterator();

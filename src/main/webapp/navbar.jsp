@@ -21,7 +21,7 @@
 <nav>
     <div class="logo">
         <a href="./index.jsp">
-            <img src="img/logo.jpg" alt="Logo">
+            <img src="img/logo_scontornato.jpg" alt="Logo">
         </a>
     </div>
     <div class="profilo">
@@ -29,12 +29,17 @@
             <img src="img/profilo.jpg" alt="Profilo">
         </a>
     </div>
+    <div class="carrello">
+        <a href="accesso.jsp">
+            <img src="img/carrello.jpg" alt="Carrello">
+        </a>
+    </div>
     <%
         if(emailUtente != null){
     %>
     <div class="logout">
         <a href="UtenteControl?action=logout">
-            <img src="img/logout.png" alt="Logout">
+            <img src="img/logout.jpg" alt="Logout">
         </a>
     </div>
     <%

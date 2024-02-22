@@ -32,6 +32,17 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+
+<div class="welcome-container">
+    <div class="slideshow">
+        <img class="slide" src="img/index1.jpg">
+        <img class="slide" src="img/index2.jpg">
+        <img class="slide" src="img/index3.jpg">
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+</div>
+
 <div class="manga-container">
     <h2>Best Manga</h2>
 <%
@@ -110,6 +121,33 @@
         }
     %>
 </div>
+
+<script>
+    let slideIndex = 0;
+    showSlides(slideIndex);
+
+    function showSlides(index) {
+        const slides = document.getElementsByClassName("slide");
+        if (index >= slides.length) { slideIndex = 0; }
+        if (index < 0) { slideIndex = slides.length - 1; }
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex].style.display = "block";
+    }
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    document.querySelector(".prev").addEventListener("click", () => {
+        plusSlides(-1);
+    });
+
+    document.querySelector(".next").addEventListener("click", () => {
+        plusSlides(1);
+    });
+</script>
 
 </body>
 </html>

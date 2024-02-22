@@ -1,9 +1,54 @@
+body {
+    background-color: #f1f2f4
+}
+
 .manga-container, .pop-container, .figure-container {
     display: flex;
     justify-content: center;
     overflow-x: auto;
     padding: 0 10px;
-    background-color: #f1f2f4
+}
+
+.welcome-container {
+    position: relative;
+    margin: 10px;
+    background-color: #f1f2f4;
+    overflow: hidden;
+    text-align: center;
+}
+
+.slideshow {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    max-width: 100%;
+    max-height: 400px; /* Altezza massima desiderata */
+    height: auto;
+    margin: 0 auto; /* Per centrare l'immagine */
+}
+
+/* Stili per i pulsanti di navigazione */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    color: black;
+    font-size: 18px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
 }
 
 .manga-item, .pop-item, .figure-item {
@@ -13,7 +58,7 @@
     width: 200px;
 }
 
-.manga-item img, .pop-item img, .figure-item img {
+.manga-item img, .pop-item img, .figure-item img{
     width: 100%;
     height: auto;
 }

@@ -37,7 +37,7 @@ public class OrdiniControl extends HttpServlet {
                 dispatcher.forward(req, resp);
             }
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.info("Si è verificata un'eccezione:");
         }
     }
 
@@ -46,7 +46,7 @@ public class OrdiniControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.info("Si è verificata un'eccezione:");
         }
     }
 }

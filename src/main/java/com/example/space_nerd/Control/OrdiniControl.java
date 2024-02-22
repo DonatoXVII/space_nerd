@@ -30,7 +30,7 @@ public class OrdiniControl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         try {
-            if(action.equalsIgnoreCase("visualizzaOrdini")){
+            if (action != null && action.equalsIgnoreCase("visualizzaOrdini")) {
                 List<OrdineBean> ordini;
                 HttpSession session = req.getSession();
                 ordini = ordineModel.visualizzaOrdini((String) session.getAttribute("email"));
@@ -39,14 +39,18 @@ public class OrdiniControl extends HttpServlet {
                 dispatcher.forward(req, resp);
             }
         } catch (ServletException | IOException e) {
-            req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
-            dispatcher.forward(req, resp);
+            handleError(req, resp, e);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
+    }
+
+    private void handleError(HttpServletRequest req, HttpServletResponse resp, Exception e) throws ServletException, IOException {
+        req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
+        dispatcher.forward(req, resp);
     }
 }

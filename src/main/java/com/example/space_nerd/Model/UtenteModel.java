@@ -80,7 +80,7 @@ public class UtenteModel {
         }
     }
 
-    public void aggiungiUtente(String email, String password) throws SQLException {
+    public void aggiungiUtente(String email, String password) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -92,6 +92,7 @@ public class UtenteModel {
             ps.setString(2, password);
             ps.setBoolean(3, false);
             ps.executeUpdate();
+
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
@@ -112,19 +113,19 @@ public class UtenteModel {
         }
     }
 
-    public boolean verificaEmail(String email) throws SQLException {
+    public boolean emailPresente(String email) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        boolean res = false;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_UTENTE + "WHERE Email = ?";
+            String query = "SELECT * FROM " + TABLE_NAME_UTENTE;
             ps = con.prepareStatement(query);
-            ps.setString(1, email);
             rs = ps.executeQuery();
-            if (rs.next()) {
-                res = true;
+            while (rs.next()) {
+                if(rs.getString("Email").equalsIgnoreCase(email)) {
+                    return true;
+                }
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -151,6 +152,6 @@ public class UtenteModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return res;
+        return false;
     }
 }

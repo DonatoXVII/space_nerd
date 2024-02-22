@@ -1,5 +1,7 @@
 package com.example.space_nerd.Control;
 
+import com.example.space_nerd.Model.DatiSensibiliBean;
+import com.example.space_nerd.Model.DatiSensibiliModel;
 import com.example.space_nerd.Model.UtenteBean;
 import com.example.space_nerd.Model.UtenteModel;
 import jakarta.servlet.RequestDispatcher;
@@ -11,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +22,7 @@ import java.util.logging.Logger;
 public class UtenteControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static UtenteModel utenteModel = new UtenteModel();
+    static DatiSensibiliModel datiModel = new DatiSensibiliModel();
     transient Logger logger = Logger.getLogger(UtenteControl.class.getName());
     private static final String INDEX_PAGE = "./index.jsp";
 
@@ -33,6 +37,9 @@ public class UtenteControl extends HttpServlet {
             if(action != null) {
                 if(action.equalsIgnoreCase("login")) {
                     login(request, response);
+                }
+                if(action.equalsIgnoreCase("registrati")){
+                    registrati(request, response);
                 }
                 if(action.equalsIgnoreCase("logout")) {
                     logout(request, response);
@@ -58,13 +65,41 @@ public class UtenteControl extends HttpServlet {
             UtenteBean utente = utenteModel.login(email, password);
             if (utente == null) {
                 request.setAttribute("result", "Credenziali errate");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/accesso.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             } else {
                 session.setAttribute("email", utente.getEmail());
                 session.setAttribute("tipo", utente.isTipo());
                 response.sendRedirect(INDEX_PAGE);
             }
+        }
+    }
+
+    private void registrati(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        Date data = Date.valueOf(request.getParameter("data"));
+        String via = request.getParameter("via");
+        int civico = Integer.parseInt(request.getParameter("civico"));
+        String provincia = request.getParameter("provincia");
+        String comune = request.getParameter("comune");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        UtenteBean utente = new UtenteBean(email, password, false);
+
+        HttpSession session = request.getSession(true);
+
+        if(utenteModel.emailPresente(email)) {
+            request.setAttribute("result", "Email già presente");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/registrati.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            utenteModel.aggiungiUtente(email, password);
+            DatiSensibiliBean dati = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
+            datiModel.registraDati(dati);
+            session.setAttribute("email", utente.getEmail());
+            session.setAttribute("tipo", utente.isTipo());
+            response.sendRedirect(INDEX_PAGE);
         }
     }
 

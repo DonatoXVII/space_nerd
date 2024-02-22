@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%!
     String emailUtente = "";
     Boolean tipoUtente = false;
@@ -15,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Space Nerd</title>
     <link href="css/navbar.css" rel="stylesheet" type="text/css">
 </head>
@@ -37,7 +36,7 @@
     <div class="profilo">
         <img src="img/profilo.jpg" alt="Profilo">
         <div class="profilo-menu">
-            <a href="accesso.jsp">Il mio profilo</a>
+            <a href="login.jsp">Il mio profilo</a>
             <a href="ordini.jsp">I miei ordini</a>
             <%
                 if(emailUtente != null){
@@ -49,7 +48,7 @@
         </div>
     </div>
     <div class="carrello">
-        <a href="accesso.jsp">
+        <a href="login.jsp">
             <img src="img/carrello.jpg" alt="Carrello">
         </a>
     </div>

@@ -35,78 +35,29 @@
             <input class="input-cognome" name="cognome" type="text" placeholder="Cognome">
         </div>
 
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
-
         <div class="input-container">
             <input class="input-data" name="data" type="date" placeholder="Data di nascita">
         </div>
-
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
 
         <div class="input-container">
             <input class="input-via" name="via" type="text" placeholder="Via">
         </div>
 
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
-
         <div class="input-container">
             <input class="input-civico" name="civico" type="text" placeholder="Numero civico">
         </div>
-
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
 
         <div class="input-container">
             <input class="input-provincia" name="provincia" type="text" placeholder="Provincia">
         </div>
 
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
-
         <div class="input-container">
             <input class="input-comune" name="comune" type="text" placeholder="Comune">
         </div>
 
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
-
         <div class="input-container">
             <input class="input-mail" name="email" type="email" placeholder="Email">
         </div>
-
-        <section class="bg-stars">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-        </section>
 
         <div class="input-container">
             <input class="input-pwd" name="password" type="password" placeholder="Password">

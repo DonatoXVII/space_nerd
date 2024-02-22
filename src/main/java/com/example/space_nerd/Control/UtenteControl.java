@@ -14,7 +14,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet("/UtenteControl")
@@ -63,15 +62,17 @@ public class UtenteControl extends HttpServlet {
                 }
             }
         } catch (ServletException | IOException | SQLException e) {
-            request.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        try {
+            doGet(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
@@ -132,7 +133,7 @@ public class UtenteControl extends HttpServlet {
         String comune = request.getParameter("comune");
 
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
+        String email = (String) session.getAttribute(emailParameter);
 
         String password = request.getParameter(pwdParameter);
         UtenteBean utente = new UtenteBean(email, password, false);

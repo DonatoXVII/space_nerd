@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet("/ProdottoControl")
@@ -54,14 +53,16 @@ public class ProdottoControl extends HttpServlet {
             dispatcher.forward(req, resp);
 
         } catch (ServletException | IOException | SQLException e) {
-            req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
-            dispatcher.forward(req, resp);
+            e.printStackTrace();
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        try {
+            doGet(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -47,7 +47,7 @@ nav img {
     display: block;
 }
 
-.profilo-menu a, .catalogo-menu{
+.profilo-menu a, .catalogo-menu a{
     display: block;
     padding: 8px 16px;
     text-decoration: none;

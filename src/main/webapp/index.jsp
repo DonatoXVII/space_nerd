@@ -35,9 +35,9 @@
 
 <div class="welcome-container">
     <div class="slideshow">
-        <img class="slide" src="img/index1.jpg">
-        <img class="slide" src="img/index2.jpg">
-        <img class="slide" src="img/index3.jpg">
+        <img class="slide" src="img/index1.jpg" alt="errore immagine">
+        <img class="slide" src="img/index2.jpg" alt="errore immagine">
+        <img class="slide" src="img/index3.jpg" alt="errore immagine">
     </div>
     <button class="prev">&#10094;</button>
     <button class="next">&#10095;</button>

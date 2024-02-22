@@ -98,7 +98,7 @@
         </section>
 
         <div class="input-container">
-            <input class="input-email" name="email" type="email" placeholder="Email">
+            <input class="input-mail" name="email" type="email" placeholder="Email">
         </div>
 
         <section class="bg-stars">
@@ -109,7 +109,7 @@
         </section>
 
         <div class="input-container">
-            <input class="input-password" name="password" type="password" placeholder="Password">
+            <input class="input-pwd" name="password" type="password" placeholder="Password">
         </div>
 
         <button type="submit" class="submit">

@@ -2,10 +2,14 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <title>Title</title>
+    <meta charset="charset=UTF-8">
+    <title>Space Nerd</title>
+    <link href="css/profilo.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-    SEI LOGGATO
+    <a href="./modifica.jsp">Modifica profilo</a>
+    <a href="./indirizzi.jsp">I tuoi indirizzi</a>
+    <a href="./metodiPagamento.jsp">I tuoi metodi di pagamento</a>
 </body>
 </html>

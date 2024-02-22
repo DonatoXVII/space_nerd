@@ -65,4 +65,41 @@ public class DatiSensibiliModel {
             }
         }
     }
+
+    public void modificaDati (DatiSensibiliBean datiUtente) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query1 = "UPDATE " + TABLE_NAME_DATI + " SET Nome = ?, Cognome = ?, DataNascita = ?," +
+                    " Via = ?, Civico = ?, Provincia = ?, Comune = ? WHERE Email = ?";
+            ps = con.prepareStatement(query1);
+            ps.setString(1, datiUtente.getNome());
+            ps.setString(2, datiUtente.getCognome());
+            ps.setDate(3, datiUtente.getDataNascita());
+            ps.setString(4, datiUtente.getVia());
+            ps.setInt(5, datiUtente.getCivico());
+            ps.setString(6, datiUtente.getProvincia());
+            ps.setString(7, datiUtente.getComune());
+            ps.setString(8, datiUtente.getEmail());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
 }

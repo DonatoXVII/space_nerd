@@ -8,12 +8,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UtenteModel {
-    private static Logger logger = Logger.getLogger(UtenteModel.class.getName());
-    private static final String TABLE_NAME_UTENTE = "Utente";
+public class IndirizzoModel {
+    private static Logger logger = Logger.getLogger(IndirizzoModel.class.getName());
+    private static final String TABLE_NAME_INDIRIZZO = "IndirizzoSpedizione";
+    private static final String TABLE_NAME_UTILIZZA = "Utilizza";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -31,22 +34,20 @@ public class UtenteModel {
         }
     }
 
-    public UtenteBean login(String email, String password) throws SQLException {
-        UtenteBean utente = new UtenteBean();
+    public List<Integer> indirizziUtilizzati(String email) {
+        List<Integer> indirizzi = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        try {
+        try{
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_UTENTE + " WHERE Email = ? AND Pass = ?";
+            String query = "SELECT IdIndirizzo FROM " + TABLE_NAME_UTILIZZA + " WHERE Email = ?";
             ps = con.prepareStatement(query);
             ps.setString(1, email);
-            ps.setString(2, password);
             rs = ps.executeQuery();
             while (rs.next()) {
-                utente.setEmail(rs.getString("Email"));
-                utente.setPassword(rs.getString("Pass"));
-                utente.setTipo(rs.getBoolean("Tipo"));
+                int i = rs.getInt("IdIndirizzo");
+                indirizzi.add(i);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -73,59 +74,28 @@ public class UtenteModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        if(utente.getEmail() == null || utente.getEmail().trim().isEmpty()) {
-            return null;
-        } else {
-            return utente;
-        }
+        return indirizzi;
     }
 
-    public void aggiungiUtente(String email, String password) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_UTENTE + "(Email, Pass, Tipo)" +
-                    "VALUES(?, ?, ?)";
-            ps = con.prepareStatement(query);
-            ps.setString(1, email);
-            ps.setString(2, password);
-            ps.setBoolean(3, false);
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            logger.log(Level.WARNING, e.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
-            }
-        }
-    }
-
-    public boolean emailPresente(String email) throws SQLException {
+    public IndirizzoBean getIndirizzo (int i) throws SQLException {
+        IndirizzoBean bean = new IndirizzoBean();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_UTENTE;
+            String query = "SELECT * FROM " + TABLE_NAME_INDIRIZZO + " WHERE IdIndirizzo = ?";
             ps = con.prepareStatement(query);
+            ps.setInt(1, i);
             rs = ps.executeQuery();
             while (rs.next()) {
-                if(rs.getString("Email").equalsIgnoreCase(email)) {
-                    return true;
-                }
+                bean.setId(i);
+                bean.setNome(rs.getString("Nome"));
+                bean.setCognome(rs.getString("Cognome"));
+                bean.setVia(rs.getString("Via"));
+                bean.setCivico(rs.getInt("Civico"));
+                bean.setProvincia(rs.getString("Provincia"));
+                bean.setComune(rs.getString("Comune"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -152,18 +122,17 @@ public class UtenteModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return false;
+        return bean;
     }
 
-    public void modificaProfilo (UtenteBean utente) throws SQLException {
+    public void rimuoviIndirizzo(int i) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_UTENTE + " SET Pass = ? WHERE Email = ?";
+            String query = "DELETE FROM " + TABLE_NAME_INDIRIZZO + " WHERE IdIndirizzo = ?";
             ps = con.prepareStatement(query);
-            ps.setString(1, utente.getPassword());
-            ps.setString(2, utente.getEmail());
+            ps.setInt(1, i);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

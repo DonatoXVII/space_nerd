@@ -28,16 +28,16 @@
     <div class="catalogo">
         CATALOGO
         <div class="catalogo-menu">
-            <a href="ordini.jsp">Manga</a>
-            <a href="ordini.jsp">Pop</a>
-            <a href="ordini.jsp">Figure</a>
+            <a href="visualizzaOrdini.jsp">Manga</a>
+            <a href="visualizzaOrdini.jsp">Pop</a>
+            <a href="visualizzaOrdini.jsp">Figure</a>
         </div>
     </div>
     <div class="profilo">
         <img src="img/profilo.jpg" alt="Profilo">
         <div class="profilo-menu">
             <a href="login.jsp">Il mio profilo</a>
-            <a href="ordini.jsp">I miei ordini</a>
+            <a href="visualizzaOrdini.jsp">I miei ordini</a>
             <%
                 if(emailUtente != null){
             %>

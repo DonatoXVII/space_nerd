@@ -2,10 +2,12 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <title>Title</title>
+    <meta charset="charset=UTF-8">
+    <title>Space Nerd</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-    I MIEI ORDINI
+
 </body>
 </html>

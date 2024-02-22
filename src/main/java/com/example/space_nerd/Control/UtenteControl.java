@@ -1,9 +1,6 @@
 package com.example.space_nerd.Control;
 
-import com.example.space_nerd.Model.DatiSensibiliBean;
-import com.example.space_nerd.Model.DatiSensibiliModel;
-import com.example.space_nerd.Model.UtenteBean;
-import com.example.space_nerd.Model.UtenteModel;
+import com.example.space_nerd.Model.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +22,7 @@ public class UtenteControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static UtenteModel utenteModel = new UtenteModel();
     static DatiSensibiliModel datiModel = new DatiSensibiliModel();
+    static IndirizzoModel indirizzoModel = new IndirizzoModel();
     static Logger logger = Logger.getLogger(UtenteControl.class.getName());
     private static final String INDEX_PAGE = "./index.jsp";
     private static final String emailParameter = "email";
@@ -41,6 +41,24 @@ public class UtenteControl extends HttpServlet {
                 }
                 if(action.equalsIgnoreCase("registrati")){
                     registrati(request, response);
+                }
+                if(action.equalsIgnoreCase("modificaProfilo")){
+                    modificaProfilo(request, response);
+                }
+                if(action.equalsIgnoreCase("visualizzaIndirizzi")){
+                    HttpSession session = request.getSession();
+                    String email = (String) session.getAttribute("email");
+                    List<Integer> indirizziPerEmail = indirizzoModel.indirizziUtilizzati(email);
+                    List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
+                    for(int i : indirizziPerEmail) {
+                        indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
+                    }
+                    request.setAttribute("indirizzi", indirizziUtilizzati);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/indirizzi.jsp");
+                    dispatcher.forward(request, response);
+                }
+                if(action.equalsIgnoreCase("rimuoviIndirizzo")) {
+                    rimuoviIndirizzo(request, response);
                 }
                 if(action.equalsIgnoreCase("logout")) {
                     logout(request, response);
@@ -102,6 +120,33 @@ public class UtenteControl extends HttpServlet {
             session.setAttribute("tipo", utente.isTipo());
             response.sendRedirect(INDEX_PAGE);
         }
+    }
+
+    public void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        Date data = Date.valueOf(request.getParameter("data"));
+        String via = request.getParameter("via");
+        int civico = Integer.parseInt(request.getParameter("civico"));
+        String provincia = request.getParameter("provincia");
+        String comune = request.getParameter("comune");
+
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+
+        String password = request.getParameter("password");
+        UtenteBean utente = new UtenteBean(email, password, false);
+        DatiSensibiliBean datiUtente = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
+
+        utenteModel.modificaProfilo(utente);
+        datiModel.modificaDati(datiUtente);
+        response.sendRedirect("./profilo.jsp");
+    }
+
+    public void rimuoviIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int i = Integer.parseInt(request.getParameter("IdIndirizzo"));
+        indirizzoModel.rimuoviIndirizzo(i);
+        response.sendRedirect("./indirizzi.jsp");
     }
 
     private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

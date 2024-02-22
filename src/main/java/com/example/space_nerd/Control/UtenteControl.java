@@ -23,8 +23,9 @@ public class UtenteControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static UtenteModel utenteModel = new UtenteModel();
     static DatiSensibiliModel datiModel = new DatiSensibiliModel();
-    transient Logger logger = Logger.getLogger(UtenteControl.class.getName());
+    static Logger logger = Logger.getLogger(UtenteControl.class.getName());
     private static final String INDEX_PAGE = "./index.jsp";
+    private static final String emailParameter = "email";
 
     public UtenteControl() {
         super();
@@ -56,7 +57,7 @@ public class UtenteControl extends HttpServlet {
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        String email = request.getParameter("email");
+        String email = request.getParameter(emailParameter);
         String password = request.getParameter("password");
         HttpSession session = request.getSession(true);
         if (email == null || password == null) {
@@ -68,7 +69,7 @@ public class UtenteControl extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             } else {
-                session.setAttribute("email", utente.getEmail());
+                session.setAttribute(emailParameter, utente.getEmail());
                 session.setAttribute("tipo", utente.isTipo());
                 response.sendRedirect(INDEX_PAGE);
             }
@@ -83,7 +84,7 @@ public class UtenteControl extends HttpServlet {
         int civico = Integer.parseInt(request.getParameter("civico"));
         String provincia = request.getParameter("provincia");
         String comune = request.getParameter("comune");
-        String email = request.getParameter("email");
+        String email = request.getParameter(emailParameter);
         String password = request.getParameter("password");
         UtenteBean utente = new UtenteBean(email, password, false);
 
@@ -97,7 +98,7 @@ public class UtenteControl extends HttpServlet {
             utenteModel.aggiungiUtente(email, password);
             DatiSensibiliBean dati = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
             datiModel.registraDati(dati);
-            session.setAttribute("email", utente.getEmail());
+            session.setAttribute(emailParameter, utente.getEmail());
             session.setAttribute("tipo", utente.isTipo());
             response.sendRedirect(INDEX_PAGE);
         }

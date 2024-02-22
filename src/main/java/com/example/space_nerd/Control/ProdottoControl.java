@@ -21,7 +21,7 @@ public class ProdottoControl extends HttpServlet {
     static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
-    transient Logger logger = Logger.getLogger(ProdottoControl.class.getName());
+    static Logger logger = Logger.getLogger(ProdottoControl.class.getName());
 
     public ProdottoControl() {super();}
 

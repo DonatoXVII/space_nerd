@@ -71,11 +71,6 @@ body {
     transition: opacity .9s;
 }
 
-.input-data:focus::placeholder {
-    opacity: 0;
-    transition: opacity .9s;
-}
-
 .input-via:focus::placeholder {
     opacity: 0;
     transition: opacity .9s;

@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,7 +30,6 @@ public class OrdiniControl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         try {
-            InetAddress addr = InetAddress.getByName(req.getRemoteAddr());
             if (action != null && action.equalsIgnoreCase("visualizzaOrdini")) {
                 List<OrdineBean> ordini;
                 HttpSession session = req.getSession();
@@ -41,19 +38,15 @@ public class OrdiniControl extends HttpServlet {
                 RequestDispatcher dispatcher = req.getRequestDispatcher("/visualizzaOrdini.jsp");
                 dispatcher.forward(req, resp);
             }
-        } catch (UnknownHostException ex) {
-            handleError(req, resp, ex);
+        } catch (ServletException | IOException e) {
+            req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
-    }
-
-    private void handleError(HttpServletRequest req, HttpServletResponse resp, Exception e) throws ServletException, IOException {
-        req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
-        dispatcher.forward(req, resp);
     }
 }

@@ -53,10 +53,10 @@ public class ProdottoControl extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
             dispatcher.forward(req, resp);
 
-        } catch (SQLException e) {
-            logger.log(Level.WARNING, e.getMessage());
-        } catch (ServletException | IOException e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante il reindirizzamento della richiesta.");
+        } catch (ServletException | IOException | SQLException e) {
+            req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(req, resp);
         }
     }
 

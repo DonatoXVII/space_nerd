@@ -39,7 +39,9 @@ public class OrdiniControl extends HttpServlet {
                 dispatcher.forward(req, resp);
             }
         } catch (ServletException | IOException e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante il reindirizzamento della richiesta.");
+            req.setAttribute("errorMessage", "Si è verificato un errore: " + e.getMessage());
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(req, resp);
         }
     }
 

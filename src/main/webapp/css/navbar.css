@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -9,6 +11,7 @@ nav {
     align-items: center;
     background-color: #721773;
     padding: 10px 20px;
+    position: relative;
 }
 
 nav img {
@@ -16,18 +19,96 @@ nav img {
 }
 
 .logo {
-    margin-right: auto;
+    margin-right: 50px;
     transform: scale(1.5);
+}
+
+.catalogo {
+    margin-right: auto;
+    color: #f1f2f4;
 }
 
 .profilo {
     margin-left: auto;
 }
 
+.profilo-menu, .catalogo-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 10px;
+}
+
+.profilo:hover .profilo-menu, .catalogo:hover .catalogo-menu{
+    display: block;
+}
+
+.profilo-menu a, .catalogo-menu c{
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.profilo-menu a:hover, .catalogo-menu a:hover {
+    background-color: #f1f1f1;
+}
+
 .carrello {
     margin-left: 20px;
 }
 
-.logout {
-    margin-left: 20px;
+.searchBox {
+    display: flex;
+    width: 300px; /* Modificato */
+    height: 40px; /* Modificato */
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: #f1f2f4;
+    border-radius: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
+:root {
+    --gradient-2: linear-gradient(90deg, #f52a4f 0%, #efaa55 100%);
+}
+
+.searchButton {
+    color: white;
+    position: absolute;
+    right: 8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient-2);
+    border: 0;
+    display: inline-block;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+/*hover effect*/
+button:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+    transform: translateY(-3px);
+}
+/*button pressing effect*/
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    padding: 24px 46px 24px 26px;
+}
+

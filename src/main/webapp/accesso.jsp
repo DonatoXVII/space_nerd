@@ -1,15 +1,8 @@
 <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%!
-    String email = "";
     String result = "";
-    Boolean tipo;
 %>
 <%
-    synchronized (session) {
-        session = request.getSession();
-        email = (String) session.getAttribute("email");
-        tipo = (Boolean) session.getAttribute("tipo");
-    }
     result = (String) request.getAttribute("result");
 %>
 <!DOCTYPE html>
@@ -20,9 +13,10 @@
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<%@include file="navbar.jsp"%>
 <%
-    if(email != null) {
-        if(tipo){
+    if(emailUtente != null) {
+        if(tipoUtente){
             response.sendRedirect("./admin.jsp");
         } else {
             response.sendRedirect("./profilo.jsp");

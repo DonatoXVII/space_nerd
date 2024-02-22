@@ -23,17 +23,6 @@
         return;
     }
 %>
-<%!
-    String email = "";
-    Boolean tipo = false;
-%>
-<%
-    synchronized (session) {
-        session = request.getSession();
-        email = (String) session.getAttribute("email");
-        tipo = (Boolean) session.getAttribute("tipo");
-    }
-%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -43,7 +32,6 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-
 <div class="manga-container">
     <h2>Best Manga</h2>
 <%

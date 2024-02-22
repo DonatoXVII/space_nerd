@@ -55,6 +55,8 @@ public class ProdottoControl extends HttpServlet {
 
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
+        } catch (ServletException | IOException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante il reindirizzamento della richiesta.");
         }
     }
 

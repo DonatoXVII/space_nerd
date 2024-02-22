@@ -11,7 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet("/OrdiniControl")
@@ -27,7 +29,7 @@ public class OrdiniControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        if(action != null) {
+        try {
             if(action.equalsIgnoreCase("visualizzaOrdini")){
                 List<OrdineBean> ordini;
                 HttpSession session = req.getSession();
@@ -36,6 +38,8 @@ public class OrdiniControl extends HttpServlet {
                 RequestDispatcher dispatcher = req.getRequestDispatcher("/visualizzaOrdini.jsp");
                 dispatcher.forward(req, resp);
             }
+        } catch (ServletException | IOException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante il reindirizzamento della richiesta.");
         }
     }
 

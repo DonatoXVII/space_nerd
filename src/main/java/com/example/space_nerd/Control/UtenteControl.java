@@ -26,6 +26,7 @@ public class UtenteControl extends HttpServlet {
     static Logger logger = Logger.getLogger(UtenteControl.class.getName());
     private static final String INDEX_PAGE = "./index.jsp";
     private static final String emailParameter = "email";
+    private static final String pwdParameter = "password";
 
     public UtenteControl() {
         super();
@@ -35,37 +36,36 @@ public class UtenteControl extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
         try {
-            if(action != null) {
-                if(action.equalsIgnoreCase("login")) {
-                    login(request, response);
-                }
-                if(action.equalsIgnoreCase("registrati")){
-                    registrati(request, response);
-                }
-                if(action.equalsIgnoreCase("modificaProfilo")){
-                    modificaProfilo(request, response);
-                }
-                if(action.equalsIgnoreCase("visualizzaIndirizzi")){
-                    HttpSession session = request.getSession();
-                    String email = (String) session.getAttribute("email");
-                    List<Integer> indirizziPerEmail = indirizzoModel.indirizziUtilizzati(email);
-                    List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
-                    for(int i : indirizziPerEmail) {
-                        indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
-                    }
-                    request.setAttribute("indirizzi", indirizziUtilizzati);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/indirizzi.jsp");
-                    dispatcher.forward(request, response);
-                }
-                if(action.equalsIgnoreCase("rimuoviIndirizzo")) {
-                    rimuoviIndirizzo(request, response);
-                }
-                if(action.equalsIgnoreCase("logout")) {
-                    logout(request, response);
+            if (action != null) {
+                switch (action.toLowerCase()) {
+                    case "login":
+                        login(request, response);
+                        break;
+                    case "registrati":
+                        registrati(request, response);
+                        break;
+                    case "modificaprofilo":
+                        modificaProfilo(request, response);
+                        break;
+                    case "visualizzaindirizzi":
+                        visualizzaIndirizzi(request, response);
+                        break;
+                    case "rimuoviindirizzo":
+                        rimuoviIndirizzo(request, response);
+                        break;
+                    case "logout":
+                        logout(request, response);
+                        break;
+                    default:
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        errorDispatcher.forward(request, response);
+                        break;
                 }
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
+        } catch (ServletException | IOException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore durante il reindirizzamento della richiesta.");
         }
     }
 
@@ -76,7 +76,7 @@ public class UtenteControl extends HttpServlet {
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String email = request.getParameter(emailParameter);
-        String password = request.getParameter("password");
+        String password = request.getParameter(pwdParameter);
         HttpSession session = request.getSession(true);
         if (email == null || password == null) {
             response.sendRedirect(INDEX_PAGE);
@@ -103,7 +103,7 @@ public class UtenteControl extends HttpServlet {
         String provincia = request.getParameter("provincia");
         String comune = request.getParameter("comune");
         String email = request.getParameter(emailParameter);
-        String password = request.getParameter("password");
+        String password = request.getParameter(pwdParameter);
         UtenteBean utente = new UtenteBean(email, password, false);
 
         HttpSession session = request.getSession(true);
@@ -134,13 +134,26 @@ public class UtenteControl extends HttpServlet {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
 
-        String password = request.getParameter("password");
+        String password = request.getParameter(pwdParameter);
         UtenteBean utente = new UtenteBean(email, password, false);
         DatiSensibiliBean datiUtente = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
 
         utenteModel.modificaProfilo(utente);
         datiModel.modificaDati(datiUtente);
         response.sendRedirect("./profilo.jsp");
+    }
+
+    private void visualizzaIndirizzi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute(emailParameter);
+        List<Integer> indirizziPerEmail = indirizzoModel.indirizziUtilizzati(email);
+        List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
+        for (int i : indirizziPerEmail) {
+            indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
+        }
+        request.setAttribute("indirizzi", indirizziUtilizzati);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/indirizzi.jsp");
+        dispatcher.forward(request, response);
     }
 
     public void rimuoviIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -14,7 +14,7 @@
 <head>
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
-    <link href="css/accesso.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>

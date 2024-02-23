@@ -22,6 +22,7 @@ public class UtenteControl extends HttpServlet {
     static UtenteModel utenteModel = new UtenteModel();
     static DatiSensibiliModel datiModel = new DatiSensibiliModel();
     static IndirizzoModel indirizzoModel = new IndirizzoModel();
+    static PagamentoModel pagamentoModel = new PagamentoModel();
     static Logger logger = Logger.getLogger(UtenteControl.class.getName());
     private static final String INDEX_PAGE = "./index.jsp";
     private static final String emailParameter = "email";
@@ -52,9 +53,21 @@ public class UtenteControl extends HttpServlet {
                     case "rimuoviindirizzo":
                         rimuoviIndirizzo(request, response);
                         break;
+                    case "visualizzametodi":
+                        visualizzaMetodi(request, response);
+                        break;
+                    /*case "rimuovimetodo":
+                        rimuoviMetodo(request, response);
+                        break;*/
                     case "logout":
                         logout(request, response);
                         break;
+                    case "inserisciindirizzo" :
+                        inserisciIndirizzo(request, response);
+                        break;
+                    /*case "inseriscimetodo" :
+                        inserisciMetodo(request, response);
+                        break;*/
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
                         errorDispatcher.forward(request, response);
@@ -161,6 +174,35 @@ public class UtenteControl extends HttpServlet {
         int i = Integer.parseInt(request.getParameter("IdIndirizzo"));
         indirizzoModel.rimuoviIndirizzo(i);
         response.sendRedirect("./indirizzi.jsp");
+    }
+
+    private void inserisciIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String via = request.getParameter("via");
+        int civico = Integer.parseInt(request.getParameter("civico"));
+        String provincia = request.getParameter("provincia");
+        String comune = request.getParameter("comune");
+
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute(emailParameter);
+
+        indirizzoModel.aggiungiIndirizzo(nome, cognome, via, civico, provincia, comune);
+        indirizzoModel.aggiornaUtilizza(email);
+        response.sendRedirect("./indirizzi.jsp");
+    }
+
+    private void visualizzaMetodi(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ServletException {
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute(emailParameter);
+        List<Integer> metodiPerEmail = pagamentoModel.metodiUtilizzati(email);
+        List<PagamentoBean> metodiUtilizzati = new ArrayList<>();
+        for (int i : metodiPerEmail) {
+            metodiUtilizzati.add(pagamentoModel.getMetodo(i));
+        }
+        request.setAttribute("pagamenti", metodiUtilizzati);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/metodiPagamento.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

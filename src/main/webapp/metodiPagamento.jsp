@@ -14,7 +14,7 @@
 <head>
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
-    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <link href="css/accesso.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>
@@ -35,7 +35,7 @@
         <%=metodo.getScadenza()%>
         <%=metodo.getCcv()%>
         <%=metodo.getTitolare()%>
-        <a href="UtenteControl?action=rimuoviMetodo&IdIdMetodo=<%=metodo.getId()%>">Rimuovi</a>
+        <a href="UtenteControl?action=rimuoviMetodo&IdMetodo=<%=metodo.getId()%>">Rimuovi</a>
     </div>
 
     <%
@@ -45,6 +45,41 @@
             }
         }
     %>
+</div>
+
+<div class="form-container">
+    <form action="UtenteControl?action=inserisciMetodo" method="post" class="form">
+        <div class="form-title"><span>come vuoi pagare nel tuo space</span></div>
+        <div class="title-2"><span>SPACE</span></div>
+
+        <div class="input-container">
+            <input class="input-numero" name="numero" type="text" placeholder="Numero carta">
+            <span> </span>
+        </div>
+
+        <section class="bg-stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+        </section>
+
+        <div class="input-container">
+            <input class="input-data" name="data" type="date" placeholder="Data Scadenza">
+        </div>
+
+        <div class="input-container">
+            <input class="input-ccv" name="ccv" type="text" placeholder="Ccv">
+        </div>
+
+        <div class="input-container">
+            <input class="input-titolae" name="titolare" type="text" placeholder="Titolare">
+        </div>
+
+        <button type="submit" class="submit">
+            <span class="sign-text">Conferma</span>
+        </button>
+    </form>
 </div>
 
 </body>

@@ -56,18 +56,18 @@ public class UtenteControl extends HttpServlet {
                     case "visualizzametodi":
                         visualizzaMetodi(request, response);
                         break;
-                    /*case "rimuovimetodo":
+                    case "rimuovimetodo":
                         rimuoviMetodo(request, response);
-                        break;*/
+                        break;
                     case "logout":
                         logout(request, response);
                         break;
                     case "inserisciindirizzo" :
                         inserisciIndirizzo(request, response);
                         break;
-                    /*case "inseriscimetodo" :
+                    case "inseriscimetodo" :
                         inserisciMetodo(request, response);
-                        break;*/
+                        break;
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
                         errorDispatcher.forward(request, response);
@@ -197,12 +197,32 @@ public class UtenteControl extends HttpServlet {
         String email = (String) session.getAttribute(emailParameter);
         List<Integer> metodiPerEmail = pagamentoModel.metodiUtilizzati(email);
         List<PagamentoBean> metodiUtilizzati = new ArrayList<>();
-        for (int i : metodiPerEmail) {
+        for (Integer i : metodiPerEmail) {
             metodiUtilizzati.add(pagamentoModel.getMetodo(i));
         }
         request.setAttribute("pagamenti", metodiUtilizzati);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/metodiPagamento.jsp");
         dispatcher.forward(request, response);
+    }
+
+    public void rimuoviMetodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int i = Integer.parseInt(request.getParameter("IdMetodo"));
+        pagamentoModel.rimuoviMetodo(i);
+        response.sendRedirect("./metodiPagamento.jsp");
+    }
+
+    public void inserisciMetodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String numero = request.getParameter("numero");
+        Date data = Date.valueOf(request.getParameter("data"));
+        int ccv = Integer.parseInt(request.getParameter("ccv"));
+        String titolare = request.getParameter("titolare");
+
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute(emailParameter);
+
+        pagamentoModel.aggiungiMetodo(numero, data, ccv, titolare);
+        pagamentoModel.aggiornaRegistra(email);
+        response.sendRedirect("./metodiPagamento.jsp");
     }
 
     private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

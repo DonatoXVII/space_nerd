@@ -40,7 +40,7 @@ public class PagamentoModel {
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT IdMetodo FROM " + TABLE_NAME_METODO + " WHERE Email = ?";
+            String query = "SELECT IdMetodo FROM " + TABLE_NAME_REGISTRA + " WHERE Email = ?";
             ps = con.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -157,7 +157,7 @@ public class PagamentoModel {
         try {
             con = ds.getConnection();
             String query = "INSERT INTO " + TABLE_NAME_METODO + "(NumeroCarta, DataScadenza, Ccv, Titolare)" +
-                    "VALUES(?, ?, ?, ?, ?, ?)";
+                    "VALUES(?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setString(1, numero);
             ps.setDate(2, scadenza);

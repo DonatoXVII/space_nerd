@@ -53,7 +53,7 @@ public class ProdottoControl extends HttpServlet {
             dispatcher.forward(req, resp);
 
         } catch (ServletException | IOException | SQLException e) {
-            logger.info("Si è verificata un'eccezione:");
+            logger.info("Si è verificata un'eccezione:" + e);
         }
     }
 
@@ -62,7 +62,7 @@ public class ProdottoControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            logger.info("Si è verificata un'eccezione:");
+            logger.info("Si è verificata un'eccezione:" + e);
         }
     }
 }

@@ -62,7 +62,7 @@ public class UtenteControl extends HttpServlet {
                 }
             }
         } catch (ServletException | IOException | SQLException e) {
-            logger.info("Si è verificata un'eccezione:");
+            logger.info("Si è verificata un'eccezione:" + e);
         }
     }
 
@@ -71,7 +71,7 @@ public class UtenteControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            logger.info("Si è verificata un'eccezione:");
+            logger.info("Si è verificata un'eccezione:" + e);
         }
     }
 

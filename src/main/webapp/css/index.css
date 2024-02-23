@@ -2,20 +2,51 @@ body {
     background-color: #f1f2f4
 }
 
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
 .manga-container, .pop-container, .figure-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     overflow-x: auto;
     padding: 0 10px;
+    position: relative;
 }
 
 .welcome-container {
-    position: relative;
-    margin: 10px;
-    background-color: #f1f2f4;
+    width: 100%;
+    max-width: 800px; /* Larghezza massima desiderata */
+    height: 400px; /* Altezza desiderata */
     overflow: hidden;
-    text-align: center;
+    position: relative;
+    margin: 0 auto; /* Centra il container orizzontalmente */
+    padding-top: 20px; /* Aggiunge spazio sopra il contenuto */
 }
+
+.welcome-container .slideshow {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* Allinea gli elementi al centro orizzontalmente */
+    align-items: center; /* Allinea gli elementi al centro verticalmente */
+}
+
+.welcome-container .slide {
+    width: auto; /* Larghezza automatica */
+    height: 100%; /* Altezza al 100% */
+    object-fit: contain; /* Mantiene le proporzioni dell'immagine */
+    max-height: 100%; /* Altezza massima al 100% */
+}
+
+.welcome-container .slide img {
+    width: 100%; /* Larghezza al 100% dell'immagine */
+    height: auto; /* Altezza automatica */
+}
+
 
 .slideshow {
     display: flex;
@@ -24,9 +55,9 @@ body {
 
 .slide {
     max-width: 100%;
-    max-height: 400px; /* Altezza massima desiderata */
+    max-height: 400px;
     height: auto;
-    margin: 0 auto; /* Per centrare l'immagine */
+    margin: 0 auto;
 }
 
 /* Stili per i pulsanti di navigazione */
@@ -51,10 +82,23 @@ body {
     right: 10px;
 }
 
+.manga-container h2 , .pop-container h2, .figure-container h2{
+    background-color: #f1f2f4;
+    padding: 10px 20px;
+    font-size: 24px;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.manga-container .manga-items , .pop-container .pop-items , .figure-container .figure-items{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .manga-item, .pop-item, .figure-item {
     margin: 10px;
     text-align: center;
-    flex: 0 0 auto;
     width: 200px;
 }
 

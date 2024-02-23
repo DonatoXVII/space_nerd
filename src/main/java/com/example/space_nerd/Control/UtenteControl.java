@@ -27,6 +27,10 @@ public class UtenteControl extends HttpServlet {
     private static final String INDEX_PAGE = "./index.jsp";
     private static final String emailParameter = "email";
     private static final String pwdParameter = "password";
+    private static final String cognomeParameter = "cognome";
+    private static final String civicoParameter = "civico";
+    private static final String provinciaParameter = "provincia";
+    private static final String comuneParameter = "comune";
 
     public UtenteControl() {
         super();
@@ -110,12 +114,12 @@ public class UtenteControl extends HttpServlet {
 
     private void registrati(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
+        String cognome = request.getParameter(cognomeParameter);
         Date data = Date.valueOf(request.getParameter("data"));
         String via = request.getParameter("via");
-        int civico = Integer.parseInt(request.getParameter("civico"));
-        String provincia = request.getParameter("provincia");
-        String comune = request.getParameter("comune");
+        int civico = Integer.parseInt(request.getParameter(civicoParameter));
+        String provincia = request.getParameter(provinciaParameter);
+        String comune = request.getParameter(comuneParameter);
         String email = request.getParameter(emailParameter);
         String password = request.getParameter(pwdParameter);
         UtenteBean utente = new UtenteBean(email, password, false);
@@ -138,12 +142,12 @@ public class UtenteControl extends HttpServlet {
 
     public void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
+        String cognome = request.getParameter(cognomeParameter);
         Date data = Date.valueOf(request.getParameter("data"));
         String via = request.getParameter("via");
-        int civico = Integer.parseInt(request.getParameter("civico"));
-        String provincia = request.getParameter("provincia");
-        String comune = request.getParameter("comune");
+        int civico = Integer.parseInt(request.getParameter(civicoParameter));
+        String provincia = request.getParameter(provinciaParameter);
+        String comune = request.getParameter(comuneParameter);
 
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute(emailParameter);
@@ -178,11 +182,11 @@ public class UtenteControl extends HttpServlet {
 
     private void inserisciIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
+        String cognome = request.getParameter(cognomeParameter);
         String via = request.getParameter("via");
-        int civico = Integer.parseInt(request.getParameter("civico"));
-        String provincia = request.getParameter("provincia");
-        String comune = request.getParameter("comune");
+        int civico = Integer.parseInt(request.getParameter(civicoParameter));
+        String provincia = request.getParameter(provinciaParameter);
+        String comune = request.getParameter(comuneParameter);
 
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute(emailParameter);

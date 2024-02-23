@@ -14,8 +14,6 @@ public class PagamentoModel {
     private static Logger logger = Logger.getLogger(PagamentoModel.class.getName());
     private static final String TABLE_NAME_METODO = "MetodoPagamento";
     private static final String TABLE_NAME_REGISTRA = "Registra";
-
-    private static final PagamentoModel pagamentoModel = new PagamentoModel();
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -226,7 +224,7 @@ public class PagamentoModel {
     }
 
     public void aggiornaRegistra(String email) {
-        int metodo = pagamentoModel.getLastMetodo();
+        int metodo = getLastMetodo();
         Connection con = null;
         PreparedStatement ps = null;
         try {

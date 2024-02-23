@@ -17,8 +17,6 @@ public class IndirizzoModel {
     private static Logger logger = Logger.getLogger(IndirizzoModel.class.getName());
     private static final String TABLE_NAME_INDIRIZZO = "IndirizzoSpedizione";
     private static final String TABLE_NAME_UTILIZZA = "Utilizza";
-
-    private static final IndirizzoModel indirizzoModel = new IndirizzoModel();
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -233,7 +231,7 @@ public class IndirizzoModel {
     }
 
     public void aggiornaUtilizza(String email) {
-        int indirizzo = indirizzoModel.getLastIndirizzo();
+        int indirizzo = getLastIndirizzo();
         Connection con = null;
         PreparedStatement ps = null;
         try {

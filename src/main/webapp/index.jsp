@@ -1,27 +1,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.space_nerd.Model.MangaBean" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="com.example.space_nerd.Model.PopBean" %>
 <%@ page import="com.example.space_nerd.Model.FigureBean" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    List<MangaBean> bestManga = (List<MangaBean>) request.getAttribute("bestManga");
-    if(bestManga == null) {
+    List<Object> bestProdotti = (List<Object>) request.getAttribute("bestProdotti");
+    if(bestProdotti == null) {
         response.sendRedirect("./ProdottoControl");
         return;
     }
-    List<PopBean> bestPop = (List<PopBean>) request.getAttribute("bestPop");
+
     List<String> immaginiPop = (List<String>) request.getAttribute("immaginiPop");
-    if(bestPop == null) {
-        response.sendRedirect("./ProdottoControl");
-        return;
-    }
-    List<FigureBean> bestFigure = (List<FigureBean>) request.getAttribute("bestFigure");
     List<String> immaginiFigure = (List<String>) request.getAttribute("immaginiFigure");
-    if(bestFigure == null) {
-        response.sendRedirect("./ProdottoControl");
-        return;
-    }
+    int countPop = 0;
+    int countFigure = 0;
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -48,34 +40,25 @@
     <div class="manga-container">
         <h2>Best Manga</h2>
         <div class="slideshow">
-        <div class="manga-items">
-            <%
-                if(bestManga != null && bestManga.size()!=0) {
-                    Iterator<?> it = bestManga.iterator();
-                    while (it.hasNext()) {
-                        MangaBean manga = (MangaBean) it.next();
-            %>
+            <div class="manga-items">
                 <%
-                    if(manga != null) {
+                    for(Object prodotto : bestProdotti){
+                        if(prodotto instanceof MangaBean) {
                 %>
-                    <div class="slide">
-                        <div class="manga-item">
-                        <img src="img/imgManga/<%=manga.getImg()%>" alt="errore immagine">
-                            <div class="description">
-                            <%=manga.getDescrizione()%>
+                            <div class="slide">
+                                <div class="manga-item">
+                                    <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+                                        <div class="description">
+                                            <%=((MangaBean) prodotto).getDescrizione()%>
+                                        </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
                 <%
+                        }
                     }
                 %>
-            <%
-                    }
-                }
-            %>
+            </div>
         </div>
-    </div>
         <button class="prev">&#10094;</button>
         <button class="next">&#10095;</button>
     </div>
@@ -83,35 +66,27 @@
     <div class="pop-container">
         <h2>Best Pop</h2>
         <div class="slideshow">
-        <div class="pop-items">
-            <%
-                if(bestPop != null && bestPop.size()!=0) {
-                    Iterator<?> it = bestPop.iterator();
-                    Iterator<?> i = immaginiPop.iterator();
-                    while (it.hasNext()) {
-                        PopBean pop = (PopBean) it.next();
-                        String img = (String) i.next();
-            %>
+            <div class="pop-items">
                 <%
-                    if(pop != null) {
+                    for(Object prodotto : bestProdotti) {
+                        if(prodotto instanceof PopBean) {
+                            String img = immaginiPop.get(countPop);
+                            countPop++;
                 %>
-            <div class="slide">
-                <div class="pop-item">
-                    <img src="img/imgPop/<%=img%>" alt="errore immagine">
-                    <div class="description">
-                        <%=pop.getDescrizione()%>
-                    </div>
-                </div>
-            </div>
+                            <div class="slide">
+                                <div class="pop-item">
+                                    <img src="img/imgPop/<%=img%>" alt="errore immagine">
+                                        <div class="description">
+                                            <%=((PopBean) prodotto).getDescrizione()%>
+                                        </div>
+                                </div>
+                            </div>
 
                 <%
+                        }
                     }
                 %>
-            <%
-                    }
-                }
-            %>
-        </div>
+            </div>
         </div>
         <button class="prev">&#10094;</button>
         <button class="next">&#10095;</button>
@@ -121,34 +96,26 @@
     <div class="figure-container">
         <h2>Best Figure</h2>
         <div class="slideshow">
-        <div class="figure-items">
-            <%
-                if(bestFigure != null && bestFigure.size()!=0) {
-                    Iterator<?> it = bestFigure.iterator();
-                    Iterator<?> i = immaginiFigure.iterator();
-                    while (it.hasNext()) {
-                        FigureBean figure = (FigureBean) it.next();
-                        String img = (String) i.next();
-            %>
+            <div class="figure-items">
                 <%
-                    if(figure != null) {
+                    for(Object prodotto : bestProdotti){
+                        if(prodotto instanceof FigureBean) {
+                            String img = immaginiFigure.get(countFigure);
+                            countFigure++;
                 %>
-            <div class="slide">
-                <div class="figure-item">
-                    <img src="img/imgFigure/<%=img%>" alt="errore immagine">
-                    <div class="description">
-                        <%=figure.getDescrizione()%>
-                    </div>
-                </div>
+                            <div class="slide">
+                                <div class="figure-item">
+                                    <img src="img/imgFigure/<%=img%>" alt="errore immagine">
+                                        <div class="description">
+                                            <%=((FigureBean) prodotto).getDescrizione()%>
+                                        </div>
+                                </div>
+                            </div>
+                <%
+                        }
+                    }
+                %>
             </div>
-                <%
-                    }
-                %>
-            <%
-                    }
-                }
-            %>
-        </div>
         </div>
         <button class="prev">&#10094;</button>
         <button class="next">&#10095;</button>

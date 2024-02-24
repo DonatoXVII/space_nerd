@@ -27,15 +27,15 @@ public class ProdottoControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
-            List<MangaBean> bestManga;
-            bestManga = mangaModel.miglioriManga();
-            req.setAttribute("bestManga", bestManga);
-            List<PopBean> bestPop;
-            bestPop = popModel.miglioriPop();
-            req.setAttribute("bestPop", bestPop);
-            List<FigureBean> bestFigure;
-            bestFigure = figureModel.miglioriFigure();
-            req.setAttribute("bestFigure", bestFigure);
+            List<MangaBean> bestManga = mangaModel.miglioriManga();
+            List<PopBean> bestPop = popModel.miglioriPop();
+            List<FigureBean> bestFigure = figureModel.miglioriFigure();
+
+            List<Object> bestProdotti = new ArrayList<>();
+            bestProdotti.addAll(bestManga);
+            bestProdotti.addAll(bestPop);
+            bestProdotti.addAll(bestFigure);
+            req.setAttribute("bestProdotti", bestProdotti);
 
             List<String> immaginiPop = new ArrayList<>();
             for(PopBean bean : bestPop) {

@@ -42,7 +42,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT F.IdFigure, F.Descrizione, SUM(Quantita) AS Tot FROM " + TABLE_NAME_FIGURE +
+            String query = "SELECT F.IdFigure, F.Descrizione, SUM(Cm.Quantita) AS Tot FROM " + TABLE_NAME_FIGURE +
                     " F JOIN " + TABLE_NAME_COMPRENDE +
                     " Cm ON F.IdFigure = Cm.IdFigure GROUP BY F.IdFigure ORDER BY Tot DESC LIMIT 3";
             ps = con.prepareStatement(query);
@@ -122,5 +122,91 @@ public class FigureModel {
             }
         }
         return immagini;
+    }
+
+    public List<FigureBean> allFigure() {
+        List<FigureBean> allFigure = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT IdFigure, Personaggio FROM " + TABLE_NAME_FIGURE;
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                FigureBean figure = new FigureBean();
+                figure.setIdFigure(rs.getInt("IdFigure"));
+                figure.setPersonaggio(rs.getString("Personaggio"));
+                allFigure.add(figure);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return allFigure;
+    }
+
+    public List<String> oneImgPerFigure(){
+        List<String> imgPerFigure = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE (IdFigure, IdImmagine) IN (SELECT " +
+                    "IdFigure, MIN(IdImmagine) FROM " + TABLE_NAME_IMMAGINE + " GROUP BY IdFigure)";
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                imgPerFigure.add(rs.getString("Nome"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return imgPerFigure;
     }
 }

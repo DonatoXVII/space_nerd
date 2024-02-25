@@ -26,31 +26,51 @@ public class ProdottoControl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
         try{
-            List<MangaBean> bestManga = mangaModel.miglioriManga();
-            List<PopBean> bestPop = popModel.miglioriPop();
-            List<FigureBean> bestFigure = figureModel.miglioriFigure();
+            if(action != null) {
+                if(action.equalsIgnoreCase("visualizzaCatalogo")) {
+                    List<MangaBean> allManga = mangaModel.allManga();
+                    List<PopBean> allPop = popModel.allPop();
+                    List<FigureBean> allFigure = figureModel.allFigure();
+                    List<String> imgPerPop = popModel.oneImgPerPop();
+                    List<String> imgPerFigure = figureModel.oneImgPerFigure();
+                    List<Object> prodotti = new ArrayList<>();
+                    prodotti.addAll(allManga);
+                    prodotti.addAll(allPop);
+                    prodotti.addAll(allFigure);
+                    req.setAttribute("prodotti", prodotti);
+                    req.setAttribute("imgPop", imgPerPop);
+                    req.setAttribute("imgFigure", imgPerFigure);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/catalogo.jsp");
+                    dispatcher.forward(req, resp);
+                }
+            } else {
+                List<MangaBean> bestManga = mangaModel.miglioriManga();
+                List<PopBean> bestPop = popModel.miglioriPop();
+                List<FigureBean> bestFigure = figureModel.miglioriFigure();
 
-            List<Object> bestProdotti = new ArrayList<>();
-            bestProdotti.addAll(bestManga);
-            bestProdotti.addAll(bestPop);
-            bestProdotti.addAll(bestFigure);
-            req.setAttribute("bestProdotti", bestProdotti);
+                List<Object> bestProdotti = new ArrayList<>();
+                bestProdotti.addAll(bestManga);
+                bestProdotti.addAll(bestPop);
+                bestProdotti.addAll(bestFigure);
+                req.setAttribute("bestProdotti", bestProdotti);
 
-            List<String> immaginiPop = new ArrayList<>();
-            for(PopBean bean : bestPop) {
-                immaginiPop.add(popModel.imgPerPop(bean).get(0));
+                List<String> immaginiPop = new ArrayList<>();
+                for(PopBean bean : bestPop) {
+                    immaginiPop.add(popModel.imgPerPop(bean).get(0));
+                }
+                req.setAttribute("immaginiPop", immaginiPop);
+
+                List<String> immaginiFigure = new ArrayList<>();
+                for(FigureBean bean : bestFigure) {
+                    immaginiFigure.add(figureModel.imgPerFigure(bean).get(0));
+                }
+                req.setAttribute("immaginiFigure", immaginiFigure);
+
+                RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+                dispatcher.forward(req, resp);
             }
-            req.setAttribute("immaginiPop", immaginiPop);
-
-            List<String> immaginiFigure = new ArrayList<>();
-            for(FigureBean bean : bestFigure) {
-                immaginiFigure.add(figureModel.imgPerFigure(bean).get(0));
-            }
-            req.setAttribute("immaginiFigure", immaginiFigure);
-
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
-            dispatcher.forward(req, resp);
 
         } catch (ServletException | IOException | SQLException e) {
             logger.info("Si è verificata un'eccezione:" + e);

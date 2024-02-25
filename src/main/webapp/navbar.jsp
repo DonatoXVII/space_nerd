@@ -28,9 +28,9 @@
     <div class="catalogo">
         CATALOGO
         <div class="catalogo-menu">
-            <a href="visualizzaOrdini.jsp">Manga</a>
-            <a href="visualizzaOrdini.jsp">Pop</a>
-            <a href="visualizzaOrdini.jsp">Figure</a>
+            <a href="catalogo.jsp">Manga</a>
+            <a href="catalogo.jsp">Pop</a>
+            <a href="catalogo.jsp">Figure</a>
         </div>
     </div>
     <div class="profilo">

@@ -82,4 +82,49 @@ public class MangaModel {
         }
         return bestManga;
     }
+
+    public List<MangaBean> allManga() {
+        List<MangaBean> allManga = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT IdManga, Descrizione, Immagine FROM " + TABLE_NAME_MANGA;
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                MangaBean manga = new MangaBean();
+                manga.setIdManga(rs.getInt("IdManga"));
+                manga.setDescrizione(rs.getString("Descrizione"));
+                manga.setImg(rs.getString("Immagine"));
+                allManga.add(manga);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return allManga;
+    }
 }

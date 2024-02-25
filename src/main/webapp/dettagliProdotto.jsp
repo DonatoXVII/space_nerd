@@ -27,6 +27,7 @@
         <%=((MangaBean) prodotto).getLingua()%><br>
         <%=((MangaBean) prodotto).getNumPagine()%><br>
         <%=((MangaBean) prodotto).getPrezzo()%><br>
+        <a href="ProdottoControl?action=aggiungiAlCarrello&IdManga=<%=((MangaBean) prodotto).getIdManga()%>">Aggiungi al carrello</a>
 <%
     } else if(prodotto instanceof PopBean){
         for(String img : immaginiPop) {

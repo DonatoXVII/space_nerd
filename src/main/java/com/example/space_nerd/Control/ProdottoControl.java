@@ -1,6 +1,7 @@
 package com.example.space_nerd.Control;
 
 import com.example.space_nerd.Model.*;
+import com.example.space_nerd.Utility.CarrelloBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class ProdottoControl extends HttpServlet {
     static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
+    static CarrelloBean carrelloBean = new CarrelloBean();
     static Logger logger = Logger.getLogger(ProdottoControl.class.getName());
 
     public ProdottoControl() {super();}
@@ -71,6 +73,17 @@ public class ProdottoControl extends HttpServlet {
                     req.setAttribute("prodotto", prodotto);
                     req.setAttribute("immaginiFigure", immaginiFigure);
                     RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliProdotto.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("aggiungiAlCarrello")) {
+                    int id = Integer.parseInt(req.getParameter("IdManga"));
+                    if(mangaModel.verificaDisponibilita(id)) {
+                        carrelloBean.aggiungiProdotto(mangaModel.getById(id));
+                    }
+                    List<Object> carrello = carrelloBean.getListaCarrello();
+                    req.getSession().setAttribute("carrello", carrelloBean);
+                    req.setAttribute("carrello", carrello);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
                     dispatcher.forward(req, resp);
                 }
             } else {

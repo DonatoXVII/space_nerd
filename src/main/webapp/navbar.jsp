@@ -1,13 +1,16 @@
+<%@ page import="com.example.space_nerd.Utility.CarrelloBean" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%!
     String emailUtente = "";
     Boolean tipoUtente = false;
+    CarrelloBean carrelloBean = null;
 %>
 <%
     synchronized (session) {
         session = request.getSession();
         emailUtente = (String) session.getAttribute("email");
         tipoUtente = (Boolean) session.getAttribute("tipo");
+        carrelloBean = (CarrelloBean) session.getAttribute("carrello");
     }
 %>
 
@@ -48,7 +51,7 @@
         </div>
     </div>
     <div class="carrello">
-        <a href="login.jsp">
+        <a href="carrello.jsp">
             <img src="img/carrello.jpg" alt="Carrello">
         </a>
     </div>

@@ -209,4 +209,52 @@ public class FigureModel {
         }
         return imgPerFigure;
     }
+
+    public FigureBean getById(int i) {
+        FigureBean figure = new FigureBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, i);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                figure.setIdFigure(i);
+                figure.setPrezzo(rs.getFloat("Prezzo"));
+                figure.setDescrizione(rs.getString("Descrizione"));
+                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
+                figure.setMateriale(rs.getString("Materiale"));
+                figure.setAltezza(rs.getInt("Altezza"));
+                figure.setPersonaggio(rs.getString("Personaggio"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return figure;
+    }
 }

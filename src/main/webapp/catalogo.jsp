@@ -28,21 +28,24 @@
     for(Object prodotto : prodotti) {
         if(prodotto instanceof MangaBean) {
 %>
-            <div class="gallery"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+            <div class="gallery">
+                <a href="ProdottoControl?action=visualizzaDettagliManga&IdManga=<%=((MangaBean) prodotto).getIdManga()%>"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"></a>
                 <div class="description"><%=((MangaBean) prodotto).getDescrizione()%></div>
             </div>
 
 <%
         } else if(prodotto instanceof PopBean) {
 %>
-            <div class="gallery"><img src="img/imgPop/<%=imgPerPop.get(countPop)%>" alt="errore immagine">
+            <div class="gallery">
+                <a href="ProdottoControl?action=visualizzaDettagliPop&IdPop=<%=((PopBean) prodotto).getIdPop()%>"><img src="img/imgPop/<%=imgPerPop.get(countPop)%>" alt="errore immagine"></a>
                 <div class="description"><%=((PopBean) prodotto).getDescrizione()%></div>
             </div>
             <%countPop++;%>
 <%
         } else if(prodotto instanceof FigureBean) {
 %>
-            <div class="gallery"><img src="img/imgFigure/<%=imgPerFigure.get(countFigure)%>" alt="errore immagine">
+            <div class="gallery">
+                <a href="ProdottoControl?action=visualizzaDettagliFigure&IdFigure=<%=((FigureBean) prodotto).getIdFigure()%>"><img src="img/imgFigure/<%=imgPerFigure.get(countFigure)%>" alt="errore immagine"></a>
                 <div class="description"><%=((FigureBean) prodotto).getPersonaggio()%></div>
             </div>
             <%countFigure++;%>

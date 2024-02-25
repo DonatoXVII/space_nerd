@@ -209,4 +209,51 @@ public class PopModel {
         }
         return imgPerPop;
     }
+
+    public PopBean getById(int i) {
+        PopBean pop = new PopBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_POP + " WHERE IdPop = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, i);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pop.setIdPop(i);
+                pop.setPrezzo(rs.getFloat("Prezzo"));
+                pop.setDescrizione(rs.getString("Descrizione"));
+                pop.setNumArticoli(rs.getInt("NumeroArticoli"));
+                pop.setNumSerie(rs.getInt("NumeroSerie"));
+                pop.setSerie(rs.getString("Serie"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return pop;
+    }
 }

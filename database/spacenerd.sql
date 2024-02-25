@@ -19,7 +19,7 @@ CREATE TABLE DatiSensibili(
     Provincia varchar(16) NOT NULL,
     Comune varchar(16) NOT NULL,
     PRIMARY KEY(Email),
-    FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
+     FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IndirizzoSpedizione(
@@ -392,11 +392,11 @@ VALUES('goku_ban2.jpg', '6');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
 VALUES('goku_ban3.jpg', '6');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('frezzer_ban1.jpg', '7');
+VALUES('freezer_ban1.jpg', '7');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('frezzer_ban2.jpg', '7');
+VALUES('freezer_ban2.jpg', '7');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('frezzer_ban3.jpg', '7');
+VALUES('freezer_ban3.jpg', '7');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
 VALUES('tl_ban1.jpg', '8');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
@@ -412,6 +412,6 @@ VALUES('ryuk3.jpg', '9');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
 VALUES('jiren1.jpg', '10');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('jiren3.jpg', '10');
+VALUES('jiren2.jpg', '10');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
 VALUES('jiren3.jpg', '10');

@@ -19,31 +19,37 @@
 <head>
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
-    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <link href="css/catalogo.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+<div class="catalogo">
 <%
     for(Object prodotto : prodotti) {
         if(prodotto instanceof MangaBean) {
 %>
-    <%=((MangaBean) prodotto).getDescrizione()%><br>
-    <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+            <div class="gallery"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+                <div class="description"><%=((MangaBean) prodotto).getDescrizione()%></div>
+            </div>
+
 <%
         } else if(prodotto instanceof PopBean) {
 %>
-    <%=((PopBean) prodotto).getDescrizione()%><br>
-    <img src="img/imgPop/<%=imgPerPop.get(countPop)%>" alt="errore immagine">
-    <%countPop++;%>
+            <div class="gallery"><img src="img/imgPop/<%=imgPerPop.get(countPop)%>" alt="errore immagine">
+                <div class="description"><%=((PopBean) prodotto).getDescrizione()%></div>
+            </div>
+            <%countPop++;%>
 <%
         } else if(prodotto instanceof FigureBean) {
 %>
-    <%=((FigureBean) prodotto).getPersonaggio()%><br>
-    <img src="img/imgFigure/<%=imgPerFigure.get(countFigure)%>" alt="errore immagine">
-    <%countFigure++;%>
+            <div class="gallery"><img src="img/imgFigure/<%=imgPerFigure.get(countFigure)%>" alt="errore immagine">
+                <div class="description"><%=((FigureBean) prodotto).getPersonaggio()%></div>
+            </div>
+            <%countFigure++;%>
 <%
         }
     }
 %>
+</div>
 </body>
 </html>

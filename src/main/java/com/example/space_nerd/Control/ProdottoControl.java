@@ -34,134 +34,48 @@ public class ProdottoControl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CarrelloBean carrelloBean = (CarrelloBean) req.getSession().getAttribute("carrello");
-        if(carrelloBean == null) {
-            carrelloBean = new CarrelloBean();
-            req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        }
-
         String action = req.getParameter("action");
-        try{
-            if(action != null) {
-                if(action.equalsIgnoreCase("visualizzaCatalogo")) {
-                    List<MangaBean> allManga = mangaModel.allManga();
-                    List<PopBean> allPop = popModel.allPop();
-                    List<FigureBean> allFigure = figureModel.allFigure();
-
-                    List<String> imgPerPop = popModel.oneImgPerPop();
-                    List<String> imgPerFigure = figureModel.oneImgPerFigure();
-
-                    List<Object> prodotti = new ArrayList<>();
-                    prodotti.addAll(allManga);
-                    prodotti.addAll(allPop);
-                    prodotti.addAll(allFigure);
-
-                    req.setAttribute("prodotti", prodotti);
-                    req.setAttribute("imgPop", imgPerPop);
-                    req.setAttribute("imgFigure", imgPerFigure);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/catalogo.jsp");
-                    dispatcher.forward(req, resp);
-                }
-                if (action.equalsIgnoreCase("visualizzaDettagliManga")) {
-                    int idManga = Integer.parseInt(req.getParameter(idMangaParameter));
-                    Object prodotto = mangaModel.getById(idManga);
-                    req.setAttribute(prodottoParameter, prodotto);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if (action.equalsIgnoreCase("visualizzaDettagliPop")) {
-                    int idPop = Integer.parseInt(req.getParameter(idPopParameter));
-                    Object prodotto = popModel.getById(idPop);
-                    List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
-                    req.setAttribute(prodottoParameter, prodotto);
-                    req.setAttribute("immaginiPop", immaginiPop);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if (action.equalsIgnoreCase("visualizzaDettagliFigure")) {
-                    int idFigure = Integer.parseInt(req.getParameter(idFigureParameter));
-                    Object prodotto = figureModel.getById(idFigure);
-                    List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
-                    req.setAttribute(prodottoParameter, prodotto);
-                    req.setAttribute("immaginiFigure", immaginiFigure);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("aggiungiMangaAlCarrello")) {
-                    int id = Integer.parseInt(req.getParameter(idMangaParameter));
-                    if(mangaModel.verificaDisponibilita(id)) {
-                        carrelloBean.aggiungiProdotto(mangaModel.getById(id));
-                    }
-                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("aggiungiPopAlCarrello")) {
-                    int id = Integer.parseInt(req.getParameter(idPopParameter));
-                    if(popModel.verificaDisponibilita(id)) {
-                        carrelloBean.aggiungiProdotto(popModel.getById(id));
-                    }
-                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("aggiungiFigureAlCarrello")) {
-                    int id = Integer.parseInt(req.getParameter(idFigureParameter));
-                    if(figureModel.verificaDisponibilita(id)) {
-                        carrelloBean.aggiungiProdotto(figureModel.getById(id));
-                    }
-                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("rimuoviMangaDalCarrello")){
-                    int id = Integer.parseInt(req.getParameter(idMangaParameter));
-                    carrelloBean.rimuoviProdotto(id);
-                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("rimuoviPopDalCarrello")){
-                    int id = Integer.parseInt(req.getParameter(idPopParameter));
-                    carrelloBean.rimuoviProdotto(id);
-                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("rimuoviFigureDalCarrello")){
-                    int id = Integer.parseInt(req.getParameter(idFigureParameter));
-                    carrelloBean.rimuoviProdotto(id);
-                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-                    dispatcher.forward(req, resp);
+        try {
+            if (action != null) {
+                switch (action.toLowerCase()) {
+                    case "visualizzacatalogo":
+                        visualizzaCatalogo(req, resp);
+                        break;
+                    case "visualizzadettaglimanga":
+                        visualizzaDettagliManga(req, resp);
+                        break;
+                    case "visualizzadettaglipop":
+                        visualizzaDettagliPop(req, resp);
+                        break;
+                    case "visualizzadettaglifigure":
+                        visualizzaDettagliFigure(req, resp);
+                        break;
+                    case "aggiungimangaalcarrello":
+                        aggiungiMangaAlCarrello(req, resp);
+                        break;
+                    case "aggiungipopalcarrello":
+                        aggiungiPopAlCarrello(req, resp);
+                        break;
+                    case "aggiungifigurealcarrello":
+                        aggiungiFigureAlCarrello(req, resp);
+                        break;
+                    case "rimuovimangadalcarrello":
+                        rimuoviMangaDalCarrello(req, resp);
+                        break;
+                    case "rimuovipopdalcarrello":
+                        rimuoviPopDalCarrello(req, resp);
+                        break;
+                    case "rimuovifiguredalcarrello":
+                        rimuoviFigureDalCarrello(req, resp);
+                        break;
+                    default:
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        errorDispatcher.forward(req, resp);
+                        break;
                 }
             } else {
-                List<MangaBean> bestManga = mangaModel.miglioriManga();
-                List<PopBean> bestPop = popModel.miglioriPop();
-                List<FigureBean> bestFigure = figureModel.miglioriFigure();
-
-                List<Object> bestProdotti = new ArrayList<>();
-                bestProdotti.addAll(bestManga);
-                bestProdotti.addAll(bestPop);
-                bestProdotti.addAll(bestFigure);
-                req.setAttribute("bestProdotti", bestProdotti);
-
-                List<String> immaginiPop = new ArrayList<>();
-                for(PopBean bean : bestPop) {
-                    immaginiPop.add(popModel.imgPerPop(bean).get(0));
-                }
-                req.setAttribute("immaginiPop", immaginiPop);
-
-                List<String> immaginiFigure = new ArrayList<>();
-                for(FigureBean bean : bestFigure) {
-                    immaginiFigure.add(figureModel.imgPerFigure(bean).get(0));
-                }
-                req.setAttribute("immaginiFigure", immaginiFigure);
-
-                RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
-                dispatcher.forward(req, resp);
+                showHomePage(req, resp);
             }
-
         } catch (ServletException | IOException | SQLException e) {
             logger.info("Si è verificata un'eccezione:" + e);
         }
@@ -174,5 +88,149 @@ public class ProdottoControl extends HttpServlet {
         } catch (ServletException | IOException e) {
             logger.info("Si è verificata un'eccezione:" + e);
         }
+    }
+
+    private CarrelloBean getCarrelloBeanFromSession(HttpServletRequest req) {
+        CarrelloBean carrelloBean = (CarrelloBean) req.getSession().getAttribute(carrelloParameter);
+        if (carrelloBean == null) {
+            carrelloBean = new CarrelloBean();
+            req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        }
+        return carrelloBean;
+    }
+
+    private void visualizzaCatalogo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        List<MangaBean> allManga = mangaModel.allManga();
+        List<PopBean> allPop = popModel.allPop();
+        List<FigureBean> allFigure = figureModel.allFigure();
+
+        List<String> imgPerPop = popModel.oneImgPerPop();
+        List<String> imgPerFigure = figureModel.oneImgPerFigure();
+
+        List<Object> prodotti = new ArrayList<>();
+        prodotti.addAll(allManga);
+        prodotti.addAll(allPop);
+        prodotti.addAll(allFigure);
+
+        req.setAttribute("prodotti", prodotti);
+        req.setAttribute("imgPop", imgPerPop);
+        req.setAttribute("imgFigure", imgPerFigure);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/catalogo.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+    private void visualizzaDettagliManga(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int idManga = Integer.parseInt(req.getParameter(idMangaParameter));
+        Object prodotto = mangaModel.getById(idManga);
+        req.setAttribute(prodottoParameter, prodotto);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void visualizzaDettagliPop(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int idPop = Integer.parseInt(req.getParameter(idPopParameter));
+        Object prodotto = popModel.getById(idPop);
+        List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
+        req.setAttribute(prodottoParameter, prodotto);
+        req.setAttribute("immaginiPop", immaginiPop);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void visualizzaDettagliFigure(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int idFigure = Integer.parseInt(req.getParameter(idFigureParameter));
+        Object prodotto = figureModel.getById(idFigure);
+        List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
+        req.setAttribute(prodottoParameter, prodotto);
+        req.setAttribute("immaginiFigure", immaginiFigure);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void aggiungiMangaAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter(idMangaParameter));
+        if (mangaModel.verificaDisponibilita(id)) {
+            CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
+            carrelloBean.aggiungiProdotto(mangaModel.getById(id));
+            req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        }
+        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void aggiungiPopAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter(idPopParameter));
+        if (popModel.verificaDisponibilita(id)) {
+            CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
+            carrelloBean.aggiungiProdotto(popModel.getById(id));
+            req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        }
+        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void aggiungiFigureAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter(idFigureParameter));
+        if (figureModel.verificaDisponibilita(id)) {
+            CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
+            carrelloBean.aggiungiProdotto(figureModel.getById(id));
+            req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        }
+        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void rimuoviMangaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter(idMangaParameter));
+        CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
+        carrelloBean.rimuoviProdotto(id);
+        req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void rimuoviPopDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter(idPopParameter));
+        CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
+        carrelloBean.rimuoviProdotto(id);
+        req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void rimuoviFigureDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter(idFigureParameter));
+        CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
+        carrelloBean.rimuoviProdotto(id);
+        req.getSession().setAttribute(carrelloParameter, carrelloBean);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
+        dispatcher.forward(req, resp);
+    }
+
+    private void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        List<MangaBean> bestManga = mangaModel.miglioriManga();
+        List<PopBean> bestPop = popModel.miglioriPop();
+        List<FigureBean> bestFigure = figureModel.miglioriFigure();
+
+        List<Object> bestProdotti = new ArrayList<>();
+        bestProdotti.addAll(bestManga);
+        bestProdotti.addAll(bestPop);
+        bestProdotti.addAll(bestFigure);
+        req.setAttribute("bestProdotti", bestProdotti);
+
+        List<String> immaginiPop = new ArrayList<>();
+        for (PopBean bean : bestPop) {
+            immaginiPop.add(popModel.imgPerPop(bean).get(0));
+        }
+        req.setAttribute("immaginiPop", immaginiPop);
+
+        List<String> immaginiFigure = new ArrayList<>();
+        for (FigureBean bean : bestFigure) {
+            immaginiFigure.add(figureModel.imgPerFigure(bean).get(0));
+        }
+        req.setAttribute("immaginiFigure", immaginiFigure);
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+        dispatcher.forward(req, resp);
     }
 }

@@ -22,6 +22,7 @@ public class PopModel {
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
     private static String queryPart = "WHERE IdPop = ?";
+    private static String descrizione = "Descrizione";
     private static DataSource ds;
 
     static {
@@ -51,7 +52,7 @@ public class PopModel {
             while(rs.next()) {
                 PopBean pop = new PopBean();
                 pop.setIdPop(rs.getInt("IdPop"));
-                pop.setDescrizione(rs.getString("Descrizione"));
+                pop.setDescrizione(rs.getString(descrizione));
                 miglioriPop.add(pop);
             }
         } catch (SQLException e) {
@@ -138,7 +139,7 @@ public class PopModel {
             while(rs.next()) {
                 PopBean pop = new PopBean();
                 pop.setIdPop(rs.getInt("IdPop"));
-                pop.setDescrizione(rs.getString("Descrizione"));
+                pop.setDescrizione(rs.getString(descrizione));
                 allPop.add(pop);
             }
         } catch (SQLException e) {
@@ -225,7 +226,7 @@ public class PopModel {
             while (rs.next()) {
                 pop.setIdPop(i);
                 pop.setPrezzo(rs.getFloat("Prezzo"));
-                pop.setDescrizione(rs.getString("Descrizione"));
+                pop.setDescrizione(rs.getString(descrizione));
                 pop.setNumArticoli(rs.getInt("NumeroArticoli"));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
                 pop.setSerie(rs.getString("Serie"));

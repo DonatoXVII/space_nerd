@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarrelloBean implements Serializable {
-    List<Object> listaCarrello;
+    transient List<Object> listaCarrello;
 
     public CarrelloBean() {
         listaCarrello = new ArrayList<>();

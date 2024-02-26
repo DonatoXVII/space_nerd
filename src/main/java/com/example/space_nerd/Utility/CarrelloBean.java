@@ -4,10 +4,11 @@ import com.example.space_nerd.Model.FigureBean;
 import com.example.space_nerd.Model.MangaBean;
 import com.example.space_nerd.Model.PopBean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarrelloBean {
+public class CarrelloBean implements Serializable {
     List<Object> listaCarrello;
 
     public CarrelloBean() {

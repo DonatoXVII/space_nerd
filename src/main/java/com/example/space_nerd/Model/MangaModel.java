@@ -20,6 +20,8 @@ public class MangaModel {
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
+    private static String immagine = "Immagine";
+    private static String descrizione = "Descrizione";
     private static DataSource ds;
 
     static {
@@ -51,8 +53,8 @@ public class MangaModel {
             while(rs.next()) {
                 MangaBean manga = new MangaBean();
                 manga.setIdManga(rs.getInt("IdManga"));
-                manga.setDescrizione(rs.getString("Descrizione"));
-                manga.setImg(rs.getString("Immagine"));
+                manga.setDescrizione(rs.getString(descrizione));
+                manga.setImg(rs.getString(immagine));
                 bestManga.add(manga);
             }
         } catch (SQLException e) {
@@ -96,8 +98,8 @@ public class MangaModel {
             while(rs.next()) {
                 MangaBean manga = new MangaBean();
                 manga.setIdManga(rs.getInt("IdManga"));
-                manga.setDescrizione(rs.getString("Descrizione"));
-                manga.setImg(rs.getString("Immagine"));
+                manga.setDescrizione(rs.getString(descrizione));
+                manga.setImg(rs.getString(immagine));
                 allManga.add(manga);
             }
         } catch (SQLException e) {
@@ -142,12 +144,12 @@ public class MangaModel {
             while (rs.next()) {
                 manga.setIdManga(i);
                 manga.setPrezzo(rs.getFloat("Prezzo"));
-                manga.setDescrizione(rs.getString("Descrizione"));
+                manga.setDescrizione(rs.getString(descrizione));
                 manga.setNumArticoli(rs.getInt("NumeroArticoli"));
                 manga.setCasaEditrice(rs.getString("CasaEditrice"));
                 manga.setLingua(rs.getString("Lingua"));
                 manga.setNumPagine(rs.getInt("NumeroPagine"));
-                manga.setImg(rs.getString("Immagine"));
+                manga.setImg(rs.getString(immagine));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

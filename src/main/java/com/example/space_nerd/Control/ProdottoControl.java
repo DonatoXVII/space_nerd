@@ -22,6 +22,13 @@ public class ProdottoControl extends HttpServlet {
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
     static Logger logger = Logger.getLogger(ProdottoControl.class.getName());
+    static String carrelloParameter = "carrello";
+    static String idMangaParameter = "IdManga";
+    static String idPopParameter = "IdPop";
+    static String idFigureParameter = "IdFigure";
+    static String prodottoParameter = "prodotto";
+    static String dettagliJSP = "/dettagliProdotto.jsp";
+    static String carrelloJSP = "/carrello.jsp";
 
     public ProdottoControl() {super();}
 
@@ -30,7 +37,7 @@ public class ProdottoControl extends HttpServlet {
         CarrelloBean carrelloBean = (CarrelloBean) req.getSession().getAttribute("carrello");
         if(carrelloBean == null) {
             carrelloBean = new CarrelloBean();
-            req.getSession().setAttribute("Carrello", carrelloBean);
+            req.getSession().setAttribute(carrelloParameter, carrelloBean);
         }
 
         String action = req.getParameter("action");
@@ -56,76 +63,76 @@ public class ProdottoControl extends HttpServlet {
                     dispatcher.forward(req, resp);
                 }
                 if (action.equalsIgnoreCase("visualizzaDettagliManga")) {
-                    int idManga = Integer.parseInt(req.getParameter("IdManga"));
+                    int idManga = Integer.parseInt(req.getParameter(idMangaParameter));
                     Object prodotto = mangaModel.getById(idManga);
-                    req.setAttribute("prodotto", prodotto);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliProdotto.jsp");
+                    req.setAttribute(prodottoParameter, prodotto);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
                     dispatcher.forward(req, resp);
                 }
                 if (action.equalsIgnoreCase("visualizzaDettagliPop")) {
-                    int idPop = Integer.parseInt(req.getParameter("IdPop"));
+                    int idPop = Integer.parseInt(req.getParameter(idPopParameter));
                     Object prodotto = popModel.getById(idPop);
                     List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
-                    req.setAttribute("prodotto", prodotto);
+                    req.setAttribute(prodottoParameter, prodotto);
                     req.setAttribute("immaginiPop", immaginiPop);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliProdotto.jsp");
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
                     dispatcher.forward(req, resp);
                 }
                 if (action.equalsIgnoreCase("visualizzaDettagliFigure")) {
-                    int idFigure = Integer.parseInt(req.getParameter("IdFigure"));
+                    int idFigure = Integer.parseInt(req.getParameter(idFigureParameter));
                     Object prodotto = figureModel.getById(idFigure);
                     List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
-                    req.setAttribute("prodotto", prodotto);
+                    req.setAttribute(prodottoParameter, prodotto);
                     req.setAttribute("immaginiFigure", immaginiFigure);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliProdotto.jsp");
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
                     dispatcher.forward(req, resp);
                 }
                 if(action.equalsIgnoreCase("aggiungiMangaAlCarrello")) {
-                    int id = Integer.parseInt(req.getParameter("IdManga"));
+                    int id = Integer.parseInt(req.getParameter(idMangaParameter));
                     if(mangaModel.verificaDisponibilita(id)) {
                         carrelloBean.aggiungiProdotto(mangaModel.getById(id));
                     }
-                    req.getSession().setAttribute("carrello", carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
                     dispatcher.forward(req, resp);
                 }
                 if(action.equalsIgnoreCase("aggiungiPopAlCarrello")) {
-                    int id = Integer.parseInt(req.getParameter("IdPop"));
+                    int id = Integer.parseInt(req.getParameter(idPopParameter));
                     if(popModel.verificaDisponibilita(id)) {
                         carrelloBean.aggiungiProdotto(popModel.getById(id));
                     }
-                    req.getSession().setAttribute("carrello", carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
                     dispatcher.forward(req, resp);
                 }
                 if(action.equalsIgnoreCase("aggiungiFigureAlCarrello")) {
-                    int id = Integer.parseInt(req.getParameter("IdFigure"));
+                    int id = Integer.parseInt(req.getParameter(idFigureParameter));
                     if(figureModel.verificaDisponibilita(id)) {
                         carrelloBean.aggiungiProdotto(figureModel.getById(id));
                     }
-                    req.getSession().setAttribute("carrello", carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
                     dispatcher.forward(req, resp);
                 }
                 if(action.equalsIgnoreCase("rimuoviMangaDalCarrello")){
-                    int id = Integer.parseInt(req.getParameter("IdManga"));
+                    int id = Integer.parseInt(req.getParameter(idMangaParameter));
                     carrelloBean.rimuoviProdotto(id);
-                    req.getSession().setAttribute("carrello", carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
                     dispatcher.forward(req, resp);
                 }
                 if(action.equalsIgnoreCase("rimuoviPopDalCarrello")){
-                    int id = Integer.parseInt(req.getParameter("IdPop"));
+                    int id = Integer.parseInt(req.getParameter(idPopParameter));
                     carrelloBean.rimuoviProdotto(id);
-                    req.getSession().setAttribute("carrello", carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
                     dispatcher.forward(req, resp);
                 }
                 if(action.equalsIgnoreCase("rimuoviFigureDalCarrello")){
-                    int id = Integer.parseInt(req.getParameter("IdFigure"));
+                    int id = Integer.parseInt(req.getParameter(idFigureParameter));
                     carrelloBean.rimuoviProdotto(id);
-                    req.getSession().setAttribute("carrello", carrelloBean);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    req.getSession().setAttribute(carrelloParameter, carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
                     dispatcher.forward(req, resp);
                 }
             } else {

@@ -21,7 +21,7 @@
 <%
     if(prodotto instanceof MangaBean){
 %>
-        <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>"><br>
+        <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"><br>
         <%=((MangaBean) prodotto).getDescrizione()%><br>
         <%=((MangaBean) prodotto).getCasaEditrice()%><br>
         <%=((MangaBean) prodotto).getLingua()%><br>
@@ -32,7 +32,7 @@
     } else if(prodotto instanceof PopBean){
         for(String img : immaginiPop) {
 %>
-        <img src="img/imgPop/<%=img%>">
+        <img src="img/imgPop/<%=img%>" alt="errore immagine">
 <%
         }
 %>
@@ -45,7 +45,7 @@
     } else if(prodotto instanceof FigureBean) {
         for(String img : immaginiFigure) {
 %>
-        <img src="img/imgFigure/<%=img%>">
+        <img src="img/imgFigure/<%=img%>" alt="errore immagine">
 <%
         }
 %>

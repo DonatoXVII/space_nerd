@@ -21,7 +21,6 @@ public class FigureModel {
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
-    private static String queryPart = "WHERE IdFigure = ?";
     private static DataSource ds;
 
     static {
@@ -89,7 +88,7 @@ public class FigureModel {
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " " + queryPart;
+            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, figureBean.getIdFigure());
             rs = ps.executeQuery();
@@ -218,7 +217,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " " + queryPart;
+            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();
@@ -266,7 +265,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_FIGURE + " " + queryPart;
+            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();

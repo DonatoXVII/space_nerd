@@ -1,5 +1,9 @@
 package com.example.space_nerd.Utility;
 
+import com.example.space_nerd.Model.FigureBean;
+import com.example.space_nerd.Model.MangaBean;
+import com.example.space_nerd.Model.PopBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,4 +36,19 @@ public class CarrelloBean {
     public void aggiungiProdotto(Object prodotto) {
         this.listaCarrello.add(prodotto);
     }
+    public void rimuoviProdotto(int id) {
+        for (Object prod : listaCarrello) {
+            if (prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id) {
+                this.listaCarrello.remove(prod);
+                break;
+            } else if(prod instanceof PopBean && ((PopBean) prod).getIdPop() == id) {
+                this.listaCarrello.remove(prod);
+                break;
+            } else if(prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id) {
+                this.listaCarrello.remove(prod);
+                break;
+            }
+        }
+    }
+    public void svuotaCarrello() { this.listaCarrello.clear(); }
 }

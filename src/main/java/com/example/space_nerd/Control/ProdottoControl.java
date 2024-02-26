@@ -21,13 +21,18 @@ public class ProdottoControl extends HttpServlet {
     static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
-    static CarrelloBean carrelloBean = new CarrelloBean();
     static Logger logger = Logger.getLogger(ProdottoControl.class.getName());
 
     public ProdottoControl() {super();}
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CarrelloBean carrelloBean = (CarrelloBean) req.getSession().getAttribute("carrello");
+        if(carrelloBean == null) {
+            carrelloBean = new CarrelloBean();
+            req.getSession().setAttribute("Carrello", carrelloBean);
+        }
+
         String action = req.getParameter("action");
         try{
             if(action != null) {
@@ -75,14 +80,51 @@ public class ProdottoControl extends HttpServlet {
                     RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliProdotto.jsp");
                     dispatcher.forward(req, resp);
                 }
-                if(action.equalsIgnoreCase("aggiungiAlCarrello")) {
+                if(action.equalsIgnoreCase("aggiungiMangaAlCarrello")) {
                     int id = Integer.parseInt(req.getParameter("IdManga"));
                     if(mangaModel.verificaDisponibilita(id)) {
                         carrelloBean.aggiungiProdotto(mangaModel.getById(id));
                     }
-                    List<Object> carrello = carrelloBean.getListaCarrello();
                     req.getSession().setAttribute("carrello", carrelloBean);
-                    req.setAttribute("carrello", carrello);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("aggiungiPopAlCarrello")) {
+                    int id = Integer.parseInt(req.getParameter("IdPop"));
+                    if(popModel.verificaDisponibilita(id)) {
+                        carrelloBean.aggiungiProdotto(popModel.getById(id));
+                    }
+                    req.getSession().setAttribute("carrello", carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("aggiungiFigureAlCarrello")) {
+                    int id = Integer.parseInt(req.getParameter("IdFigure"));
+                    if(figureModel.verificaDisponibilita(id)) {
+                        carrelloBean.aggiungiProdotto(figureModel.getById(id));
+                    }
+                    req.getSession().setAttribute("carrello", carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("rimuoviMangaDalCarrello")){
+                    int id = Integer.parseInt(req.getParameter("IdManga"));
+                    carrelloBean.rimuoviProdotto(id);
+                    req.getSession().setAttribute("carrello", carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("rimuoviPopDalCarrello")){
+                    int id = Integer.parseInt(req.getParameter("IdPop"));
+                    carrelloBean.rimuoviProdotto(id);
+                    req.getSession().setAttribute("carrello", carrelloBean);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("rimuoviFigureDalCarrello")){
+                    int id = Integer.parseInt(req.getParameter("IdFigure"));
+                    carrelloBean.rimuoviProdotto(id);
+                    req.getSession().setAttribute("carrello", carrelloBean);
                     RequestDispatcher dispatcher = req.getRequestDispatcher("/carrello.jsp");
                     dispatcher.forward(req, resp);
                 }

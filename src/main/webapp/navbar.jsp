@@ -51,9 +51,15 @@
         </div>
     </div>
     <div class="carrello">
-        <a href="carrello.jsp">
-            <img src="img/carrello.jpg" alt="Carrello">
-        </a>
+        <%if(emailUtente == null){%>
+            <a href="login.jsp">
+                <img src="img/carrello.jpg" alt="Carrello">
+            </a>
+        <%}else{%>
+            <a href="carrello.jsp">
+                <img src="img/carrello.jpg" alt="Carrello">
+            </a>
+        <%}%>
     </div>
     <div class="searchBox">
         <input class="searchInput" type="text" name="" placeholder="Cerca">

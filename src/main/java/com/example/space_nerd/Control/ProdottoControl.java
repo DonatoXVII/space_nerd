@@ -41,15 +41,15 @@ public class ProdottoControl extends HttpServlet {
                     case "visualizzacatalogo":
                         visualizzaCatalogo(req, resp);
                         break;
-                    case "visualizzadettaglimanga":
-                        visualizzaDettagliManga(req, resp);
+                    case "visualizzadettagli":
+                        visualizzaDettagli(req, resp);
                         break;
-                    case "visualizzadettaglipop":
+                    /*case "visualizzadettaglipop":
                         visualizzaDettagliPop(req, resp);
                         break;
                     case "visualizzadettaglifigure":
                         visualizzaDettagliFigure(req, resp);
-                        break;
+                        break;*/
                     case "aggiungimangaalcarrello":
                         aggiungiMangaAlCarrello(req, resp);
                         break;
@@ -119,15 +119,27 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void visualizzaDettagliManga(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int idManga = Integer.parseInt(req.getParameter(idMangaParameter));
-        Object prodotto = mangaModel.getById(idManga);
+    private void visualizzaDettagli(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String tipo = req.getParameter("Tipo");
+        int id = Integer.parseInt(req.getParameter("Id"));
+        Object prodotto = null;
+        if(tipo.equalsIgnoreCase("manga")){
+            prodotto = mangaModel.getById(id);
+        } else if(tipo.equalsIgnoreCase("pop")) {
+            prodotto = popModel.getById(id);
+            List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
+            req.setAttribute("immaginiPop", immaginiPop);
+        } else if(tipo.equalsIgnoreCase("figure")) {
+            prodotto = figureModel.getById(id);
+            List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
+            req.setAttribute("immaginiFigure", immaginiFigure);
+        }
         req.setAttribute(prodottoParameter, prodotto);
         RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
         dispatcher.forward(req, resp);
     }
 
-    private void visualizzaDettagliPop(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /*private void visualizzaDettagliPop(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idPop = Integer.parseInt(req.getParameter(idPopParameter));
         Object prodotto = popModel.getById(idPop);
         List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
@@ -145,7 +157,7 @@ public class ProdottoControl extends HttpServlet {
         req.setAttribute("immaginiFigure", immaginiFigure);
         RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
         dispatcher.forward(req, resp);
-    }
+    }*/
 
     private void aggiungiMangaAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idMangaParameter));

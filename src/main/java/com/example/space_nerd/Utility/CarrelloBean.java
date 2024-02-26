@@ -41,14 +41,12 @@ public class CarrelloBean implements Serializable {
         for (Object prod : listaCarrello) {
             if (prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id) {
                 this.listaCarrello.remove(prod);
-                break;
             } else if(prod instanceof PopBean && ((PopBean) prod).getIdPop() == id) {
                 this.listaCarrello.remove(prod);
-                break;
             } else if(prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id) {
                 this.listaCarrello.remove(prod);
-                break;
             }
+            break;
         }
     }
     public void svuotaCarrello() { this.listaCarrello.clear(); }

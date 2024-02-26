@@ -82,7 +82,7 @@ public class ProdottoControl extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
@@ -99,7 +99,7 @@ public class ProdottoControl extends HttpServlet {
         return carrelloBean;
     }
 
-    private void visualizzaCatalogo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void visualizzaCatalogo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<MangaBean> allManga = mangaModel.allManga();
         List<PopBean> allPop = popModel.allPop();
         List<FigureBean> allFigure = figureModel.allFigure();
@@ -119,7 +119,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void visualizzaDettagliManga(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void visualizzaDettagliManga(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idManga = Integer.parseInt(req.getParameter(idMangaParameter));
         Object prodotto = mangaModel.getById(idManga);
         req.setAttribute(prodottoParameter, prodotto);
@@ -127,7 +127,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void visualizzaDettagliPop(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void visualizzaDettagliPop(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idPop = Integer.parseInt(req.getParameter(idPopParameter));
         Object prodotto = popModel.getById(idPop);
         List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
@@ -137,7 +137,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void visualizzaDettagliFigure(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void visualizzaDettagliFigure(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idFigure = Integer.parseInt(req.getParameter(idFigureParameter));
         Object prodotto = figureModel.getById(idFigure);
         List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
@@ -147,7 +147,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void aggiungiMangaAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void aggiungiMangaAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idMangaParameter));
         if (mangaModel.verificaDisponibilita(id)) {
             CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
@@ -158,7 +158,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void aggiungiPopAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void aggiungiPopAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idPopParameter));
         if (popModel.verificaDisponibilita(id)) {
             CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
@@ -169,7 +169,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void aggiungiFigureAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void aggiungiFigureAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idFigureParameter));
         if (figureModel.verificaDisponibilita(id)) {
             CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
@@ -180,7 +180,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void rimuoviMangaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void rimuoviMangaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idMangaParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         carrelloBean.rimuoviProdotto(id);
@@ -189,7 +189,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void rimuoviPopDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void rimuoviPopDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idPopParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         carrelloBean.rimuoviProdotto(id);
@@ -198,7 +198,7 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void rimuoviFigureDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void rimuoviFigureDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idFigureParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         carrelloBean.rimuoviProdotto(id);

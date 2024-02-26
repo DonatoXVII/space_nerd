@@ -39,14 +39,20 @@ public class CarrelloBean implements Serializable {
     }
     public void rimuoviProdotto(int id) {
         for (Object prod : listaCarrello) {
+            boolean rimuovi = false;
+
             if (prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id) {
-                this.listaCarrello.remove(prod);
-            } else if(prod instanceof PopBean && ((PopBean) prod).getIdPop() == id) {
-                this.listaCarrello.remove(prod);
-            } else if(prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id) {
-                this.listaCarrello.remove(prod);
+                rimuovi = true;
+            } else if (prod instanceof PopBean && ((PopBean) prod).getIdPop() == id) {
+                rimuovi = true;
+            } else if (prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id) {
+                rimuovi = true;
             }
-            break;
+
+            if (rimuovi) {
+                this.listaCarrello.remove(prod);
+                break;
+            }
         }
     }
     public void svuotaCarrello() { this.listaCarrello.clear(); }

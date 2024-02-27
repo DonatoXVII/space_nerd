@@ -8,16 +8,28 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+
 <div class="cards">
-    <div class="card red">
-        <a href="./modifica.jsp">Modifica il tuo profilo</a>
-    </div>
-    <div class="card blue">
-        <a href="./indirizzi.jsp">I tuoi indirizzi</a>
-    </div>
-    <div class="card green">
-        <a href="./metodiPagamento.jsp">I tuoi metodi di pagamento</a>
+    <a href="./modifica.jsp"><div class="card red"><p>MODIFICA IL TUO PROFILO</p></div></a>
+    <a href="./indirizzi.jsp"><div class="card blue"><p>INDIRIZZI DI SPEDIZIONE</p></div></a>
+    <a href="./metodiPagamento.jsp"><div class="card green"><p>METODI DI PAGAMENTO</p></div></a>
+</div>
+
+<div class="view-profilo">
+    <div class="form-title"><span>il tuo</span></div>
+    <div class="title-2"><span>SPACE</span></div>
+    <div class="parametri">
+        <label><%=emailUtente%></label><br>
+        <section class="bg-stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+        </section>
+        <label>nome</label><br>
+        <label>cognome</label><br>
     </div>
 </div>
+
 </body>
 </html>

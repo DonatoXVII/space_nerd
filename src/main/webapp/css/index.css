@@ -122,3 +122,21 @@ body {
     text-decoration: none;
     color: inherit;
 }
+
+@media screen and (max-width: 780px) {
+    .manga-item img, .pop-item img, .figure-item img {
+        max-width: 70%;
+        height: auto;
+    }
+
+    .description {
+        max-height: 200px;
+        overflow-y: auto;
+        font-weight: bold;
+        font-family: Montserrat, serif;
+        width: 70%;
+        padding: 20px;
+        text-decoration: none;
+        color: inherit;
+    }
+}

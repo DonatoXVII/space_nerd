@@ -6,73 +6,15 @@ body {
     background-attachment: fixed;
 }
 
-.cards {
-    width: 520px;
-    height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    transform: translate(50%, 140%);
-}
-
-.cards .red {
-    background: radial-gradient(circle at 50% -20.71%, #de9c2c 0, #e5922a 8.33%, #ea852b 16.67%,
-    #ee772d 25%, #f16731 33.33%, #f35436 41.67%, #f23c3c 50%, #f01843 58.33%, #ed004c 66.67%,
-    #e90057 75%, #e30064 83.33%, #db0071 91.67%, #d10080 100%);
-}
-
-.cards .blue {
-    background : radial-gradient(circle at 50% -20.71%, #ade5ff 0, #7dcefb 25%, #3cb5f2 50%,
-    #009ce9 75%, #0085e0 100%);
-}
-
-.cards .green {
-    background : radial-gradient(circle at 50% -20.71%, #3cf23c 0, #3cf23c 50%, #3cf23c 100%);
-}
-
-.cards .card {
-    width: 250px;
-    height: 100px;
-    margin: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.88);
-    cursor: pointer;
-    transition: 400ms;
-}
-
-.cards .green {
-    margin-top: 0;
-    width: 510px;
-}
-
-.cards a {
-    font-family: Montserrat, serif;
-    font-weight: bold;
-    text-decoration: none;
-    color: #f1f2f4;
-}
-
-.cards .card:hover {
-    transform: scale(1.1, 1.1);
-}
-
-.cards:hover > .card:not(:hover) {
-    filter: blur(10px);
-    transform: scale(0.9, 0.9);
-}
-
 .view-profilo {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: block;
     padding: 2.2rem;
-    max-width: 350px;
-    height: 315px;
+    width: 500px;
+    height: 415px;
     background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
     rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
     rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
@@ -81,7 +23,6 @@ body {
     box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
     overflow: hidden;
     z-index: +1;
-    transform: translate(215%, -22%);
 }
 
 .bg-stars {
@@ -211,10 +152,95 @@ body {
     content: '—';
 }
 
-.parametri{
+.parametri {
     margin-top: 20px;
+    padding-top: 30px;
     font-family: Montserrat, serif;
     font-weight: bold;
     text-align: left;
     color: #f1f2f4;
+}
+
+.parametri label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.parametri a {
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Montserrat, serif;
+    color: #f1f2f4;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 8px;
+    height: 60px;
+    width: 160px;
+    border: none;
+    background: rgba(248, 110, 16, 0.2);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.lable {
+    line-height: 20px;
+    font-size: 17px;
+    color: #f1f2f4;
+    font-family: Montserrat, serif;
+    letter-spacing: 1px;
+}
+
+.button:hover {
+    background: #efaa55;
+}
+
+.button:hover .svg-icon {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.btn-container a {
+    text-decoration: none;
+}
+
+@media screen and (max-width: 780px) {
+    .view-profilo {
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        padding: 2.2rem;
+        width: 300px;
+        height: 500px;
+        background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
+        rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
+        rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
+        border: 2px solid #fff;
+        -webkit-box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
+        box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
+        overflow: hidden;
+        z-index: +1;
+    }
 }

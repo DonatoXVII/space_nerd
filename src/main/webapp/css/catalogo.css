@@ -4,6 +4,7 @@ body {
 
 .catalogo {
     display: flex;
+    padding: 2px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;

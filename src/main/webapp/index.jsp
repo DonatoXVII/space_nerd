@@ -36,36 +36,30 @@
     <button class="next">&#10095;</button>
 </div>
 
-<div class="container">
+<div class="prodotti-container">
     <div class="manga-container">
-        <h2>Best Manga</h2>
-        <div class="slideshow">
+        <h2>Manga più venduti</h2>
             <div class="manga-items">
                 <%
                     for(Object prodotto : bestProdotti){
                         if(prodotto instanceof MangaBean) {
                 %>
-                            <div class="slide">
-                                <div class="manga-item">
-                                    <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
-                                        <div class="description">
-                                            <%=((MangaBean) prodotto).getDescrizione()%>
-                                        </div>
+
+                            <a href="ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>"><div class="manga-item">
+                                <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+                                <div class="description">
+                                    <%=((MangaBean) prodotto).getDescrizione()%>
                                 </div>
-                            </div>
+                            </div></a>
                 <%
                         }
                     }
                 %>
             </div>
-        </div>
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
     </div>
 
     <div class="pop-container">
-        <h2>Best Pop</h2>
-        <div class="slideshow">
+        <h2>Pop più venduti</h2>
             <div class="pop-items">
                 <%
                     for(Object prodotto : bestProdotti) {
@@ -73,29 +67,22 @@
                             String img = immaginiPop.get(countPop);
                             countPop++;
                 %>
-                            <div class="slide">
-                                <div class="pop-item">
-                                    <img src="img/imgPop/<%=img%>" alt="errore immagine">
-                                        <div class="description">
-                                            <%=((PopBean) prodotto).getDescrizione()%>
-                                        </div>
+                                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><div class="pop-item">
+                                <img src="img/imgPop/<%=img%>" alt="errore immagine">
+                                <div class="description">
+                                    <%=((PopBean) prodotto).getDescrizione()%>
                                 </div>
-                            </div>
-
+                                </div></a>
                 <%
                         }
                     }
                 %>
             </div>
-        </div>
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
     </div>
 
 
     <div class="figure-container">
-        <h2>Best Figure</h2>
-        <div class="slideshow">
+        <h2>Action figure più vendute</h2>
             <div class="figure-items">
                 <%
                     for(Object prodotto : bestProdotti){
@@ -103,22 +90,18 @@
                             String img = immaginiFigure.get(countFigure);
                             countFigure++;
                 %>
-                            <div class="slide">
-                                <div class="figure-item">
-                                    <img src="img/imgFigure/<%=img%>" alt="errore immagine">
-                                        <div class="description">
-                                            <%=((FigureBean) prodotto).getDescrizione()%>
-                                        </div>
+
+                                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><div class="figure-item">
+                                <img src="img/imgFigure/<%=img%>" alt="errore immagine">
+                                <div class="description">
+                                    <%=((FigureBean) prodotto).getDescrizione()%>
                                 </div>
-                            </div>
+                                </div></a>
                 <%
                         }
                     }
                 %>
             </div>
-        </div>
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
     </div>
 </div>
 

@@ -2,51 +2,34 @@ body {
     background-color: #f1f2f4
 }
 
-.container {
-    display: flex;
-    justify-content: space-around;
-}
-
-.manga-container, .pop-container, .figure-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    overflow-x: auto;
-    padding: 0 10px;
-    position: relative;
-}
-
 .welcome-container {
     width: 100%;
-    max-width: 800px; /* Larghezza massima desiderata */
-    height: 400px; /* Altezza desiderata */
+    max-width: 800px;
+    height: 400px;
     overflow: hidden;
     position: relative;
-    margin: 0 auto; /* Centra il container orizzontalmente */
-    padding-top: 20px; /* Aggiunge spazio sopra il contenuto */
+    margin: 0 auto;
 }
 
 .welcome-container .slideshow {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center; /* Allinea gli elementi al centro orizzontalmente */
-    align-items: center; /* Allinea gli elementi al centro verticalmente */
+    justify-content: center;
+    align-items: center;
 }
 
 .welcome-container .slide {
-    width: auto; /* Larghezza automatica */
-    height: 100%; /* Altezza al 100% */
-    object-fit: contain; /* Mantiene le proporzioni dell'immagine */
-    max-height: 100%; /* Altezza massima al 100% */
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    max-height: 100%;
 }
 
 .welcome-container .slide img {
-    width: 100%; /* Larghezza al 100% dell'immagine */
-    height: auto; /* Altezza automatica */
+    width: 100%;
+    height: auto;
 }
-
 
 .slideshow {
     display: flex;
@@ -60,18 +43,15 @@ body {
     margin: 0 auto;
 }
 
-/* Stili per i pulsanti di navigazione */
 .prev, .next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background-color: rgba(255, 255, 255, 0.5);
     border: none;
-    color: black;
     font-size: 18px;
     padding: 10px;
     cursor: pointer;
-    z-index: 1;
 }
 
 .prev {
@@ -82,27 +62,63 @@ body {
     right: 10px;
 }
 
-.manga-container h2 , .pop-container h2, .figure-container h2{
-    background-color: #f1f2f4;
-    padding: 10px 20px;
-    font-size: 24px;
-    z-index: 1;
-    margin-bottom: 10px;
+.prodotti-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
 }
 
-.manga-container .manga-items , .pop-container .pop-items , .figure-container .figure-items{
+.manga-container, .pop-container, .figure-container {
+    width: calc(33.33% - 20px);
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.manga-container a, .pop-container a, .figure-container a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.manga-container h2, .pop-container h2, .figure-container h2 {
+    font-weight: bold;
+    font-family: Montserrat, serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.manga-items, .pop-items, .figure-items {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .manga-item, .pop-item, .figure-item {
     margin: 10px;
     text-align: center;
     width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.manga-item img, .pop-item img, .figure-item img{
-    width: 100%;
+.manga-item img, .pop-item img, .figure-item img {
+    max-width: 100%;
     height: auto;
+}
+
+.description {
+    max-height: 200px;
+    overflow-y: auto;
+    font-weight: bold;
+    font-family: Montserrat, serif;
+    width: 100%;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
 }

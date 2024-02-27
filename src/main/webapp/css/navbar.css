@@ -25,37 +25,65 @@ nav img {
     transform: scale(1.5);
 }
 
-.catalogo {
-    margin-right: auto;
-    color: #f1f2f4;
+.catalogo a{
+    font-family: Montserrat, serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(241, 242, 244);
 }
 
-.profilo {
-    margin-left: auto;
-}
-
-.profilo-menu, .catalogo-menu {
+.profilo-menu, .catalogo-menu{
     display: none;
     position: absolute;
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     padding: 10px;
+    width: 150px;
+    text-align: center;
+}
+
+.profilo-menu a, .catalogo-menu a {
+    font-family: Montserrat, serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 8px 16px;
 }
 
 .profilo:hover .profilo-menu, .catalogo:hover .catalogo-menu{
     display: block;
 }
 
-.profilo-menu a, .catalogo-menu a{
-    display: block;
-    padding: 8px 16px;
-    text-decoration: none;
-    color: black;
-}
-
 .profilo-menu a:hover, .catalogo-menu a:hover {
     background-color: #f1f1f1;
+}
+
+/* Posiziona il menu del profilo sotto il centro dell'immagine profilo */
+.profilo {
+    margin-left: auto;
+    position: relative;
+}
+
+.profilo .profilo-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%; /* Posiziona sotto l'immagine profilo */
+}
+
+/* Posiziona il menu del catalogo sotto il centro della scritta catalogo */
+.catalogo {
+    margin-right: auto;
+    position: relative;
+}
+
+.catalogo .catalogo-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%; /* Posiziona sotto il testo Catalogo */
 }
 
 .carrello {

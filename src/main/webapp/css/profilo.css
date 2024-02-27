@@ -1,3 +1,67 @@
-body {
-    background-color: #f1f2f4;
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center; /* Centrare verticalmente */
+    align-items: center; /* Centrare orizzontalmente */
+    height: 100vh; /* Altezza al 100% della viewport */
+    margin: auto; /* Centra il div orizzontalmente e verticalmente */
+    width: 250px; /* Larghezza fissa del div */
+    max-height: 30vh; /* Altezza massima del div */
+    transform: translate(-120%, 160%); /* Spostamento del 50% della larghezza e altezza del div */
+}
+
+.cards .red {
+    background-color: #f43f5e;
+}
+
+.cards .blue {
+    background-color: #3b82f6;
+}
+
+.cards .green {
+    background-color: #22c55e;
+}
+
+.cards .card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 100px;
+    width: 250px;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.88);
+    cursor: pointer;
+    transition: 400ms;
+}
+
+.cards a {
+    font-family: Montserrat, serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #f1f2f4;
+}
+
+.cards .card:hover {
+    transform: scale(1.1, 1.1);
+}
+
+.cards:hover > .card:not(:hover) {
+    filter: blur(10px);
+    transform: scale(0.9, 0.9);
+}
+
+.w-full ul, li{
+    color: black;
+}
+
+.flex {
+    color: black;
+}
+
+.w-full p, .text-sm, .text-xl {
+    font-family: Montserrat, serif;
+    color: black;
 }

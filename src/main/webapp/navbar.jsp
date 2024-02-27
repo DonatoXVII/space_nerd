@@ -29,11 +29,11 @@
         </a>
     </div>
     <div class="catalogo">
-        CATALOGO
+        <a href="catalogo.jsp">CATALOGO</a>
         <div class="catalogo-menu">
-            <a href="catalogo.jsp">Manga</a>
-            <a href="catalogo.jsp">Pop</a>
-            <a href="catalogo.jsp">Figure</a>
+            <a href="">Manga</a>
+            <a href="">Pop</a>
+            <a href="">Figure</a>
         </div>
     </div>
     <div class="profilo">

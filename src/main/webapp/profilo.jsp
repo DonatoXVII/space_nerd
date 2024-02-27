@@ -8,8 +8,16 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-    <a href="./modifica.jsp">Modifica profilo</a>
-    <a href="./indirizzi.jsp">I tuoi indirizzi</a>
-    <a href="./metodiPagamento.jsp">I tuoi metodi di pagamento</a>
+<div class="cards">
+    <div class="card red">
+        <a href="./modifica.jsp">Modifica il tuo profilo</a>
+    </div>
+    <div class="card blue">
+        <a href="./indirizzi.jsp">I tuoi indirizzi</a>
+    </div>
+    <div class="card green">
+        <a href="./metodiPagamento.jsp">I tuoi metodi di pagamento</a>
+    </div>
+</div>
 </body>
 </html>

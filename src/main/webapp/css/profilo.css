@@ -1,26 +1,37 @@
+body {
+    background-image: url("../img/luffy.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
 .cards {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     justify-content: center; /* Centrare verticalmente */
     align-items: center; /* Centrare orizzontalmente */
     height: 100vh; /* Altezza al 100% della viewport */
     margin: auto; /* Centra il div orizzontalmente e verticalmente */
     width: 250px; /* Larghezza fissa del div */
     max-height: 30vh; /* Altezza massima del div */
-    transform: translate(-120%, 160%); /* Spostamento del 50% della larghezza e altezza del div */
+    transform: translate(-160%, 100%); /* Spostamento del 50% della larghezza e altezza del div */
 }
 
 .cards .red {
-    background-color: #f43f5e;
+    background: radial-gradient(circle at 50% -20.71%, #de9c2c 0, #e5922a 8.33%, #ea852b 16.67%,
+    #ee772d 25%, #f16731 33.33%, #f35436 41.67%, #f23c3c 50%, #f01843 58.33%, #ed004c 66.67%,
+    #e90057 75%, #e30064 83.33%, #db0071 91.67%, #d10080 100%);
 }
 
 .cards .blue {
-    background-color: #3b82f6;
+    background : radial-gradient(circle at 50% -20.71%, #ade5ff 0, #7dcefb 25%, #3cb5f2 50%,
+    #009ce9 75%, #0085e0 100%);
 }
 
 .cards .green {
-    background-color: #22c55e;
+    background : radial-gradient(circle at 50% -20.71%, #3cf23c 0, #3cf23c 50%, #3cf23c 100%);
 }
 
 .cards .card {
@@ -51,17 +62,4 @@
 .cards:hover > .card:not(:hover) {
     filter: blur(10px);
     transform: scale(0.9, 0.9);
-}
-
-.w-full ul, li{
-    color: black;
-}
-
-.flex {
-    color: black;
-}
-
-.w-full p, .text-sm, .text-xl {
-    font-family: Montserrat, serif;
-    color: black;
 }

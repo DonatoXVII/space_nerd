@@ -26,14 +26,14 @@ nav img {
     transform: scale(1.5);
 }
 
-.catalogo a{
+.catalogobar a{
     font-family: Montserrat, serif;
     font-weight: bold;
     text-decoration: none;
     color: rgb(241, 242, 244);
 }
 
-.profilo-menu, .catalogo-menu{
+.profilo-menu, .catalogobar-menu{
     display: none;
     position: absolute;
     background-color: white;
@@ -44,7 +44,7 @@ nav img {
     text-align: center;
 }
 
-.profilo-menu a, .catalogo-menu a {
+.profilo-menu a, .catalogobar-menu a {
     font-family: Montserrat, serif;
     font-weight: bold;
     text-decoration: none;
@@ -53,11 +53,11 @@ nav img {
     padding: 8px 16px;
 }
 
-.profilo:hover .profilo-menu, .catalogo:hover .catalogo-menu{
+.profilo:hover .profilo-menu, .catalogobar:hover .catalogobar-menu{
     display: block;
 }
 
-.profilo-menu a:hover, .catalogo-menu a:hover {
+.profilo-menu a:hover, .catalogobar-menu a:hover {
     background-color: #f1f1f1;
 }
 
@@ -75,12 +75,12 @@ nav img {
 }
 
 /* Posiziona il menu del catalogo sotto il centro della scritta catalogo */
-.catalogo {
+.catalogobar {
     margin-right: auto;
     position: relative;
 }
 
-.catalogo .catalogo-menu {
+.catalogobar .catalogobar-menu {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);

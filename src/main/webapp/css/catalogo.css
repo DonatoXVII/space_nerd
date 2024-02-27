@@ -3,19 +3,23 @@ body {
 }
 
 .catalogo {
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .gallery {
     margin: 5px;
-    border: 1px solid #ccc;
     float: left;
     width: 180px;
+    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
+    rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
+    rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
 }
 
-.gallery :hover {
-    border: 1px solid #777;
+.gallery:hover {
+    border: 3px solid rgba(60, 60, 93, 0.7);
 }
 
 .gallery img {
@@ -26,5 +30,7 @@ body {
 .description {
     padding: 15px;
     text-align: center;
-    color: darkslategrey;
+    font-family: Montserrat, serif;
+    font-weight: bold;
+    color: #f1f2f4;
 }

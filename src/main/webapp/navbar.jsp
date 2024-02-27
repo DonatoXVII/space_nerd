@@ -32,9 +32,9 @@
             <img src="img/logo_scontornato.jpg" alt="Logo">
         </a>
     </div>
-    <div class="catalogo">
+    <div class="catalogobar">
         <a href="catalogo.jsp">CATALOGO</a>
-        <div class="catalogo-menu">
+        <div class="catalogobar-menu">
             <a href="">Manga</a>
             <a href="">Pop</a>
             <a href="">Figure</a>

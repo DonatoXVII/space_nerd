@@ -8,6 +8,7 @@
 <head>
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
+    <link rel="stylesheet" type="text/css" href="css/carrello.css">
 </head>
 <body>
 <%@include file="navbar.jsp"%>

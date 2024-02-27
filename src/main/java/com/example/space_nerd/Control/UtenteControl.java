@@ -105,7 +105,10 @@ public class UtenteControl extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             } else {
+                DatiSensibiliBean dati = datiModel.recuperaDati(utente.getEmail());
                 session.setAttribute(emailParameter, utente.getEmail());
+                session.setAttribute("nome", dati.getNome());
+                session.setAttribute("cognome", dati.getCognome());
                 session.setAttribute("tipo", utente.isTipo());
                 response.sendRedirect(INDEX_PAGE);
             }

@@ -6,6 +6,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ public class DatiSensibiliModel {
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
+    private static String msgRs = "Errore durante la chiusura del ResultSet";
 
     static {
         try {
@@ -102,4 +104,47 @@ public class DatiSensibiliModel {
             }
         }
     }
+     public DatiSensibiliBean recuperaDati (String email) {
+         DatiSensibiliBean bean = new DatiSensibiliBean();
+         Connection con = null;
+         PreparedStatement ps = null;
+         ResultSet rs = null;
+         try {
+             con = ds.getConnection();
+             String query = "SELECT Email, Nome, Cognome FROM " + TABLE_NAME_DATI + " WHERE Email = ?";
+             ps = con.prepareStatement(query);
+             ps.setString(1, email);
+             rs = ps.executeQuery();
+             while(rs.next()) {
+                bean.setEmail(email);
+                bean.setNome(rs.getString("Nome"));
+                bean.setCognome(rs.getString("Cognome"));
+             }
+         } catch (SQLException e) {
+             logger.log(Level.WARNING, e.getMessage());
+         } finally {
+             try {
+                 if (rs != null) {
+                     rs.close();
+                 }
+             } catch (SQLException e) {
+                 logger.log(Level.WARNING, msgRs, e);
+             }
+             try {
+                 if (ps != null) {
+                     ps.close();
+                 }
+             } catch (SQLException e) {
+                 logger.log(Level.WARNING, msgPs, e);
+             }
+             try {
+                 if (con != null) {
+                     con.close();
+                 }
+             } catch (SQLException e) {
+                 logger.log(Level.WARNING, msgCon, e);
+             }
+         }
+         return bean;
+     }
 }

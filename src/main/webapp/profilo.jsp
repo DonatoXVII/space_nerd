@@ -19,15 +19,15 @@
     <div class="form-title"><span>il tuo</span></div>
     <div class="title-2"><span>SPACE</span></div>
     <div class="parametri">
-        <label><%=emailUtente%></label><br>
+        EMAIL : <p><%=emailUtente%></p>
         <section class="bg-stars">
             <span class="star"></span>
             <span class="star"></span>
             <span class="star"></span>
             <span class="star"></span>
         </section>
-        <label>nome</label><br>
-        <label>cognome</label><br>
+        NOME : <p><%=nome%></p>
+        COGNOME : <p><%=cognome%></p>
     </div>
 </div>
 

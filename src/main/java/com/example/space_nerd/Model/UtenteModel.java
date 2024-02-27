@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 public class UtenteModel {
     private static Logger logger = Logger.getLogger(UtenteModel.class.getName());
     private static final String TABLE_NAME_UTENTE = "Utente";
+    private static final String TABLE_NAME_DATI = "DatiSensibili";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";

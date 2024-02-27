@@ -3,12 +3,16 @@
 <%!
     String emailUtente = "";
     Boolean tipoUtente = false;
+    String nome = "";
+    String cognome = "";
     CarrelloBean carrelloBean = null;
 %>
 <%
     synchronized (session) {
         session = request.getSession();
         emailUtente = (String) session.getAttribute("email");
+        nome = (String) session.getAttribute("nome");
+        cognome = (String) session.getAttribute("cognome");
         tipoUtente = (Boolean) session.getAttribute("tipo");
         carrelloBean = (CarrelloBean) session.getAttribute("carrello");
     }

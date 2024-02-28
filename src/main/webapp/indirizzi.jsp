@@ -37,6 +37,7 @@
         <%=indirizzo.getCivico()%>
         <%=indirizzo.getProvincia()%>
         <%=indirizzo.getComune()%>
+        <%=indirizzo.getCap()%>
         <a href="UtenteControl?action=rimuoviIndirizzo&IdIndirizzo=<%=indirizzo.getId()%>">Rimuovi</a>
     </div>
 
@@ -84,6 +85,10 @@
 
         <div class="input-container">
             <input class="input-comune" name="comune" type="text" placeholder="Comune">
+        </div>
+
+        <div class="input-container">
+            <input class="input-cap" name="cap" type="text" placeholder="Cap">
         </div>
 
         <button type="submit" class="submit">

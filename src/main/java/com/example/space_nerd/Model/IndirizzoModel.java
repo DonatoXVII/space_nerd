@@ -77,7 +77,7 @@ public class IndirizzoModel {
         return indirizzi;
     }
 
-    public IndirizzoBean getIndirizzo (int i) throws SQLException {
+    public IndirizzoBean getIndirizzo (int i) {
         IndirizzoBean bean = new IndirizzoBean();
         Connection con = null;
         PreparedStatement ps = null;
@@ -96,6 +96,7 @@ public class IndirizzoModel {
                 bean.setCivico(rs.getInt("Civico"));
                 bean.setProvincia(rs.getString("Provincia"));
                 bean.setComune(rs.getString("Comune"));
+                bean.setCap(rs.getInt("Cap"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -154,13 +155,13 @@ public class IndirizzoModel {
         }
     }
 
-    public void aggiungiIndirizzo(String nome, String cognome, String via, int civico, String provincia, String comune) {
+    public void aggiungiIndirizzo(String nome, String cognome, String via, int civico, String provincia, String comune, int cap) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_INDIRIZZO + "(Nome, Cognome, Via, Civico, Provincia, Comune)" +
-                    "VALUES(?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_INDIRIZZO + "(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)" +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setString(1, nome);
             ps.setString(2, cognome);
@@ -168,6 +169,7 @@ public class IndirizzoModel {
             ps.setInt(4, civico);
             ps.setString(5, provincia);
             ps.setString(6, comune);
+            ps.setInt(7, cap);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

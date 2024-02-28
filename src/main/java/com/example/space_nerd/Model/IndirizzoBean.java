@@ -8,6 +8,7 @@ public class IndirizzoBean {
     int civico;
     String provincia;
     String comune;
+    int cap;
 
     public IndirizzoBean() {
         id = 0;
@@ -17,9 +18,10 @@ public class IndirizzoBean {
         civico = 0;
         provincia = "";
         comune = "";
+        cap = 0;
     }
 
-    public IndirizzoBean(int id, String nome, String cognome, String via, int civico, String provincia, String comune) {
+    public IndirizzoBean(int id, String nome, String cognome, String via, int civico, String provincia, String comune, int cap) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -27,6 +29,7 @@ public class IndirizzoBean {
         this.civico = civico;
         this.provincia = provincia;
         this.comune = comune;
+        this.cap = cap;
     }
 
     public int getId() {
@@ -85,6 +88,14 @@ public class IndirizzoBean {
         this.comune = comune;
     }
 
+    public int getCap() {
+        return cap;
+    }
+
+    public void setCap(int cap) {
+        this.cap = cap;
+    }
+
     @Override
     public String toString() {
         return "IndirizzoBean{" +
@@ -95,6 +106,7 @@ public class IndirizzoBean {
                 ", civico=" + civico +
                 ", provincia='" + provincia + '\'' +
                 ", comune='" + comune + '\'' +
+                ", cap=" + cap +
                 '}';
     }
 }

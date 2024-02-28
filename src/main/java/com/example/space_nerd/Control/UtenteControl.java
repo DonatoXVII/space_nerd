@@ -138,6 +138,8 @@ public class UtenteControl extends HttpServlet {
             DatiSensibiliBean dati = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
             datiModel.registraDati(dati);
             session.setAttribute(emailParameter, utente.getEmail());
+            session.setAttribute("nome", dati.getNome());
+            session.setAttribute("cognome", dati.getCognome());
             session.setAttribute("tipo", utente.isTipo());
             response.sendRedirect(INDEX_PAGE);
         }
@@ -190,11 +192,12 @@ public class UtenteControl extends HttpServlet {
         int civico = Integer.parseInt(request.getParameter(civicoParameter));
         String provincia = request.getParameter(provinciaParameter);
         String comune = request.getParameter(comuneParameter);
+        int cap = Integer.parseInt(request.getParameter("cap"));
 
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute(emailParameter);
 
-        indirizzoModel.aggiungiIndirizzo(nome, cognome, via, civico, provincia, comune);
+        indirizzoModel.aggiungiIndirizzo(nome, cognome, via, civico, provincia, comune, cap);
         indirizzoModel.aggiornaUtilizza(email);
         response.sendRedirect("./indirizzi.jsp");
     }

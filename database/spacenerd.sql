@@ -19,7 +19,7 @@ CREATE TABLE DatiSensibili(
     Provincia varchar(16) NOT NULL,
     Comune varchar(16) NOT NULL,
     PRIMARY KEY(Email),
-     FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IndirizzoSpedizione(
@@ -30,6 +30,7 @@ CREATE TABLE IndirizzoSpedizione(
     Civico int NOT NULL,
     Provincia varchar(16) NOT NULL,
     Comune varchar(50) NOT NULL,
+    Cap int NOT NULL,
     PRIMARY KEY(IdIndirizzo)
 );
 
@@ -153,14 +154,14 @@ VALUES('s.cirma@studenti.unisa.it', 'Simone', 'Cirma', '2001-04-24', 'Roma', '15
 INSERT INTO DatiSensibili(Email, Nome, Cognome, DataNascita, Via, Civico, Provincia, Comune)
 VALUES('a.digiorgio@studenti.unisa.it', 'Antonio', 'di Giorgio', '2000-12-05', 'Torino', '23', 'Napoli', 'Frattaminore');
 
-INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune)
-VALUES('Simone', 'Cirma', 'Roma', '15', 'Caserta', 'San Marco');
-INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune)
-VALUES('Simone', 'Cirma', 'Geronimo', '18', 'Caserta', 'San Marco');
-INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune)
-VALUES('Antonio', 'di Giorgio', 'Torino', '23', 'Napoli', 'Frattaminore');
-INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune)
-VALUES('Antonio', 'di Giorgio', 'Paolo Rossi', '22', 'Napoli', 'Frattaminore');
+INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
+VALUES('Simone', 'Cirma', 'Roma', '15', 'Caserta', 'San Marco', '81020');
+INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
+VALUES('Simone', 'Cirma', 'Geronimo', '18', 'Caserta', 'San Marco', '81020');
+INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
+VALUES('Antonio', 'di Giorgio', 'Torino', '23', 'Napoli', 'Frattaminore', '80020');
+INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
+VALUES('Antonio', 'di Giorgio', 'Paolo Rossi', '22', 'Napoli', 'Frattaminore', '80020');
 
 INSERT INTO Utilizza(Email, IdIndirizzo)
 VALUES('s.cirma@studenti.unisa.it', '1');

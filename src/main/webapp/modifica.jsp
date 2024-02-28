@@ -5,15 +5,18 @@
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
+    <link href="css/profilo.css" rel="stylesheet" type="text/css">
+    <script src="js/caricaCitta.js"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-<form action="UtenteControl?action=modificaProfilo" method="post" class="form">
+<div class="form-container-accesso">
+<form action="UtenteControl?action=modificaProfilo" method="post" class="form-registrazione">
     <div class="form-title"><span>aggiorna il tuo</span></div>
     <div class="title-2"><span>SPACE</span></div>
 
     <div class="input-container">
-        <input class="input-nome" name="nome" type="text" placeholder="Nome">
+        <input class="input-nome" name="nome" type="text" placeholder="Nome" required>
         <span> </span>
     </div>
 
@@ -25,70 +28,32 @@
     </section>
 
     <div class="input-container">
-        <input class="input-cognome" name="cognome" type="text" placeholder="Cognome">
+        <input class="input-cognome" name="cognome" type="text" placeholder="Cognome" required>
     </div>
-
-    <section class="bg-stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </section>
 
     <div class="input-container">
-        <input class="input-data" name="data" type="date" placeholder="Data di nascita">
+        <input class="input-data" name="data" type="date" placeholder="Data di nascita" required>
     </div>
-
-    <section class="bg-stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </section>
 
     <div class="input-container">
-        <input class="input-via" name="via" type="text" placeholder="Via">
+        <input class="input-via" name="via" type="text" placeholder="Via" required>
     </div>
-
-    <section class="bg-stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </section>
 
     <div class="input-container">
-        <input class="input-civico" name="civico" type="text" placeholder="Numero civico">
+        <input class="input-civico" name="civico" type="text" placeholder="Numero civico" required>
     </div>
-
-    <section class="bg-stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </section>
 
     <div class="input-container">
-        <input class="input-provincia" name="provincia" type="text" placeholder="Provincia">
+        <select id="provincia" name="provincia" required>
+            <option value="" selected>Scegli la provincia</option>
+        </select>
     </div>
-
-    <section class="bg-stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </section>
 
     <div class="input-container">
-        <input class="input-comune" name="comune" type="text" placeholder="Comune">
+        <select id="comune" name="comune" required>
+            <option value="" selected>Scegli il comune</option>
+        </select>
     </div>
-
-    <section class="bg-stars">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </section>
 
     <div class="input-container">
         <input class="input-pwd" name="password" type="password" placeholder="Password">
@@ -98,5 +63,6 @@
         <span class="sign-text">Conferma modifiche</span>
     </button>
 </form>
+</div>
 </body>
 </html>

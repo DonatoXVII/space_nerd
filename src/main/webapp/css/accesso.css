@@ -2,28 +2,20 @@ body {
     background-color: #f1f2f4
 }
 
-/*.form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}*/
-
-/*.form-container-registrazione {
-    position: absolute;
-    top: calc(50% + 60px);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 450px;
-    width: 90%;
-    margin: 0 auto;
-}*/
+.form-container-accesso {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 90vh;
+    flex-wrap: wrap;
+    margin-top: 0;
+}
 
 .form {
     position: relative;
-    display: block;
     padding: 2.2rem;
-    max-width: 350px;
+    width: 100%;
+    max-width: 300px;
     background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
     rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
     rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
@@ -36,8 +28,8 @@ body {
 
 .form-registrazione{
     position: relative;
-    display: block;
     padding: 2.2rem;
+    width: 100%;
     max-width: 450px;
     background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
     rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,

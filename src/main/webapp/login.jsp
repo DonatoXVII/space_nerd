@@ -24,12 +24,12 @@
     }
 %>
 
-<div class="form-container">
+<div class="form-container-accesso">
     <form action="UtenteControl?action=login" method="post" class="form">
         <div class="form-title"><span>entra nel tuo</span></div>
         <div class="title-2"><span>SPACE</span></div>
         <div class="input-container">
-            <input class="input-mail" name="email" type="email" placeholder="Email">
+            <input class="input-mail" name="email" type="email" placeholder="Email" required>
             <span> </span>
         </div>
 
@@ -41,7 +41,7 @@
         </section>
 
         <div class="input-container">
-            <input class="input-pwd" name="password" type="password" placeholder="Password">
+            <input class="input-pwd" name="password" type="password" placeholder="Password" required>
         </div>
 
         <button type="submit" class="submit">

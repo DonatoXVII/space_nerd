@@ -114,19 +114,19 @@ public class UtenteModel {
         }
     }
 
-    public boolean emailPresente(String email) throws SQLException {
+    public boolean emailPresente(String email) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        boolean res = false;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_UTENTE;
+            String query = "SELECT * FROM " + TABLE_NAME_UTENTE + " WHERE Email = ?";
             ps = con.prepareStatement(query);
+            ps.setString(1, email);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                if(rs.getString("Email").equalsIgnoreCase(email)) {
-                    return true;
-                }
+            if (rs.next()) {
+                res = true;
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -153,7 +153,7 @@ public class UtenteModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return false;
+        return res;
     }
 
     public void modificaProfilo (UtenteBean utente) throws SQLException {

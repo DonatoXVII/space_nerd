@@ -71,6 +71,7 @@ nav img {
     left: 50%;
     transform: translateX(-50%);
     top: 100%;
+    z-index: 9999;
 }
 
 .catalogobar {
@@ -83,6 +84,7 @@ nav img {
     left: 50%;
     transform: translateX(-50%);
     top: 100%;
+    z-index: 9999;
 }
 
 .carrello {

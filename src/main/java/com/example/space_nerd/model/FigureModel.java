@@ -18,6 +18,7 @@ public class FigureModel {
     private static final String TABLE_NAME_FIGURE = "Figure";
     private static final String TABLE_NAME_COMPRENDE = "ComprendeFigure";
     private static final String TABLE_NAME_IMMAGINE = "ImmagineFigure";
+    private static final String WHERE_IDFIGURE = "WHERE IdFigure = ?";
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
@@ -35,7 +36,7 @@ public class FigureModel {
         }
     }
 
-    public List<FigureBean> miglioriFigure() throws SQLException {
+    public List<FigureBean> miglioriFigure() {
         List<FigureBean> miglioriFigure = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -88,7 +89,7 @@ public class FigureModel {
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE IdFigure = ?";
+            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " " + WHERE_IDFIGURE;
             ps = con.prepareStatement(query);
             ps.setInt(1, figureBean.getIdFigure());
             rs = ps.executeQuery();
@@ -217,7 +218,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
+            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " " + WHERE_IDFIGURE;
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();
@@ -265,7 +266,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
+            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_FIGURE + " " + WHERE_IDFIGURE;
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();

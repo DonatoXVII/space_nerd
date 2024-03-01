@@ -167,27 +167,24 @@ public class ProdottoControl extends HttpServlet {
     }
 
     private void rimuoviMangaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(idMangaParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto(mangaModel.getById(id));
+        carrelloBean.rimuoviProdotto();
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
         dispatcher.forward(req, resp);
     }
 
     private void rimuoviPopDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(idPopParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto(popModel.getById(id));
+        carrelloBean.rimuoviProdotto();
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
         dispatcher.forward(req, resp);
     }
 
     private void rimuoviFigureDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(idFigureParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto(figureModel.getById(id));
+        carrelloBean.rimuoviProdotto();
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
         dispatcher.forward(req, resp);

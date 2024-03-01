@@ -1,9 +1,5 @@
 package com.example.space_nerd.utility;
 
-import com.example.space_nerd.model.FigureBean;
-import com.example.space_nerd.model.MangaBean;
-import com.example.space_nerd.model.PopBean;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +33,7 @@ public class CarrelloBean implements Serializable {
     public void aggiungiProdotto(Object prodotto) {
         this.listaCarrello.add(prodotto);
     }
-    public void rimuoviProdotto(Object prodotto) {
+    public void rimuoviProdotto() {
         for (Object prod : listaCarrello) {
             boolean rimuovi = false;
 

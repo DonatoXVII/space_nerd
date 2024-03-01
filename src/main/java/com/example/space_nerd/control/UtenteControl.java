@@ -1,6 +1,6 @@
-package com.example.space_nerd.Control;
+package com.example.space_nerd.control;
 
-import com.example.space_nerd.Model.*;
+import com.example.space_nerd.model.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.http.HttpRequest;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -87,13 +86,13 @@ public class UtenteControl extends HttpServlet {
                         break;
                 }
             }
-        } catch (ServletException | IOException | SQLException e) {
+        } catch (ServletException | IOException e) {
             logger.info("Si è verificata un'eccezione:" + e);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
@@ -101,7 +100,7 @@ public class UtenteControl extends HttpServlet {
         }
     }
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+    private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String email = request.getParameter(EMAIL_PARAMETER);
         String password = request.getParameter(PWD_PARAMETER);
         HttpSession session = request.getSession(true);
@@ -123,7 +122,7 @@ public class UtenteControl extends HttpServlet {
         }
     }
 
-    private void utenteRegistrato(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+    private void utenteRegistrato(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter(EMAIL_PARAMETER);
         String pwd = request.getParameter(PWD_PARAMETER);
         UtenteBean utente = utenteModel.login(email, pwd);
@@ -156,7 +155,7 @@ public class UtenteControl extends HttpServlet {
         }
     }
 
-    private void registrati(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+    private void registrati(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String nome = request.getParameter(NOME_PARAMETER);
         String cognome = request.getParameter(COGNOME_PARAMETER);
         Date data = Date.valueOf(request.getParameter("data"));
@@ -185,7 +184,7 @@ public class UtenteControl extends HttpServlet {
         }
     }
 
-    private void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter(NOME_PARAMETER);
         String cognome = request.getParameter(COGNOME_PARAMETER);
         Date data = Date.valueOf(request.getParameter("data"));
@@ -205,7 +204,7 @@ public class UtenteControl extends HttpServlet {
         response.sendRedirect("./profilo.jsp");
     }
 
-    private void visualizzaIndirizzi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    private void visualizzaIndirizzi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute(EMAIL_PARAMETER);
         List<Integer> indirizziPerEmail = indirizzoModel.getIndiririzziUtente(email);
@@ -241,7 +240,7 @@ public class UtenteControl extends HttpServlet {
         response.sendRedirect("./indirizzi.jsp");
     }
 
-    private void visualizzaMetodi(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ServletException {
+    private void visualizzaMetodi(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute(EMAIL_PARAMETER);
         List<Integer> metodiPerEmail = pagamentoModel.getMetodiUtente(email);

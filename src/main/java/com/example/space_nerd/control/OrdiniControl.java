@@ -1,7 +1,7 @@
-package com.example.space_nerd.Control;
+package com.example.space_nerd.control;
 
-import com.example.space_nerd.Model.OrdineBean;
-import com.example.space_nerd.Model.OrdineModel;
+import com.example.space_nerd.model.OrdineBean;
+import com.example.space_nerd.model.OrdineModel;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

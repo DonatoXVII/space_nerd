@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.space_nerd.Model.OrdineBean" %>
+<%@ page import="com.example.space_nerd.model.OrdineBean" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%

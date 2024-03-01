@@ -1,8 +1,8 @@
-package com.example.space_nerd.Utility;
+package com.example.space_nerd.utility;
 
-import com.example.space_nerd.Model.FigureBean;
-import com.example.space_nerd.Model.MangaBean;
-import com.example.space_nerd.Model.PopBean;
+import com.example.space_nerd.model.FigureBean;
+import com.example.space_nerd.model.MangaBean;
+import com.example.space_nerd.model.PopBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;

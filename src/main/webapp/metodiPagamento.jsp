@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="com.example.space_nerd.Model.PagamentoBean" %>
+<%@ page import="com.example.space_nerd.model.PagamentoBean" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     List<PagamentoBean> metodi = (List<PagamentoBean>) request.getAttribute("pagamenti");

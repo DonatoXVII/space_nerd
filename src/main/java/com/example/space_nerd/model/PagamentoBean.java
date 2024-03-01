@@ -1,4 +1,4 @@
-package com.example.space_nerd.Model;
+package com.example.space_nerd.model;
 
 import java.sql.Date;
 

@@ -1,4 +1,4 @@
-package com.example.space_nerd.Model;
+package com.example.space_nerd.model;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,14 +13,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FigureModel {
-    private static Logger logger = Logger.getLogger(FigureModel.class.getName());
-    private static final String TABLE_NAME_FIGURE = "Figure";
-    private static final String TABLE_NAME_COMPRENDE = "ComprendeFigure";
-    private static final String TABLE_NAME_IMMAGINE = "ImmagineFigure";
+public class PopModel {
+    private static Logger logger = Logger.getLogger(PopModel.class.getName());
+    private static final String TABLE_NAME_POP = "Pop";
+    private static final String TABLE_NAME_COMPRENDE = "ComprendePop";
+    private static final String TABLE_NAME_IMMAGINE = "ImmaginePop";
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
+    private static String descrizione = "Descrizione";
     private static DataSource ds;
 
     static {
@@ -35,23 +36,23 @@ public class FigureModel {
         }
     }
 
-    public List<FigureBean> miglioriFigure() throws SQLException {
-        List<FigureBean> miglioriFigure = new ArrayList<>();
+    public List<PopBean> miglioriPop() throws SQLException {
+        List<PopBean> miglioriPop = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT F.IdFigure, F.Descrizione, SUM(Cm.Quantita) AS Tot FROM " + TABLE_NAME_FIGURE +
-                    " F JOIN " + TABLE_NAME_COMPRENDE +
-                    " Cm ON F.IdFigure = Cm.IdFigure GROUP BY F.IdFigure ORDER BY Tot DESC LIMIT 3";
+            String query = "SELECT P.IdPop, P.Descrizione, SUM(Cm.Quantita) AS Tot FROM " + TABLE_NAME_POP +
+                    " P JOIN " + TABLE_NAME_COMPRENDE +
+                    " Cm ON P.IdPop = Cm.IdPop GROUP BY P.IdPop ORDER BY Tot DESC LIMIT 3";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
-                FigureBean figure = new FigureBean();
-                figure.setIdFigure(rs.getInt("IdFigure"));
-                figure.setDescrizione(rs.getString("Descrizione"));
-                miglioriFigure.add(figure);
+                PopBean pop = new PopBean();
+                pop.setIdPop(rs.getInt("IdPop"));
+                pop.setDescrizione(rs.getString(descrizione));
+                miglioriPop.add(pop);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -78,19 +79,19 @@ public class FigureModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return miglioriFigure;
+        return miglioriPop;
     }
 
-    public List<String> imgPerFigure(FigureBean figureBean) {
+    public List<String> imgPerPop(PopBean popBean) {
         List<String> immagini = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE IdFigure = ?";
+            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE IdPop = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, figureBean.getIdFigure());
+            ps.setInt(1, popBean.getIdPop());
             rs = ps.executeQuery();
             while(rs.next()){
                 String img = rs.getString("Nome");
@@ -124,21 +125,21 @@ public class FigureModel {
         return immagini;
     }
 
-    public List<FigureBean> allFigure() {
-        List<FigureBean> allFigure = new ArrayList<>();
+    public List<PopBean> allPop() {
+        List<PopBean> allPop = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdFigure, Personaggio FROM " + TABLE_NAME_FIGURE;
+            String query = "SELECT IdPop, Descrizione FROM " + TABLE_NAME_POP;
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
-                FigureBean figure = new FigureBean();
-                figure.setIdFigure(rs.getInt("IdFigure"));
-                figure.setPersonaggio(rs.getString("Personaggio"));
-                allFigure.add(figure);
+                PopBean pop = new PopBean();
+                pop.setIdPop(rs.getInt("IdPop"));
+                pop.setDescrizione(rs.getString(descrizione));
+                allPop.add(pop);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -165,22 +166,22 @@ public class FigureModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return allFigure;
+        return allPop;
     }
 
-    public List<String> oneImgPerFigure(){
-        List<String> imgPerFigure = new ArrayList<>();
+    public List<String> oneImgPerPop(){
+        List<String> imgPerPop = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE (IdFigure, IdImmagine) IN (SELECT " +
-                    "IdFigure, MIN(IdImmagine) FROM " + TABLE_NAME_IMMAGINE + " GROUP BY IdFigure)";
+            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE (IdPop, IdImmagine) IN (SELECT " +
+                    "IdPop, MIN(IdImmagine) FROM " + TABLE_NAME_IMMAGINE + " GROUP BY IdPop)";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
-                imgPerFigure.add(rs.getString("Nome"));
+                imgPerPop.add(rs.getString("Nome"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -207,28 +208,27 @@ public class FigureModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return imgPerFigure;
+        return imgPerPop;
     }
 
-    public FigureBean getById(int i) {
-        FigureBean figure = new FigureBean();
+    public PopBean getById(int i) {
+        PopBean pop = new PopBean();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
+            String query = "SELECT * FROM " + TABLE_NAME_POP + " WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();
             while (rs.next()) {
-                figure.setIdFigure(i);
-                figure.setPrezzo(rs.getFloat("Prezzo"));
-                figure.setDescrizione(rs.getString("Descrizione"));
-                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
-                figure.setMateriale(rs.getString("Materiale"));
-                figure.setAltezza(rs.getInt("Altezza"));
-                figure.setPersonaggio(rs.getString("Personaggio"));
+                pop.setIdPop(i);
+                pop.setPrezzo(rs.getFloat("Prezzo"));
+                pop.setDescrizione(rs.getString(descrizione));
+                pop.setNumArticoli(rs.getInt("NumeroArticoli"));
+                pop.setNumSerie(rs.getInt("NumeroSerie"));
+                pop.setSerie(rs.getString("Serie"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -255,7 +255,7 @@ public class FigureModel {
                 logger.log(Level.WARNING, msgCon, e);
             }
         }
-        return figure;
+        return pop;
     }
 
     public boolean verificaDisponibilita(int i) {
@@ -265,7 +265,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
+            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_POP + " WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();

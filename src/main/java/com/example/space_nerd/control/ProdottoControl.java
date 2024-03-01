@@ -1,7 +1,7 @@
-package com.example.space_nerd.Control;
+package com.example.space_nerd.control;
 
-import com.example.space_nerd.Model.*;
-import com.example.space_nerd.Utility.CarrelloBean;
+import com.example.space_nerd.model.*;
+import com.example.space_nerd.utility.CarrelloBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

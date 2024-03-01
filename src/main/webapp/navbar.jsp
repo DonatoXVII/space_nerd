@@ -35,9 +35,9 @@
     <div class="catalogobar">
         <a href="catalogo.jsp">CATALOGO</a>
         <div class="catalogobar-menu">
-            <a href="">Manga</a>
-            <a href="">Pop</a>
-            <a href="">Figure</a>
+            <a href="catalogo.jsp">Manga</a>
+            <a href="catalogo.jsp">Pop</a>
+            <a href="catalogo.jsp">Figure</a>
         </div>
     </div>
     <div class="profilo">

@@ -37,15 +37,11 @@ public class CarrelloBean implements Serializable {
     public void aggiungiProdotto(Object prodotto) {
         this.listaCarrello.add(prodotto);
     }
-    public void rimuoviProdotto(int id) {
+    public void rimuoviProdotto(Object prodotto) {
         for (Object prod : listaCarrello) {
             boolean rimuovi = false;
 
-            if (prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id) {
-                rimuovi = true;
-            } else if (prod instanceof PopBean && ((PopBean) prod).getIdPop() == id) {
-                rimuovi = true;
-            } else if (prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id) {
+            if (prod != null) {
                 rimuovi = true;
             }
 

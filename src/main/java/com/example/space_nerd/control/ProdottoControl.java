@@ -44,12 +44,6 @@ public class ProdottoControl extends HttpServlet {
                     case "visualizzadettagli":
                         visualizzaDettagli(req, resp);
                         break;
-                    /*case "visualizzadettaglipop":
-                        visualizzaDettagliPop(req, resp);
-                        break;
-                    case "visualizzadettaglifigure":
-                        visualizzaDettagliFigure(req, resp);
-                        break;*/
                     case "aggiungimangaalcarrello":
                         aggiungiMangaAlCarrello(req, resp);
                         break;
@@ -139,26 +133,6 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    /*private void visualizzaDettagliPop(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int idPop = Integer.parseInt(req.getParameter(idPopParameter));
-        Object prodotto = popModel.getById(idPop);
-        List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
-        req.setAttribute(prodottoParameter, prodotto);
-        req.setAttribute("immaginiPop", immaginiPop);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
-        dispatcher.forward(req, resp);
-    }
-
-    private void visualizzaDettagliFigure(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int idFigure = Integer.parseInt(req.getParameter(idFigureParameter));
-        Object prodotto = figureModel.getById(idFigure);
-        List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
-        req.setAttribute(prodottoParameter, prodotto);
-        req.setAttribute("immaginiFigure", immaginiFigure);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
-        dispatcher.forward(req, resp);
-    }*/
-
     private void aggiungiMangaAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idMangaParameter));
         if (mangaModel.verificaDisponibilita(id)) {
@@ -195,7 +169,7 @@ public class ProdottoControl extends HttpServlet {
     private void rimuoviMangaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idMangaParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto(id);
+        carrelloBean.rimuoviProdotto(mangaModel.getById(id));
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
         dispatcher.forward(req, resp);
@@ -204,7 +178,7 @@ public class ProdottoControl extends HttpServlet {
     private void rimuoviPopDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idPopParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto(id);
+        carrelloBean.rimuoviProdotto(popModel.getById(id));
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
         dispatcher.forward(req, resp);
@@ -213,7 +187,7 @@ public class ProdottoControl extends HttpServlet {
     private void rimuoviFigureDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(idFigureParameter));
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto(id);
+        carrelloBean.rimuoviProdotto(figureModel.getById(id));
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
         dispatcher.forward(req, resp);

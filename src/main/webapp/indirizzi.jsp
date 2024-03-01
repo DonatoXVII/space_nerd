@@ -16,7 +16,6 @@
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
     <link href="css/utility.css" rel="stylesheet" type="text/css">
-    <script src="js/caricaCitta.js"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
@@ -98,13 +97,13 @@
                 </div>
                 <div class="card__content">
                     <div class="parametri">
-                        Nome : <label><%=indirizzo.getNome()%></label><br>
-                        Cognome : <label><%=indirizzo.getCognome()%></label><br>
-                        Via : <label><%=indirizzo.getVia()%></label><br>
-                        Civico : <label><%=indirizzo.getCivico()%></label><br>
-                        Provincia : <label><%=indirizzo.getProvincia()%></label><br>
-                        Comune : <label><%=indirizzo.getComune()%></label><br>
-                        Cap : <label><%=indirizzo.getCap()%></label><br>
+                        <div>Nome: <%=indirizzo.getNome()%></div>
+                        <div>Cognome: <%=indirizzo.getCognome()%></div>
+                        <div>Via: <%=indirizzo.getVia()%></div>
+                        <div>Civico: <%=indirizzo.getCivico()%></div>
+                        <div>Provincia: <%=indirizzo.getProvincia()%></div>
+                        <div>Comune: <%=indirizzo.getComune()%></div>
+                        <div>Cap: <%=indirizzo.getCap()%></div>
                     </div>
                 </div>
             </div>
@@ -118,6 +117,6 @@
         %>
     </div>
 </div>
-
+<script src="js/caricaCitta.js"></script>
 </body>
 </html>

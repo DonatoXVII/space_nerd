@@ -130,7 +130,7 @@
                     <div class="strip"></div>
                     <div class="mstrip"></div>
                     <div class="sstrip">
-                        <p class="code">***</p>
+                        <div class="code"><%=metodo.getCcv()%></div>
                     </div>
                 </div>
             </div>

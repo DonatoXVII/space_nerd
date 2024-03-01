@@ -13,15 +13,15 @@
     <div class="form-title"><span>il tuo</span></div>
     <div class="title-2"><span>SPACE</span></div>
     <div class="parametri">
-        EMAIL : <label><%=emailUtente%></label><br>
+        EMAIL : <p><%=emailUtente%></p><br>
         <section class="bg-stars">
             <span class="star"></span>
             <span class="star"></span>
             <span class="star"></span>
             <span class="star"></span>
         </section>
-        NOME : <label><%=nome%></label><br>
-        COGNOME : <label><%=cognome%></label><br>
+        NOME : <p><%=nome%></p><br>
+        COGNOME : <p><%=cognome%></p><br>
     </div>
 
     <div class="btn-container">

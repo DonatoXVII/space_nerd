@@ -31,7 +31,7 @@ public class DatiSensibiliModel {
         }
     }
 
-    public void registraDati(DatiSensibiliBean dati) throws SQLException {
+    public void registraDati(DatiSensibiliBean dati) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -68,7 +68,7 @@ public class DatiSensibiliModel {
         }
     }
 
-    public void modificaDati (DatiSensibiliBean datiUtente) throws SQLException {
+    public void modificaDati (DatiSensibiliBean datiUtente) {
         Connection con = null;
         PreparedStatement ps = null;
         try {

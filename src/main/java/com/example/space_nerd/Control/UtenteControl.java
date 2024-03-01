@@ -27,12 +27,13 @@ public class UtenteControl extends HttpServlet {
     static PagamentoModel pagamentoModel = new PagamentoModel();
     static Logger logger = Logger.getLogger(UtenteControl.class.getName());
     private static final String INDEX_PAGE = "./index.jsp";
-    private static final String emailParameter = "email";
-    private static final String pwdParameter = "password";
-    private static final String cognomeParameter = "cognome";
-    private static final String civicoParameter = "civico";
-    private static final String provinciaParameter = "provincia";
-    private static final String comuneParameter = "comune";
+    private static final String EMAIL_PARAMETER = "email";
+    private static final String PWD_PARAMETER = "password";
+    private static final String NOME_PARAMETER = "nome";
+    private static final String COGNOME_PARAMETER = "cognome";
+    private static final String CIVICO_PARAMETER = "civico";
+    private static final String PROVINCIA_PARAMETER = "provincia";
+    private static final String COMUNE_PARAMETER = "comune";
 
     public UtenteControl() {
         super();
@@ -101,30 +102,46 @@ public class UtenteControl extends HttpServlet {
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        String email = request.getParameter(emailParameter);
-        String password = request.getParameter(pwdParameter);
+        String email = request.getParameter(EMAIL_PARAMETER);
+        String password = request.getParameter(PWD_PARAMETER);
         HttpSession session = request.getSession(true);
         if (email == null || password == null) {
             response.sendRedirect(INDEX_PAGE);
         } else {
             UtenteBean utente = utenteModel.login(email, password);
             if (utente == null) {
-                request.setAttribute("result", "Credenziali errate");
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             } else {
                 DatiSensibiliBean dati = datiModel.recuperaDati(utente.getEmail());
-                session.setAttribute(emailParameter, utente.getEmail());
-                session.setAttribute("nome", dati.getNome());
-                session.setAttribute("cognome", dati.getCognome());
+                session.setAttribute(EMAIL_PARAMETER, utente.getEmail());
+                session.setAttribute(NOME_PARAMETER, dati.getNome());
+                session.setAttribute(COGNOME_PARAMETER, dati.getCognome());
                 session.setAttribute("tipo", utente.isTipo());
                 response.sendRedirect(INDEX_PAGE);
             }
         }
     }
 
+    private void utenteRegistrato(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        String email = request.getParameter(EMAIL_PARAMETER);
+        String pwd = request.getParameter(PWD_PARAMETER);
+        UtenteBean utente = utenteModel.login(email, pwd);
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        if(utente == null) {
+            PrintWriter out = response.getWriter();
+            out.print("non esiste");
+            out.flush();
+        } else {
+            PrintWriter out = response.getWriter();
+            out.print("esiste");
+            out.flush();
+        }
+    }
+
     private void verificaEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String email = request.getParameter("email");
+        String email = request.getParameter(EMAIL_PARAMETER);
         boolean trovato = utenteModel.emailPresente(email);
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -140,77 +157,58 @@ public class UtenteControl extends HttpServlet {
     }
 
     private void registrati(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter(cognomeParameter);
+        String nome = request.getParameter(NOME_PARAMETER);
+        String cognome = request.getParameter(COGNOME_PARAMETER);
         Date data = Date.valueOf(request.getParameter("data"));
         String via = request.getParameter("via");
-        int civico = Integer.parseInt(request.getParameter(civicoParameter));
-        String provincia = request.getParameter(provinciaParameter);
-        String comune = request.getParameter(comuneParameter);
-        String email = request.getParameter(emailParameter);
-        String password = request.getParameter(pwdParameter);
-        UtenteBean utente = new UtenteBean(email, password, false);
+        int civico = Integer.parseInt(request.getParameter(CIVICO_PARAMETER));
+        String provincia = request.getParameter(PROVINCIA_PARAMETER);
+        String comune = request.getParameter(COMUNE_PARAMETER);
+        String email = request.getParameter(EMAIL_PARAMETER);
+        String password = request.getParameter(PWD_PARAMETER);
 
+        UtenteBean utente = new UtenteBean(email, password, false);
         HttpSession session = request.getSession(true);
 
         if(utenteModel.emailPresente(email)) {
-            request.setAttribute("result", "Email già presente");
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/registrati.jsp");
             dispatcher.forward(request, response);
         } else {
-            utenteModel.aggiungiUtente(email, password);
+            utenteModel.registraUtente(email, password);
             DatiSensibiliBean dati = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
             datiModel.registraDati(dati);
-            session.setAttribute(emailParameter, utente.getEmail());
-            session.setAttribute("nome", dati.getNome());
-            session.setAttribute("cognome", dati.getCognome());
+            session.setAttribute(EMAIL_PARAMETER, utente.getEmail());
+            session.setAttribute(NOME_PARAMETER, dati.getNome());
+            session.setAttribute(COGNOME_PARAMETER, dati.getCognome());
             session.setAttribute("tipo", utente.isTipo());
             response.sendRedirect(INDEX_PAGE);
         }
     }
 
-    private void utenteRegistrato(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
-        String email = request.getParameter("email");
-        String pwd = request.getParameter("password");
-        UtenteBean utente = utenteModel.login(email, pwd);
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        if(utente == null) {
-            PrintWriter out = response.getWriter();
-            out.print("non esiste");
-            out.flush();
-        } else {
-            PrintWriter out = response.getWriter();
-            out.print("esiste");
-            out.flush();
-        }
-    }
-
     private void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter(cognomeParameter);
+        String nome = request.getParameter(NOME_PARAMETER);
+        String cognome = request.getParameter(COGNOME_PARAMETER);
         Date data = Date.valueOf(request.getParameter("data"));
         String via = request.getParameter("via");
-        int civico = Integer.parseInt(request.getParameter(civicoParameter));
-        String provincia = request.getParameter(provinciaParameter);
-        String comune = request.getParameter(comuneParameter);
+        int civico = Integer.parseInt(request.getParameter(CIVICO_PARAMETER));
+        String provincia = request.getParameter(PROVINCIA_PARAMETER);
+        String comune = request.getParameter(COMUNE_PARAMETER);
+        String password = request.getParameter(PWD_PARAMETER);
 
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
+        String email = (String) session.getAttribute(EMAIL_PARAMETER);
 
-        String password = request.getParameter(pwdParameter);
         UtenteBean utente = new UtenteBean(email, password, false);
         DatiSensibiliBean datiUtente = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
-
-        utenteModel.modificaProfilo(utente);
+        utenteModel.modificaPassword(utente);
         datiModel.modificaDati(datiUtente);
         response.sendRedirect("./profilo.jsp");
     }
 
     private void visualizzaIndirizzi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
-        List<Integer> indirizziPerEmail = indirizzoModel.indirizziUtilizzati(email);
+        String email = (String) session.getAttribute(EMAIL_PARAMETER);
+        List<Integer> indirizziPerEmail = indirizzoModel.getIndiririzziUtente(email);
         List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
         for (int i : indirizziPerEmail) {
             indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
@@ -220,23 +218,23 @@ public class UtenteControl extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    public void rimuoviIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void rimuoviIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int i = Integer.parseInt(request.getParameter("IdIndirizzo"));
         indirizzoModel.rimuoviIndirizzo(i);
         response.sendRedirect("./indirizzi.jsp");
     }
 
     private void inserisciIndirizzo(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter(cognomeParameter);
+        String nome = request.getParameter(NOME_PARAMETER);
+        String cognome = request.getParameter(COGNOME_PARAMETER);
         String via = request.getParameter("via");
-        int civico = Integer.parseInt(request.getParameter(civicoParameter));
-        String provincia = request.getParameter(provinciaParameter);
-        String comune = request.getParameter(comuneParameter);
+        int civico = Integer.parseInt(request.getParameter(CIVICO_PARAMETER));
+        String provincia = request.getParameter(PROVINCIA_PARAMETER);
+        String comune = request.getParameter(COMUNE_PARAMETER);
         int cap = Integer.parseInt(request.getParameter("cap"));
 
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
+        String email = (String) session.getAttribute(EMAIL_PARAMETER);
 
         indirizzoModel.aggiungiIndirizzo(nome, cognome, via, civico, provincia, comune, cap);
         indirizzoModel.aggiornaUtilizza(email);
@@ -245,8 +243,8 @@ public class UtenteControl extends HttpServlet {
 
     private void visualizzaMetodi(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, ServletException {
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
-        List<Integer> metodiPerEmail = pagamentoModel.metodiUtilizzati(email);
+        String email = (String) session.getAttribute(EMAIL_PARAMETER);
+        List<Integer> metodiPerEmail = pagamentoModel.getMetodiUtente(email);
         List<PagamentoBean> metodiUtilizzati = new ArrayList<>();
         for (Integer i : metodiPerEmail) {
             metodiUtilizzati.add(pagamentoModel.getMetodo(i));
@@ -256,20 +254,20 @@ public class UtenteControl extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    public void rimuoviMetodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void rimuoviMetodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int i = Integer.parseInt(request.getParameter("IdMetodo"));
         pagamentoModel.rimuoviMetodo(i);
         response.sendRedirect("./metodiPagamento.jsp");
     }
 
-    public void inserisciMetodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void inserisciMetodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String numero = request.getParameter("numero");
         Date data = Date.valueOf(request.getParameter("data"));
         int ccv = Integer.parseInt(request.getParameter("ccv"));
         String titolare = request.getParameter("titolare");
 
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
+        String email = (String) session.getAttribute(EMAIL_PARAMETER);
 
         pagamentoModel.aggiungiMetodo(numero, data, ccv, titolare);
         pagamentoModel.aggiornaRegistra(email);

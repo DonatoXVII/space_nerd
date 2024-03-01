@@ -31,7 +31,7 @@ public class PagamentoModel {
         }
     }
 
-    public List<Integer> metodiUtilizzati(String email) {
+    public List<Integer> getMetodiUtente(String email) {
         List<Integer> metodi = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -74,7 +74,7 @@ public class PagamentoModel {
         return metodi;
     }
 
-    public PagamentoBean getMetodo (int i) throws SQLException {
+    public PagamentoBean getMetodo (int i) {
         PagamentoBean bean = new PagamentoBean();
         Connection con = null;
         PreparedStatement ps = null;

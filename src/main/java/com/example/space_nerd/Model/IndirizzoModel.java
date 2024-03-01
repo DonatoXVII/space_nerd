@@ -34,7 +34,7 @@ public class IndirizzoModel {
         }
     }
 
-    public List<Integer> indirizziUtilizzati(String email) {
+    public List<Integer> getIndiririzziUtente(String email) {
         List<Integer> indirizzi = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;

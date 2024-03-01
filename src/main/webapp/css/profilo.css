@@ -154,16 +154,16 @@ body {
 
 .parametri {
     margin-top: 20px;
-    padding-top: 30px;
+    padding-top: 20px;
     font-family: Montserrat, serif;
     font-weight: bold;
     text-align: left;
     color: #f1f2f4;
 }
 
-.parametri label {
+.parametri p {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .parametri a {

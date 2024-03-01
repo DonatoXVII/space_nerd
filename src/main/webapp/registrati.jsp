@@ -11,12 +11,12 @@
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
-    <script src="js/caricaCitta.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
 <div class="form-container-accesso">
-    <form action="UtenteControl?action=registrati" method="post" class="form-registrazione">
+    <form action="UtenteControl?action=registrati" method="post" class="form-registrazione" name="registrazione" onsubmit="return validate()">
         <div class="form-title"><span>registrati anche tu nello</span></div>
         <div class="title-2"><span>SPACE</span></div>
 
@@ -73,12 +73,57 @@
     </form>
 </div>
 
-<%
-    if(result != null) {
-%>
-<h3><%=result%></h3>
-<%
+<script src="js/caricaCitta.js"></script>
+<script>
+    function validate() {
+        var email = document.registrazione.email.value;
+        var pwd = document.registrazione.password.value;
+        var passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        var data = document.registrazione.data.value;
+        var dataDiOggi = new Date();
+        var dataLimite = new Date();
+        dataLimite.setFullYear(dataDiOggi.getFullYear() - 18);
+
+        if(email !== ""){
+            $.ajax({
+                url: "UtenteControl?action=verificaEmail",
+                type: "POST",
+                data: { email: email },
+                success: function(response) {
+                    if (response === "esiste")
+                    {
+                        alert("L'email inserita risulta già registrata");
+                        return false;
+                    }
+                },
+                error: function() {
+                    alert("Si è verificato un errore durante la verifica dell'email");
+                    return false;
+                }
+            });
+        }
+
+        if (!passwordRegex.test(pwd)) {
+            alert("Il campo Password è errato, deve contenere almeno 8 caratteri"
+                + "di cui almeno uno speciale, una maiuscola, una minuscola e un numero");
+            document.registrazione.password.focus();
+            return false;
+        }
+
+        if(data !== null) {
+            var dataNascita = new Date(data);
+        }
+        if(dataNascita > dataDiOggi){
+            alert("Inserisci una data valida");
+            document.registrazione.data.focus();
+            return false;
+        }else if(dataNascita > dataLimite){
+            alert("Per registrarti devi avere almeno 18 anni");
+            document.registrazione.data.focus();
+            return false;
+        }
     }
-%>
+</script>
+
 </body>
 </html>

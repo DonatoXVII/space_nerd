@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.http.HttpRequest;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,8 +47,14 @@ public class UtenteControl extends HttpServlet {
                     case "login":
                         login(request, response);
                         break;
+                    case "utenteregistrato":
+                        utenteRegistrato(request, response);
+                        break;
                     case "registrati":
                         registrati(request, response);
+                        break;
+                    case "verificaemail" :
+                        verificaEmail(request, response);
                         break;
                     case "modificaprofilo":
                         modificaProfilo(request, response);
@@ -115,6 +123,22 @@ public class UtenteControl extends HttpServlet {
         }
     }
 
+    private void verificaEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String email = request.getParameter("email");
+        boolean trovato = utenteModel.emailPresente(email);
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        if(trovato) {
+            PrintWriter out = response.getWriter();
+            out.print("esiste");
+            out.flush();
+        } else {
+            PrintWriter out = response.getWriter();
+            out.print("non esiste");
+            out.flush();
+        }
+    }
+
     private void registrati(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter(cognomeParameter);
@@ -145,7 +169,24 @@ public class UtenteControl extends HttpServlet {
         }
     }
 
-    public void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void utenteRegistrato(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        String email = request.getParameter("email");
+        String pwd = request.getParameter("password");
+        UtenteBean utente = utenteModel.login(email, pwd);
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        if(utente == null) {
+            PrintWriter out = response.getWriter();
+            out.print("non esiste");
+            out.flush();
+        } else {
+            PrintWriter out = response.getWriter();
+            out.print("esiste");
+            out.flush();
+        }
+    }
+
+    private void modificaProfilo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter(cognomeParameter);
         Date data = Date.valueOf(request.getParameter("data"));

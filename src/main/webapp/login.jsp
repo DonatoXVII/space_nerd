@@ -11,6 +11,7 @@
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
@@ -25,7 +26,7 @@
 %>
 
 <div class="form-container-accesso">
-    <form action="UtenteControl?action=login" method="post" class="form">
+    <form action="UtenteControl?action=login" method="post" class="form" name="registrazione" onsubmit="return validate()">
         <div class="form-title"><span>entra nel tuo</span></div>
         <div class="title-2"><span>SPACE</span></div>
         <div class="input-container">
@@ -55,13 +56,32 @@
     </form>
 </div>
 
-<%
-    if(result != null) {
-%>
-<h3><%=result%></h3>
-<%
+<script>
+    function validate() {
+        var email = document.registrazione.email.value;
+        var pwd = document.registrazione.password.value;
+
+        if(email !== "" && pwd !== ""){
+            $.ajax({
+                url: "UtenteControl?action=UtenteRegistrato",
+                type: "POST",
+                data: { email: email, password: pwd },
+                success: function(response) {
+                    if (response === "non esiste")
+                    {
+                        alert("Credenziali errate");
+                        return false;
+                    }
+                },
+                error: function() {
+                    alert("Si è verificato un errore durante la verifica dell'email");
+                    return false;
+                }
+            });
+        }
+
     }
-%>
+</script>
 
 </body>
 </html>

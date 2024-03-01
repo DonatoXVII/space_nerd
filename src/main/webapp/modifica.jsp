@@ -6,12 +6,12 @@
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
     <link href="css/profilo.css" rel="stylesheet" type="text/css">
-    <script src="js/caricaCitta.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
 <div class="form-container-accesso">
-<form action="UtenteControl?action=modificaProfilo" method="post" class="form-registrazione">
+<form action="UtenteControl?action=modificaProfilo" method="post" class="form-registrazione" name="registrazione" onsubmit="return validate()">
     <div class="form-title"><span>aggiorna il tuo</span></div>
     <div class="title-2"><span>SPACE</span></div>
 
@@ -64,5 +64,38 @@
     </button>
 </form>
 </div>
+
+<script src="js/caricaCitta.js"></script>
+<script>
+    function validate() {
+        var pwd = document.registrazione.password.value;
+        var passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        var data = document.registrazione.data.value;
+        var dataDiOggi = new Date();
+        var dataLimite = new Date();
+        dataLimite.setFullYear(dataDiOggi.getFullYear() - 18);
+
+        if (!passwordRegex.test(pwd)) {
+            alert("Il campo Password è errato, deve contenere almeno 8 caratteri"
+                + "di cui almeno uno speciale, una maiuscola, una minuscola e un numero");
+            document.registrazione.password.focus();
+            return false;
+        }
+
+        if(data !== null) {
+            var dataNascita = new Date(data);
+        }
+        if(dataNascita > dataDiOggi){
+            alert("Inserisci una data valida");
+            document.registrazione.data.focus();
+            return false;
+        }else if(dataNascita > dataLimite){
+            alert("Per registrarti devi avere almeno 18 anni");
+            document.registrazione.data.focus();
+            return false;
+        }
+    }
+</script>
+
 </body>
 </html>

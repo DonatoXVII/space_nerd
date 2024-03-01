@@ -16,17 +16,18 @@
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
     <link href="css/utility.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
 
 <div class="form-container-accesso">
-    <form action="UtenteControl?action=inserisciMetodo" method="post" class="form-registrazione">
+    <form action="UtenteControl?action=inserisciMetodo" method="post" class="form-registrazione" name="registrazione" onsubmit="return validate()">
         <div class="form-title"><span>aggiungi un nuovo metodo di pagamento al tuo</span></div>
         <div class="title-2"><span>SPACE</span></div>
 
         <div class="input-container">
-            <input class="input-numero" name="numero" type="text" placeholder="Numero carta" required>
+            <input class="input-numero" name="numero" type="number" placeholder="Numero carta" required>
             <span> </span>
         </div>
 
@@ -158,6 +159,40 @@
         %>
     </div>
 </div>
+
+<script>
+    function validate() {
+        var numero = document.registrazione.numero.value;
+        var data = document.registrazione.data.value;
+        var dataDiOggi = new Date();
+        var ccv = document.registrazione.ccv.value;
+
+        if(numero !== "") {
+            if(numero.length !== 16) {
+                alert("Il campo numero carta è errato");
+                document.registrazione.numero.focus();
+                return false;
+            }
+        }
+
+        if(data !== null) {
+            var dataScadenza = new Date(data);
+        }
+        if(dataScadenza < dataDiOggi){
+            alert("Inserisci una data valida");
+            document.registrazione.data.focus();
+            return false;
+        }
+
+        if(ccv !== "") {
+            if(ccv.length !== 3) {
+                alert("Il campo ccv è errato");
+                document.registrazione.ccv.focus();
+                return false;
+            }
+        }
+    }
+</script>
 
 </body>
 </html>

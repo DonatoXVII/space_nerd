@@ -18,6 +18,7 @@ public class PopModel {
     private static final String TABLE_NAME_POP = "Pop";
     private static final String TABLE_NAME_COMPRENDE = "ComprendePop";
     private static final String TABLE_NAME_IMMAGINE = "ImmaginePop";
+    private static final String WHERE_IDPOP = "WHERE IdPop = ?";
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
@@ -89,7 +90,7 @@ public class PopModel {
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE IdPop = ?";
+            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " " + WHERE_IDPOP;
             ps = con.prepareStatement(query);
             ps.setInt(1, popBean.getIdPop());
             rs = ps.executeQuery();
@@ -218,7 +219,7 @@ public class PopModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_POP + " WHERE IdPop = ?";
+            String query = "SELECT * FROM " + TABLE_NAME_POP + " " + WHERE_IDPOP;
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();
@@ -265,7 +266,7 @@ public class PopModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_POP + " WHERE IdPop = ?";
+            String query = "SELECT NumeroArticoli FROM " + TABLE_NAME_POP + " " + WHERE_IDPOP;
             ps = con.prepareStatement(query);
             ps.setInt(1, i);
             rs = ps.executeQuery();

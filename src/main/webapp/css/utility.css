@@ -326,3 +326,36 @@ body {
     transform: translate(3px, 3px);
     box-shadow: 0px 0px var(--main-color);
 }
+
+.ordini-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2.2rem;
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    z-index: +1;
+    justify-content: space-evenly;
+    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
+    rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
+    rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
+    border: 2px solid #fff;
+    -webkit-box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
+    box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
+}
+
+.ordini-container h1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: Montserrat, serif;
+    font-weight: bold;
+    color : #f1f2f4;
+    margin-bottom: 50px;
+}
+
+.ordini-container h2 {
+    font-family: Montserrat, serif;
+    color: black;
+    font-weight: bold;
+}

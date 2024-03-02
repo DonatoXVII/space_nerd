@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -28,13 +29,22 @@ public class OrdiniControl extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         try {
-            if (action != null && action.equalsIgnoreCase("visualizzaOrdini")) {
-                List<OrdineBean> ordini;
-                HttpSession session = req.getSession();
-                ordini = ordineModel.visualizzaOrdini((String) session.getAttribute("email"));
-                req.setAttribute("ordini", ordini);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("/visualizzaOrdini.jsp");
-                dispatcher.forward(req, resp);
+            if(action != null) {
+                if (action.equalsIgnoreCase("visualizzaOrdini")) {
+                    List<OrdineBean> ordini;
+                    HttpSession session = req.getSession();
+                    ordini = ordineModel.visualizzaOrdini((String) session.getAttribute("email"));
+                    req.setAttribute("ordini", ordini);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/ordini.jsp");
+                    dispatcher.forward(req, resp);
+                }
+                if(action.equalsIgnoreCase("visualizzaDettagliOrdine")) {
+                    int id = Integer.parseInt(req.getParameter("IdOrdine"));
+                    List<Object> prodottiOrdine = new ArrayList<>(ordineModel.getProdottiOrdine(id));
+                    req.setAttribute("prodottiOrdine", prodottiOrdine);
+                    RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliOrdine.jsp");
+                    dispatcher.forward(req, resp);
+                }
             }
         } catch (ServletException | IOException e) {
             logger.info("Si è verificata un'eccezione:" + e);

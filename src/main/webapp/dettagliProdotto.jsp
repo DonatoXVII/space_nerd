@@ -27,7 +27,7 @@
         <%=((MangaBean) prodotto).getLingua()%><br>
         <%=((MangaBean) prodotto).getNumPagine()%><br>
         <%=((MangaBean) prodotto).getPrezzo()%><br>
-        <a href="ProdottoControl?action=aggiungiMangaAlCarrello&IdManga=<%=((MangaBean) prodotto).getIdManga()%>">Aggiungi al carrello</a>
+        <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>">Aggiungi al carrello</a>
 <%
     } else if(prodotto instanceof PopBean){
         for(String img : immaginiPop) {
@@ -40,7 +40,7 @@
         <%=((PopBean) prodotto).getNumSerie()%>
         <%=((PopBean) prodotto).getSerie()%>
         <%=((PopBean) prodotto).getPrezzo()%>
-        <a href="ProdottoControl?action=aggiungiPopAlCarrello&IdPop=<%=((PopBean) prodotto).getIdPop()%>">Aggiungi al carrello</a>
+        <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>">Aggiungi al carrello</a>
 <%
     } else if(prodotto instanceof FigureBean) {
         for(String img : immaginiFigure) {
@@ -54,7 +54,7 @@
         <%=((FigureBean) prodotto).getMateriale()%>
         <%=((FigureBean) prodotto).getPersonaggio()%>
         <%=((FigureBean) prodotto).getPrezzo()%>
-        <a href="ProdottoControl?action=aggiungiFigureAlCarrello&IdFigure=<%=((FigureBean) prodotto).getIdFigure()%>">Aggiungi al carrello</a>
+        <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>">Aggiungi al carrello</a>
 <%
     }
 %>

@@ -23,12 +23,9 @@ public class ProdottoControl extends HttpServlet {
     static FigureModel figureModel = new FigureModel();
     static Logger logger = Logger.getLogger(ProdottoControl.class.getName());
     static String carrelloParameter = "carrello";
-    static String idMangaParameter = "IdManga";
-    static String idPopParameter = "IdPop";
-    static String idFigureParameter = "IdFigure";
     static String prodottoParameter = "prodotto";
     static String dettagliJSP = "/dettagliProdotto.jsp";
-    static String carrelloJSP = "/carrello.jsp";
+    static String carrelloJSP = "./carrello.jsp";
 
     public ProdottoControl() {super();}
 
@@ -44,24 +41,14 @@ public class ProdottoControl extends HttpServlet {
                     case "visualizzadettagli":
                         visualizzaDettagli(req, resp);
                         break;
-                    case "aggiungimangaalcarrello":
-                        aggiungiMangaAlCarrello(req, resp);
+                    case "aggiungialcarrello":
+                        aggiungiAlCarrello(req, resp);
                         break;
-                    case "aggiungipopalcarrello":
-                        aggiungiPopAlCarrello(req, resp);
+                    case "rimuovidalcarrello":
+                        rimuoviDalCarrello(req, resp);
                         break;
-                    case "aggiungifigurealcarrello":
-                        aggiungiFigureAlCarrello(req, resp);
-                        break;
-                    case "rimuovimangadalcarrello":
-                        rimuoviMangaDalCarrello(req, resp);
-                        break;
-                    case "rimuovipopdalcarrello":
-                        rimuoviPopDalCarrello(req, resp);
-                        break;
-                    case "rimuovifiguredalcarrello":
-                        rimuoviFigureDalCarrello(req, resp);
-                        break;
+                    case "svuotacarrello":
+                        svuotaCarrello(req, resp);
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
                         errorDispatcher.forward(req, resp);
@@ -133,61 +120,48 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void aggiungiMangaAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(idMangaParameter));
-        if (mangaModel.verificaDisponibilita(id)) {
-            CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-            carrelloBean.aggiungiProdotto(mangaModel.getById(id));
-            req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        }
-        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-        dispatcher.forward(req, resp);
-    }
-
-    private void aggiungiPopAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(idPopParameter));
-        if (popModel.verificaDisponibilita(id)) {
-            CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-            carrelloBean.aggiungiProdotto(popModel.getById(id));
-            req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        }
-        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-        dispatcher.forward(req, resp);
-    }
-
-    private void aggiungiFigureAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(idFigureParameter));
-        if (figureModel.verificaDisponibilita(id)) {
-            CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-            carrelloBean.aggiungiProdotto(figureModel.getById(id));
-            req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        }
-        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-        dispatcher.forward(req, resp);
-    }
-
-    private void rimuoviMangaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void aggiungiAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto();
+        String tipo = req.getParameter("Tipo");
+        int id = Integer.parseInt(req.getParameter("Id"));
+        if (tipo.equalsIgnoreCase("manga")) {
+            if(mangaModel.verificaDisponibilita(id)) {
+                carrelloBean.aggiungiProdotto(mangaModel.getById(id));
+            }
+        }else if (tipo.equalsIgnoreCase("pop")) {
+            if(popModel.verificaDisponibilita(id)) {
+                carrelloBean.aggiungiProdotto(popModel.getById(id));
+            }
+        } else if (tipo.equalsIgnoreCase("figure")) {
+            if(figureModel.verificaDisponibilita(id)) {
+                carrelloBean.aggiungiProdotto(figureModel.getById(id));
+            }
+        }
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-        dispatcher.forward(req, resp);
+        resp.sendRedirect(carrelloJSP);
     }
 
-    private void rimuoviPopDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void rimuoviDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto();
+        String tipo = req.getParameter("Tipo");
+        int id = Integer.parseInt(req.getParameter("Id"));
+        if (tipo.equalsIgnoreCase("manga")) {
+            carrelloBean.rimuoviProdotto(id);
+        }else if (tipo.equalsIgnoreCase("pop")) {
+            carrelloBean.rimuoviProdotto(id);
+        } else if (tipo.equalsIgnoreCase("figure")) {
+            carrelloBean.rimuoviProdotto(id);
+        }
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-        dispatcher.forward(req, resp);
+        resp.sendRedirect(carrelloJSP);
     }
 
-    private void rimuoviFigureDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        carrelloBean.rimuoviProdotto();
-        req.getSession().setAttribute(carrelloParameter, carrelloBean);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(carrelloJSP);
-        dispatcher.forward(req, resp);
+    private void svuotaCarrello(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        CarrelloBean carrelloBean = getCarrelloBeanFromSession(request);
+        carrelloBean.svuotaCarrello();
+        request.getSession().setAttribute(carrelloParameter, carrelloBean);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/carrello.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {

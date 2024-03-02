@@ -1,7 +1,6 @@
 package com.example.space_nerd.control;
 
-import com.example.space_nerd.model.OrdineBean;
-import com.example.space_nerd.model.OrdineModel;
+import com.example.space_nerd.model.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,6 +18,8 @@ import java.util.logging.Logger;
 public class OrdiniControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static OrdineModel ordineModel = new OrdineModel();
+    static PopModel popModel = new PopModel();
+    static FigureModel figureModel = new FigureModel();
     static Logger logger = Logger.getLogger(OrdiniControl.class.getName());
 
     public OrdiniControl() {
@@ -41,7 +42,20 @@ public class OrdiniControl extends HttpServlet {
                 if(action.equalsIgnoreCase("visualizzaDettagliOrdine")) {
                     int id = Integer.parseInt(req.getParameter("IdOrdine"));
                     List<Object> prodottiOrdine = new ArrayList<>(ordineModel.getProdottiOrdine(id));
+                    List<String> imgPop = new ArrayList<>();
+                    List<String> imgFigure = new ArrayList<>();
+                    for(Object prod : prodottiOrdine) {
+                        if(prod instanceof PopBean) {
+                            assert false;
+                            imgPop.addAll(popModel.imgPerPop((PopBean) prod));
+                        } else if(prod instanceof FigureBean) {
+                            assert false;
+                            imgFigure.addAll(figureModel.imgPerFigure((FigureBean) prod));
+                        }
+                    }
                     req.setAttribute("prodottiOrdine", prodottiOrdine);
+                    req.setAttribute("imgPop", imgPop);
+                    req.setAttribute("imgFigure", imgFigure);
                     RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliOrdine.jsp");
                     dispatcher.forward(req, resp);
                 }

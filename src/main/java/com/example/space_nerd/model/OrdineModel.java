@@ -54,6 +54,7 @@ public class OrdineModel {
                 OrdineBean bean = new OrdineBean();
                 bean.setId(rs.getInt("IdOrdine"));
                 bean.setPrezzo(rs.getFloat("PrezzoTotale"));
+                bean.setData(rs.getDate("DataOrdine"));
                 bean.setFattura(rs.getString("Fattura"));
                 bean.setEmail(email);
                 ordini.add(bean);

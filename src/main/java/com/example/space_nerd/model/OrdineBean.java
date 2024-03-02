@@ -1,21 +1,26 @@
 package com.example.space_nerd.model;
 
+import java.sql.Date;
+
 public class OrdineBean {
     int id;
     float prezzo;
+    Date data;
     String fattura;
     String email;
 
     public OrdineBean() {
         id = 0;
         prezzo = 0;
+        data = null;
         fattura = "";
         email = "";
     }
 
-    public OrdineBean(int id, float prezzo, String fattura, String email) {
+    public OrdineBean(int id, float prezzo, Date data, String fattura, String email) {
         this.id = id;
         this.prezzo = prezzo;
+        this.data = data;
         this.fattura = fattura;
         this.email = email;
     }
@@ -35,6 +40,10 @@ public class OrdineBean {
     public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
     }
+
+    public Date getData() { return data; }
+
+    public void setData(Date data) { this.data = data; }
 
     public String getFattura() {
         return fattura;
@@ -57,6 +66,7 @@ public class OrdineBean {
         return "OrdineBean{" +
                 "id=" + id +
                 ", prezzo=" + prezzo +
+                ", data=" + data +
                 ", fattura='" + fattura + '\'' +
                 ", email='" + email + '\'' +
                 '}';

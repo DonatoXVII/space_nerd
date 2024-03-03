@@ -26,7 +26,7 @@
 <%
             if(prodotto instanceof MangaBean) {
 %>
-                <div class="imgOrdine"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>"></div>
+               <div class="imgOrdine"><div class="ordManga"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>"></div></div>
                 <div class="dettagliProd">
                     <%=((MangaBean) prodotto).getDescrizione()%><br>
                     <%=((MangaBean) prodotto).getCasaEditrice()%><br>
@@ -38,15 +38,18 @@
             } else if(prodotto instanceof PopBean) {
 %>
                 <div class="imgOrdine">
+                    <div class="slideshow">
                     <%
                         for(String immagine : ((PopBean) prodotto).getImmagini()){
                     %>
-                    <img src="img/imgPop/<%=immagine%>" alt="errore immagine">
+                    <img class="slide" src="img/imgPop/<%=immagine%>" alt="errore immagine">
                     <%
                         }
                     %>
+                    </div>
+                    <button class="prev">&#10094;</button>
+                    <button class="next">&#10095;</button>
                 </div>
-
                 <div class="dettagliProd">
                     <%=((PopBean) prodotto).getDescrizione()%><br>
                     <%=((PopBean) prodotto).getNumSerie()%><br>
@@ -57,13 +60,17 @@
             }else if(prodotto instanceof FigureBean) {
 %>
                 <div class="imgOrdine">
+                    <div class="slideshow">
                     <%
                         for(String immagine : ((FigureBean) prodotto).getImmagini()){
                     %>
-                    <img src="img/imgFigure/<%=immagine%>" alt="errore immagine">
+                    <img class="slide" src="img/imgFigure/<%=immagine%>" alt="errore immagine">
                     <%
                         }
                     %>
+                    </div>
+                    <button class="prev">&#10094;</button>
+                    <button class="next">&#10095;</button>
                 </div>
                 <div class="dettagliProd">
                     <%=((FigureBean) prodotto).getDescrizione()%><br>
@@ -83,5 +90,59 @@
     }
 %>
 </div>
+
+<script>
+    function initSlideshows() {
+        const slideshows = document.querySelectorAll(".slideshow");
+
+        slideshows.forEach(slideshow => {
+            const slides = slideshow.querySelectorAll(".slide");
+            let slideIndex = 0;
+
+            function showSlides(index) {
+                if (index >= slides.length) { slideIndex = 0; }
+                if (index < 0) { slideIndex = slides.length - 1; }
+
+                slides.forEach((slide, i) => {
+                    if (i === slideIndex) {
+                        slide.style.display = "block";
+                    } else {
+                        slide.style.display = "none";
+                    }
+                });
+
+                const images = slideshow.querySelectorAll(".slide img");
+                images.forEach((img, i) => {
+                    // Aggiunta: Centra l'immagine all'interno dello slide
+                    img.style.display = "block";
+                    img.style.margin = "auto";
+                    img.style.maxWidth = "100%";
+                    img.style.maxHeight = "100%";
+                });
+            }
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            showSlides(slideIndex);
+
+            const prevBtn = slideshow.parentElement.querySelector(".prev");
+            const nextBtn = slideshow.parentElement.querySelector(".next");
+
+            prevBtn.addEventListener("click", () => {
+                plusSlides(-1);
+            });
+
+            nextBtn.addEventListener("click", () => {
+                plusSlides(1);
+            });
+        });
+    }
+
+    // Chiama la funzione per inizializzare gli slideshow
+    initSlideshows();
+</script>
+
 </body>
 </html>

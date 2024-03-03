@@ -38,6 +38,10 @@ public class OrdiniControl extends HttpServlet {
                     case "visualizzadettagliordine" :
                         visualizzaDettagliOrdini(req, resp);
                         break;
+                    default:
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        errorDispatcher.forward(req, resp);
+                        break;
                 }
             }
         } catch (ServletException | IOException e) {

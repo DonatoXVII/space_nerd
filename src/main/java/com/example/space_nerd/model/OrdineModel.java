@@ -22,6 +22,7 @@ public class OrdineModel {
     private static final MangaModel mangaModel = new MangaModel();
     private static final PopModel popModel = new PopModel();
     private static final FigureModel figureModel = new FigureModel();
+    private static final String WHERE_IDORDINE = "WHERE IdOrdine = ?";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -98,9 +99,9 @@ public class OrdineModel {
         ResultSet rsFigure = null;
         try {
             con = ds.getConnection();
-            String queryManga = "SELECT IdManga FROM " + TABLE_NAME_COMPRENDE_MANGA + " WHERE IdOrdine = ?";
-            String queryPop = "SELECT IdPop FROM " + TABLE_NAME_COMPRENDE_POP + " WHERE IdOrdine = ?";
-            String queryFigure = "SELECT IdFigure FROM " + TABLE_NAME_COMPRENDE_FIGURE + " WHERE IdOrdine = ?";
+            String queryManga = "SELECT IdManga FROM " + TABLE_NAME_COMPRENDE_MANGA + " " + WHERE_IDORDINE;
+            String queryPop = "SELECT IdPop FROM " + TABLE_NAME_COMPRENDE_POP + " " + WHERE_IDORDINE;
+            String queryFigure = "SELECT IdFigure FROM " + TABLE_NAME_COMPRENDE_FIGURE + " " + WHERE_IDORDINE;
 
             psManga = con.prepareStatement(queryManga);
             psPop = con.prepareStatement(queryPop);
@@ -127,57 +128,47 @@ public class OrdineModel {
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
-            try {
-                if (rsManga != null) {
-                    rsManga.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
-            }
-            try {
-                if (rsPop != null) {
-                    rsPop.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
-            }
-            try {
-                if (rsFigure != null) {
-                    rsFigure.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
-            }
-            try {
-                if (psManga != null) {
-                    psManga.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
-            }
-            try {
-                if (psPop != null) {
-                    psPop.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
-            }
-            try {
-                if (psFigure != null) {
-                    psFigure.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
-            }
+            closeResultSet(rsManga, msgRs);
+            closeResultSet(rsPop, msgRs);
+            closeResultSet(rsFigure, msgRs);
+
+            closePreparedStatement(psManga, msgPs);
+            closePreparedStatement(psPop, msgPs);
+            closePreparedStatement(psFigure, msgPs);
+
+            closeConnection(con, msgCon);
         }
         return prodottiOrdine;
+    }
+
+    private void closeResultSet(ResultSet rs, String message) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, message, e);
+        }
+    }
+
+    private void closePreparedStatement(PreparedStatement ps, String message) {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, message, e);
+        }
+    }
+
+    private void closeConnection(Connection con, String message) {
+        try {
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, message, e);
+        }
     }
 
 }

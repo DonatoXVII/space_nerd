@@ -26,7 +26,7 @@
 <%
             if(prodotto instanceof MangaBean) {
 %>
-               <div class="imgOrdine"><div class="ordManga"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>"></div></div>
+               <div class="imgOrdine"><div class="ordManga"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"></div></div>
                 <div class="dettagliProd">
                     <%=((MangaBean) prodotto).getDescrizione()%><br>
                     <%=((MangaBean) prodotto).getCasaEditrice()%><br>

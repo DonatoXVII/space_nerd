@@ -26,6 +26,8 @@ public class ProdottoControl extends HttpServlet {
     static String prodottoParameter = "prodotto";
     static String dettagliJSP = "/dettagliProdotto.jsp";
     static String carrelloJSP = "./carrello.jsp";
+    static String mangaParameter = "manga";
+    static String figureParameter = "figure";
 
     public ProdottoControl() {super();}
 
@@ -49,6 +51,7 @@ public class ProdottoControl extends HttpServlet {
                         break;
                     case "svuotacarrello":
                         svuotaCarrello(req, resp);
+                        break;
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
                         errorDispatcher.forward(req, resp);
@@ -108,7 +111,7 @@ public class ProdottoControl extends HttpServlet {
         String tipo = req.getParameter("Tipo");
         int id = Integer.parseInt(req.getParameter("Id"));
         Object prodotto = null;
-        if(tipo.equalsIgnoreCase("manga")){
+        if(tipo.equalsIgnoreCase(mangaParameter)){
             prodotto = mangaModel.getById(id);
         } else if(tipo.equalsIgnoreCase("pop")) {
             prodotto = popModel.getById(id);
@@ -116,7 +119,7 @@ public class ProdottoControl extends HttpServlet {
             for(String immagine : immaginiPop) {
                 ((PopBean) prodotto).aggiungiImmagine(immagine);
             }
-        } else if(tipo.equalsIgnoreCase("figure")) {
+        } else if(tipo.equalsIgnoreCase(figureParameter)) {
             prodotto = figureModel.getById(id);
             List<String> immaginiFIgure = figureModel.getAllImgFigure((FigureBean) prodotto);
             for(String immagine : immaginiFIgure) {
@@ -128,11 +131,11 @@ public class ProdottoControl extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void aggiungiAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void aggiungiAlCarrello(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         String tipo = req.getParameter("Tipo");
         int id = Integer.parseInt(req.getParameter("Id"));
-        if (tipo.equalsIgnoreCase("manga")) {
+        if (tipo.equalsIgnoreCase(mangaParameter)) {
             if(mangaModel.verificaDisponibilita(id)) {
                 carrelloBean.aggiungiProdotto(mangaModel.getById(id));
             }
@@ -140,7 +143,7 @@ public class ProdottoControl extends HttpServlet {
             if(popModel.verificaDisponibilita(id)) {
                 carrelloBean.aggiungiProdotto(popModel.getById(id));
             }
-        } else if (tipo.equalsIgnoreCase("figure")) {
+        } else if (tipo.equalsIgnoreCase(figureParameter)) {
             if(figureModel.verificaDisponibilita(id)) {
                 carrelloBean.aggiungiProdotto(figureModel.getById(id));
             }
@@ -151,15 +154,8 @@ public class ProdottoControl extends HttpServlet {
 
     private void rimuoviDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
-        String tipo = req.getParameter("Tipo");
         int id = Integer.parseInt(req.getParameter("Id"));
-        if (tipo.equalsIgnoreCase("manga")) {
-            carrelloBean.rimuoviProdotto(id);
-        }else if (tipo.equalsIgnoreCase("pop")) {
-            carrelloBean.rimuoviProdotto(id);
-        } else if (tipo.equalsIgnoreCase("figure")) {
-            carrelloBean.rimuoviProdotto(id);
-        }
+        carrelloBean.rimuoviProdotto(id);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }

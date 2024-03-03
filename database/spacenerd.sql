@@ -52,15 +52,16 @@ CREATE TABLE MetodoPagamento(
 );
 
 CREATE TABLE Registra(
-    Email varchar(50) NOT NULL COLLATE utf8_bin,
-    IdMetodo int NOT NULL,
-    FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(IdMetodo) REFERENCES MetodoPagamento(IdMetodo) ON UPDATE CASCADE ON DELETE CASCADE
+     Email varchar(50) NOT NULL COLLATE utf8_bin,
+     IdMetodo int NOT NULL,
+     FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE,
+     FOREIGN KEY(IdMetodo) REFERENCES MetodoPagamento(IdMetodo) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Ordine(
     IdOrdine int NOT NULL auto_increment,
     PrezzoTotale float NOT NULL,
+    DataOrdine date NOT NULL,
     Fattura varchar(16) NOT NULL UNIQUE,
     Email varchar(50) NOT NULL COLLATE utf8_bin,
     PRIMARY KEY(IdOrdine),
@@ -157,7 +158,7 @@ VALUES('a.digiorgio@studenti.unisa.it', 'Antonio', 'di Giorgio', '2000-12-05', '
 INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
 VALUES('Simone', 'Cirma', 'Roma', '15', 'Caserta', 'San Marco', '81020');
 INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
-VALUES('Simone', 'Cirma', 'Geronimo', '18', 'Caserta', 'San Marco', '81020');
+VALUES('Simone', 'Cirma', 'Geronimo', '18', 'Caserta', 'San Marco' , '81020');
 INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
 VALUES('Antonio', 'di Giorgio', 'Torino', '23', 'Napoli', 'Frattaminore', '80020');
 INSERT INTO IndirizzoSpedizione(Nome, Cognome, Via, Civico, Provincia, Comune, Cap)
@@ -186,14 +187,14 @@ VALUES('a.digiorgio@studenti.unisa.it', '3');
 INSERT INTO Registra(Email, IdMetodo)
 VALUES('s.cirma@studenti.unisa.it', '2');
 
-INSERT INTO Ordine(PrezzoTotale, Fattura, Email)
-VALUES('150', 'Fattura1.pdf', 's.cirma@studenti.unisa.it');
-INSERT INTO Ordine(PrezzoTotale, Fattura, Email)
-VALUES('200', 'Fattura2.pdf', 's.cirma@studenti.unisa.it');
-INSERT INTO Ordine(PrezzoTotale, Fattura, Email)
-VALUES('120', 'Fattura3.pdf', 'a.digiorgio@studenti.unisa.it');
-INSERT INTO Ordine(PrezzoTotale, Fattura, Email)
-VALUES('85', 'Fattura4.pdf', 'a.digiorgio@studenti.unisa.it');
+INSERT INTO Ordine(PrezzoTotale, DataOrdine, Fattura, Email)
+VALUES('150', '2022-12-12', 'Fattura1.pdf', 's.cirma@studenti.unisa.it');
+INSERT INTO Ordine(PrezzoTotale, DataOrdine, Fattura, Email)
+VALUES('200', '2022-12-13', 'Fattura2.pdf', 's.cirma@studenti.unisa.it');
+INSERT INTO Ordine(PrezzoTotale, DataOrdine, Fattura, Email)
+VALUES('120', '2022-12-12', 'Fattura3.pdf', 'a.digiorgio@studenti.unisa.it');
+INSERT INTO Ordine(PrezzoTotale, DataOrdine, Fattura, Email)
+VALUES('85', '2022-12-12', 'Fattura4.pdf', 'a.digiorgio@studenti.unisa.it');
 
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
 VALUES('5.20', 'One Piece New Edition vol 1', '15', 'StarComics', 'Italiano', '200', 'imgOP1.jpg');
@@ -350,7 +351,7 @@ VALUES('img_popsw2.jpg', '8');
 INSERT INTO ImmaginePop(Nome, IdPop)
 VALUES('img_popcpt1.jpg', '9');
 INSERT INTO ImmaginePop(Nome, IdPop)
-VALUES('img_popctp2.jpg', '9');
+VALUES('img_popcpt2.jpg', '9');
 INSERT INTO ImmaginePop(Nome, IdPop)
 VALUES('img_popvegeta1.jpg', '10');
 INSERT INTO ImmaginePop(Nome, IdPop)

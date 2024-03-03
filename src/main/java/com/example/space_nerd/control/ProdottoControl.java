@@ -179,23 +179,21 @@ public class ProdottoControl extends HttpServlet {
         MangaBean mangaBean = mangaModel.getMangaPerDescrizione(descrizione);
         PopBean popBean = popModel.getPopPerDescrizione(descrizione);
         FigureBean figureBean = figureModel.getFigurePerDescrizione(descrizione);
-        if(mangaBean != null){
+        if(mangaBean.getIdManga() != 0){
             request.setAttribute("prodotto", mangaBean);
         }
-        if(popBean != null) {
+        if(popBean.getIdPop() != 0) {
             List<String> immagini = popModel.getAllImgPop(popBean);
             for(String immagine : immagini) {
                 popBean.aggiungiImmagine(immagine);
             }
-            System.out.println(popBean);
             request.setAttribute("prodotto", popBean);
         }
-        if(figureBean != null) {
+        if(figureBean.getIdFigure() != 0) {
             List<String> immagini = figureModel.getAllImgFigure(figureBean);
             for(String immagine : immagini) {
                 figureBean.aggiungiImmagine(immagine);
             }
-            System.out.println(popBean);
             request.setAttribute("prodotto", figureBean);
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(dettagliJSP);
@@ -229,7 +227,6 @@ public class ProdottoControl extends HttpServlet {
                 figure.aggiungiImmagine(immagine);
             }
         }
-
         List<Object> bestProdotti = new ArrayList<>();
         bestProdotti.addAll(bestManga);
         bestProdotti.addAll(bestPop);

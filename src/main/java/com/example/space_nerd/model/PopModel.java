@@ -22,7 +22,7 @@ public class PopModel {
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
-    private static String descrizione = "Descrizione";
+    private static String descrizioneParameter = "Descrizione";
     private static DataSource ds;
 
     static {
@@ -52,7 +52,7 @@ public class PopModel {
             while(rs.next()) {
                 PopBean pop = new PopBean();
                 pop.setIdPop(rs.getInt("IdPop"));
-                pop.setDescrizione(rs.getString(descrizione));
+                pop.setDescrizione(rs.getString(descrizioneParameter));
                 miglioriPop.add(pop);
             }
         } catch (SQLException e) {
@@ -139,7 +139,7 @@ public class PopModel {
             while(rs.next()) {
                 PopBean pop = new PopBean();
                 pop.setIdPop(rs.getInt("IdPop"));
-                pop.setDescrizione(rs.getString(descrizione));
+                pop.setDescrizione(rs.getString(descrizioneParameter));
                 allPop.add(pop);
             }
         } catch (SQLException e) {
@@ -184,7 +184,7 @@ public class PopModel {
             while (rs.next()) {
                 pop.setIdPop(i);
                 pop.setPrezzo(rs.getFloat("Prezzo"));
-                pop.setDescrizione(rs.getString(descrizione));
+                pop.setDescrizione(rs.getString(descrizioneParameter));
                 pop.setNumArticoli(rs.getInt("NumeroArticoli"));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
                 pop.setSerie(rs.getString("Serie"));
@@ -259,5 +259,95 @@ public class PopModel {
             }
         }
         return res;
+    }
+
+    public PopBean getPopPerDescrizione(String descrizione) {
+        PopBean pop = new PopBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_POP + " WHERE Descrizione LIKE ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, descrizione);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                pop.setIdPop(rs.getInt("IdPop"));
+                pop.setPrezzo(rs.getFloat("Prezzo"));
+                pop.setDescrizione(descrizione);
+                pop.setNumArticoli(rs.getInt("NumeroArticoli"));
+                pop.setNumSerie(rs.getInt("NumeroSerie"));
+                pop.setSerie(rs.getString("Serie"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return pop;
+    }
+
+    public List<String> getSuggerimentiPop(String ricerca) {
+        List<String> suggerimenti = new ArrayList<>();
+        ricerca = "%" + ricerca + "%";
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT Descrizione FROM " + TABLE_NAME_POP + " WHERE Descrizione LIKE ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, ricerca);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                suggerimenti.add(rs.getString("Descrizione"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return suggerimenti;
     }
 }

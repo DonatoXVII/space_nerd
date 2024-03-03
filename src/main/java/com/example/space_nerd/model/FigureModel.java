@@ -260,4 +260,95 @@ public class FigureModel {
         }
         return res;
     }
+
+    public FigureBean getFigurePerDescrizione(String descrizione) {
+        FigureBean figure = new FigureBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE Descrizione LIKE ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, descrizione);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                figure.setIdFigure(rs.getInt("IdFigure"));
+                figure.setPrezzo(rs.getFloat("Prezzo"));
+                figure.setDescrizione(descrizione);
+                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
+                figure.setMateriale(rs.getString("Materiale"));
+                figure.setAltezza(rs.getInt("Altezza"));
+                figure.setPersonaggio(rs.getString("Personaggio"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return figure;
+    }
+
+    public List<String> getSuggerimentiFigure(String ricerca) {
+        List<String> suggerimenti = new ArrayList<>();
+        ricerca = "%" + ricerca + "%";
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT Descrizione FROM " + TABLE_NAME_FIGURE + " WHERE Descrizione LIKE ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, ricerca);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                suggerimenti.add(rs.getString("Descrizione"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return suggerimenti;
+    }
 }

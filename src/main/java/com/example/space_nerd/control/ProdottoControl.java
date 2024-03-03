@@ -1,5 +1,6 @@
 package com.example.space_nerd.control;
 
+import com.google.gson.Gson;
 import com.example.space_nerd.model.*;
 import com.example.space_nerd.utility.CarrelloBean;
 import jakarta.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,12 @@ public class ProdottoControl extends HttpServlet {
                         break;
                     case "svuotacarrello":
                         svuotaCarrello(req, resp);
+                        break;
+                    case "ricerca":
+                        ricerca(req, resp);
+                        break;
+                    case "ricercasuggerimenti" :
+                        ricercaSuggerimenti(req, resp);
                         break;
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
@@ -164,6 +172,47 @@ public class ProdottoControl extends HttpServlet {
         request.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/carrello.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private void ricerca(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String descrizione = request.getParameter("ricerca");
+        MangaBean mangaBean = mangaModel.getMangaPerDescrizione(descrizione);
+        PopBean popBean = popModel.getPopPerDescrizione(descrizione);
+        FigureBean figureBean = figureModel.getFigurePerDescrizione(descrizione);
+        if(mangaBean != null){
+            request.setAttribute("prodotto", mangaBean);
+        }
+        if(popBean != null) {
+            List<String> immagini = popModel.getAllImgPop(popBean);
+            for(String immagine : immagini) {
+                popBean.aggiungiImmagine(immagine);
+            }
+            System.out.println(popBean);
+            request.setAttribute("prodotto", popBean);
+        }
+        if(figureBean != null) {
+            List<String> immagini = figureModel.getAllImgFigure(figureBean);
+            for(String immagine : immagini) {
+                figureBean.aggiungiImmagine(immagine);
+            }
+            System.out.println(popBean);
+            request.setAttribute("prodotto", figureBean);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(dettagliJSP);
+        dispatcher.forward(request, response);
+    }
+
+    private void ricercaSuggerimenti(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String ricerca = request.getParameter("ricerca");
+        List<String> suggerimenti = new ArrayList<>();
+        suggerimenti.addAll(mangaModel.getSuggerimentiManga(ricerca));
+        suggerimenti.addAll(popModel.getSuggerimentiPop(ricerca));
+        suggerimenti.addAll(figureModel.getSuggerimentiFigure(ricerca));
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print("{\"suggerimenti\": " + new Gson().toJson(suggerimenti) + "}");
+        out.flush();
     }
 
     private void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {

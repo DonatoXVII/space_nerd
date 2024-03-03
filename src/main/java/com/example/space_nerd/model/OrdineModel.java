@@ -39,7 +39,7 @@ public class OrdineModel {
         }
     }
 
-    public List<OrdineBean> visualizzaOrdini(String email) {
+    public List<OrdineBean> getOrdiniPerUtente(String email) {
         List<OrdineBean> ordini = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;

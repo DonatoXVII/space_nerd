@@ -36,7 +36,7 @@ public class FigureModel {
         }
     }
 
-    public List<FigureBean> miglioriFigure() {
+    public List<FigureBean> getMiglioriFigure() {
         List<FigureBean> miglioriFigure = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -82,7 +82,7 @@ public class FigureModel {
         return miglioriFigure;
     }
 
-    public List<String> imgPerFigure(FigureBean figureBean) {
+    public List<String> getAllImgFigure(FigureBean figureBean) {
         List<String> immagini = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -125,7 +125,7 @@ public class FigureModel {
         return immagini;
     }
 
-    public List<FigureBean> allFigure() {
+    public List<FigureBean> getAllFigure() {
         List<FigureBean> allFigure = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -167,48 +167,6 @@ public class FigureModel {
             }
         }
         return allFigure;
-    }
-
-    public List<String> oneImgPerFigure(){
-        List<String> imgPerFigure = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE (IdFigure, IdImmagine) IN (SELECT " +
-                    "IdFigure, MIN(IdImmagine) FROM " + TABLE_NAME_IMMAGINE + " GROUP BY IdFigure)";
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                imgPerFigure.add(rs.getString("Nome"));
-            }
-        } catch (SQLException e) {
-            logger.log(Level.WARNING, e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
-            }
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
-            }
-        }
-        return imgPerFigure;
     }
 
     public FigureBean getById(int i) {

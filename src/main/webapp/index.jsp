@@ -9,11 +9,6 @@
         response.sendRedirect("./ProdottoControl");
         return;
     }
-
-    List<String> immaginiPop = (List<String>) request.getAttribute("immaginiPop");
-    List<String> immaginiFigure = (List<String>) request.getAttribute("immaginiFigure");
-    int countPop = 0;
-    int countFigure = 0;
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -64,11 +59,9 @@
                 <%
                     for(Object prodotto : bestProdotti) {
                         if(prodotto instanceof PopBean) {
-                            String img = immaginiPop.get(countPop);
-                            countPop++;
                 %>
                                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><div class="pop-item">
-                                <img src="img/imgPop/<%=img%>" alt="errore immagine">
+                                <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                                 <div class="description">
                                     <%=((PopBean) prodotto).getDescrizione()%>
                                 </div>
@@ -87,12 +80,10 @@
                 <%
                     for(Object prodotto : bestProdotti){
                         if(prodotto instanceof FigureBean) {
-                            String img = immaginiFigure.get(countFigure);
-                            countFigure++;
                 %>
 
                                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><div class="figure-item">
-                                <img src="img/imgFigure/<%=img%>" alt="errore immagine">
+                                <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                                 <div class="description">
                                     <%=((FigureBean) prodotto).getDescrizione()%>
                                 </div>

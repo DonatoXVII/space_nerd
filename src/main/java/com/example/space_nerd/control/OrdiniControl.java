@@ -31,33 +31,13 @@ public class OrdiniControl extends HttpServlet {
         String action = req.getParameter("action");
         try {
             if(action != null) {
-                if (action.equalsIgnoreCase("visualizzaOrdini")) {
-                    List<OrdineBean> ordini;
-                    HttpSession session = req.getSession();
-                    ordini = ordineModel.visualizzaOrdini((String) session.getAttribute("email"));
-                    req.setAttribute("ordini", ordini);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/ordini.jsp");
-                    dispatcher.forward(req, resp);
-                }
-                if(action.equalsIgnoreCase("visualizzaDettagliOrdine")) {
-                    int id = Integer.parseInt(req.getParameter("IdOrdine"));
-                    List<Object> prodottiOrdine = new ArrayList<>(ordineModel.getProdottiOrdine(id));
-                    List<String> imgPop = new ArrayList<>();
-                    List<String> imgFigure = new ArrayList<>();
-                    for(Object prod : prodottiOrdine) {
-                        if(prod instanceof PopBean) {
-                            assert false;
-                            imgPop.addAll(popModel.imgPerPop((PopBean) prod));
-                        } else if(prod instanceof FigureBean) {
-                            assert false;
-                            imgFigure.addAll(figureModel.imgPerFigure((FigureBean) prod));
-                        }
-                    }
-                    req.setAttribute("prodottiOrdine", prodottiOrdine);
-                    req.setAttribute("imgPop", imgPop);
-                    req.setAttribute("imgFigure", imgFigure);
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("/dettagliOrdine.jsp");
-                    dispatcher.forward(req, resp);
+                switch (action.toLowerCase()) {
+                    case "visualizzaordini" :
+                        visualizzaOrdini(req, resp);
+                        break;
+                    case "visualizzadettagliordine" :
+                        visualizzaDettagliOrdini(req, resp);
+                        break;
                 }
             }
         } catch (ServletException | IOException e) {
@@ -66,11 +46,43 @@ public class OrdiniControl extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
             logger.info("Si è verificata un'eccezione:" + e);
         }
     }
+
+    private void visualizzaOrdini(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<OrdineBean> ordini;
+        HttpSession session = request.getSession();
+        ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute("email"));
+        request.setAttribute("ordini", ordini);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void visualizzaDettagliOrdini(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("IdOrdine"));
+        List<Object> prodottiOrdine = new ArrayList<>(ordineModel.getProdottiOrdine(id));
+        for(Object prod : prodottiOrdine) {
+            if(prod instanceof PopBean) {
+                List<String> immaginiPop = popModel.getAllImgPop((PopBean) prod);
+                for(String immagine : immaginiPop) {
+                    ((PopBean) prod).aggiungiImmagine(immagine);
+                }
+            } else if(prod instanceof FigureBean) {
+                List<String> immaginiFigure = figureModel.getAllImgFigure((FigureBean) prod);
+                for(String immagine : immaginiFigure) {
+                    ((FigureBean) prod).aggiungiImmagine(immagine);
+                }
+            }
+        }
+        request.setAttribute("prodottiOrdine", prodottiOrdine);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/dettagliOrdine.jsp");
+        dispatcher.forward(request, response);
+
+    }
 }
+

@@ -5,10 +5,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     List<Object> prodottiOrdine = (List<Object>) request.getAttribute("prodottiOrdine");
-    List<String> imgPop = (List<String>) request.getAttribute("imgPop");
-    List<String> imgFigure = (List<String>) request.getAttribute("imgFigure");
-    int countPop = 0;
-    int countFigure = 0;
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -42,8 +38,13 @@
             } else if(prodotto instanceof PopBean) {
 %>
                 <div class="imgOrdine">
-                    <img src="img/imgPop/<%=imgPop.get(countPop)%>" alt="errore immagine">
-                    <img src="img/imgPop/<%=imgPop.get(countPop+1)%>" alt="errore immagine">
+                    <%
+                        for(String immagine : ((PopBean) prodotto).getImmagini()){
+                    %>
+                    <img src="img/imgPop/<%=immagine%>" alt="errore immagine">
+                    <%
+                        }
+                    %>
                 </div>
 
                 <div class="dettagliProd">
@@ -53,13 +54,16 @@
                     <%=((PopBean) prodotto).getPrezzo()%><br>
                 </div>
 <%
-                countPop+=2;
             }else if(prodotto instanceof FigureBean) {
 %>
                 <div class="imgOrdine">
-                    <img src="img/imgFigure/<%=imgFigure.get(countFigure)%>" alt="errore immagine">
-                    <img src="img/imgFigure/<%=imgFigure.get(countFigure+1)%>" alt="errore immagine">
-                    <img src="img/imgFigure/<%=imgFigure.get(countFigure+2)%>" alt="errore immagine">
+                    <%
+                        for(String immagine : ((FigureBean) prodotto).getImmagini()){
+                    %>
+                    <img src="img/imgFigure/<%=immagine%>" alt="errore immagine">
+                    <%
+                        }
+                    %>
                 </div>
                 <div class="dettagliProd">
                     <%=((FigureBean) prodotto).getDescrizione()%><br>
@@ -69,9 +73,9 @@
                     <%=((FigureBean) prodotto).getPrezzo()%><br>
                 </div>
 <%
-                countFigure+=3;
             }
-%></div>
+%>
+            </div>
 <%
         }
 %>

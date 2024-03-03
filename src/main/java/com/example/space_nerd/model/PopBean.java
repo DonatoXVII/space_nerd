@@ -1,5 +1,8 @@
 package com.example.space_nerd.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PopBean {
     int idPop;
     float prezzo;
@@ -7,6 +10,7 @@ public class PopBean {
     int numArticoli;
     int numSerie;
     String serie;
+    List<String> immagini;
 
     public PopBean() {
         idPop = 0;
@@ -15,15 +19,17 @@ public class PopBean {
         numArticoli = 0;
         numSerie = 0;
         serie = "";
+        immagini = new ArrayList<>();
     }
 
-    public PopBean(int idPop, float prezzo, String descrizione, int numArticoli, int numSerie, String serie) {
+    public PopBean(int idPop, float prezzo, String descrizione, int numArticoli, int numSerie, String serie, List<String> immagini) {
         this.idPop = idPop;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
         this.numArticoli = numArticoli;
         this.numSerie = numSerie;
         this.serie = serie;
+        this.immagini = immagini;
     }
 
     public int getIdPop() {
@@ -74,6 +80,14 @@ public class PopBean {
         this.serie = serie;
     }
 
+    public List<String> getImmagini() { return immagini; }
+
+    public void setImmagini(List<String> immagini) { this.immagini = immagini; }
+
+    public void aggiungiImmagine(String immagine) {
+        this.immagini.add(immagine);
+    }
+
     @Override
     public String toString() {
         return "PopBean{" +
@@ -83,6 +97,7 @@ public class PopBean {
                 ", numArticoli=" + numArticoli +
                 ", numSerie=" + numSerie +
                 ", serie='" + serie + '\'' +
+                ", immagini=" + immagini +
                 '}';
     }
 }

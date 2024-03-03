@@ -81,21 +81,25 @@ public class ProdottoControl extends HttpServlet {
     }
 
     private void visualizzaCatalogo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<MangaBean> allManga = mangaModel.allManga();
-        List<PopBean> allPop = popModel.allPop();
-        List<FigureBean> allFigure = figureModel.allFigure();
-
-        List<String> imgPerPop = popModel.oneImgPerPop();
-        List<String> imgPerFigure = figureModel.oneImgPerFigure();
+        List<MangaBean> allManga = mangaModel.getAllManga();
+        List<PopBean> allPop = popModel.getAllPop();
+        List<FigureBean> allFigure = figureModel.getAllFigure();
+        for(PopBean pop : allPop) {
+            for(String immagine : popModel.getAllImgPop(pop)) {
+                pop.aggiungiImmagine(immagine);
+            }
+        }
+        for(FigureBean figure : allFigure) {
+            for(String immagine : figureModel.getAllImgFigure(figure)) {
+                figure.aggiungiImmagine(immagine);
+            }
+        }
 
         List<Object> prodotti = new ArrayList<>();
         prodotti.addAll(allManga);
         prodotti.addAll(allPop);
         prodotti.addAll(allFigure);
-
         req.setAttribute("prodotti", prodotti);
-        req.setAttribute("imgPop", imgPerPop);
-        req.setAttribute("imgFigure", imgPerFigure);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/catalogo.jsp");
         dispatcher.forward(req, resp);
     }
@@ -108,12 +112,16 @@ public class ProdottoControl extends HttpServlet {
             prodotto = mangaModel.getById(id);
         } else if(tipo.equalsIgnoreCase("pop")) {
             prodotto = popModel.getById(id);
-            List<String> immaginiPop = popModel.imgPerPop((PopBean) prodotto);
-            req.setAttribute("immaginiPop", immaginiPop);
+            List<String> immaginiPop = popModel.getAllImgPop((PopBean) prodotto);
+            for(String immagine : immaginiPop) {
+                ((PopBean) prodotto).aggiungiImmagine(immagine);
+            }
         } else if(tipo.equalsIgnoreCase("figure")) {
             prodotto = figureModel.getById(id);
-            List<String> immaginiFigure = figureModel.imgPerFigure((FigureBean) prodotto);
-            req.setAttribute("immaginiFigure", immaginiFigure);
+            List<String> immaginiFIgure = figureModel.getAllImgFigure((FigureBean) prodotto);
+            for(String immagine : immaginiFIgure) {
+                ((FigureBean) prodotto).aggiungiImmagine(immagine);
+            }
         }
         req.setAttribute(prodottoParameter, prodotto);
         RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
@@ -165,28 +173,25 @@ public class ProdottoControl extends HttpServlet {
     }
 
     private void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-        List<MangaBean> bestManga = mangaModel.miglioriManga();
-        List<PopBean> bestPop = popModel.miglioriPop();
-        List<FigureBean> bestFigure = figureModel.miglioriFigure();
+        List<MangaBean> bestManga = mangaModel.getMiglioriManga();
+        List<PopBean> bestPop = popModel.getMiglioriPop();
+        List<FigureBean> bestFigure = figureModel.getMiglioriFigure();
+        for(PopBean pop : bestPop) {
+            for(String immagine : popModel.getAllImgPop(pop)) {
+                pop.aggiungiImmagine(immagine);
+            }
+        }
+        for(FigureBean figure : bestFigure) {
+            for(String immagine : figureModel.getAllImgFigure(figure)) {
+                figure.aggiungiImmagine(immagine);
+            }
+        }
 
         List<Object> bestProdotti = new ArrayList<>();
         bestProdotti.addAll(bestManga);
         bestProdotti.addAll(bestPop);
         bestProdotti.addAll(bestFigure);
         req.setAttribute("bestProdotti", bestProdotti);
-
-        List<String> immaginiPop = new ArrayList<>();
-        for (PopBean bean : bestPop) {
-            immaginiPop.add(popModel.imgPerPop(bean).get(0));
-        }
-        req.setAttribute("immaginiPop", immaginiPop);
-
-        List<String> immaginiFigure = new ArrayList<>();
-        for (FigureBean bean : bestFigure) {
-            immaginiFigure.add(figureModel.imgPerFigure(bean).get(0));
-        }
-        req.setAttribute("immaginiFigure", immaginiFigure);
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);
     }

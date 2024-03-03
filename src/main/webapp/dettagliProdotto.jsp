@@ -1,12 +1,9 @@
 <%@ page import="com.example.space_nerd.model.MangaBean" %>
 <%@ page import="com.example.space_nerd.model.PopBean" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.example.space_nerd.model.FigureBean" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     Object prodotto = request.getAttribute("prodotto");
-    List<String> immaginiPop = (List<String>) request.getAttribute("immaginiPop");
-    List<String> immaginiFigure = (List<String>) request.getAttribute("immaginiFigure");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -30,7 +27,7 @@
         <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>">Aggiungi al carrello</a>
 <%
     } else if(prodotto instanceof PopBean){
-        for(String img : immaginiPop) {
+        for(String img : ((PopBean) prodotto).getImmagini()) {
 %>
         <img src="img/imgPop/<%=img%>" alt="errore immagine">
 <%
@@ -43,7 +40,7 @@
         <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>">Aggiungi al carrello</a>
 <%
     } else if(prodotto instanceof FigureBean) {
-        for(String img : immaginiFigure) {
+        for(String img : ((FigureBean) prodotto).getImmagini()) {
 %>
         <img src="img/imgFigure/<%=img%>" alt="errore immagine">
 <%

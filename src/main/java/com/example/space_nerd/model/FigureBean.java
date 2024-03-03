@@ -1,5 +1,8 @@
 package com.example.space_nerd.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FigureBean {
     int idFigure;
     float prezzo;
@@ -8,6 +11,7 @@ public class FigureBean {
     String materiale;
     int altezza;
     String personaggio;
+    List<String> immagini;
 
     public FigureBean() {
         idFigure = 0;
@@ -17,9 +21,10 @@ public class FigureBean {
         materiale = "";
         altezza = 0;
         personaggio = "";
+        immagini = new ArrayList<>();
     }
 
-    public FigureBean(int idFigure, float prezzo, String descrizione, int numArticoli, String materiale, int altezza, String personaggio) {
+    public FigureBean(int idFigure, float prezzo, String descrizione, int numArticoli, String materiale, int altezza, String personaggio, List<String> immagini) {
         this.idFigure = idFigure;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -27,6 +32,7 @@ public class FigureBean {
         this.materiale = materiale;
         this.altezza = altezza;
         this.personaggio = personaggio;
+        this.immagini = immagini;
     }
 
     public int getIdFigure() {
@@ -85,6 +91,14 @@ public class FigureBean {
         this.personaggio = personaggio;
     }
 
+    public List<String> getImmagini() { return immagini; }
+
+    public void setImmagini(List<String> immagini) { this.immagini = immagini; }
+
+    public void aggiungiImmagine(String immagine) {
+        this.immagini.add(immagine);
+    }
+
     @Override
     public String toString() {
         return "FigureBean{" +
@@ -95,6 +109,7 @@ public class FigureBean {
                 ", materiale='" + materiale + '\'' +
                 ", altezza=" + altezza +
                 ", personaggio='" + personaggio + '\'' +
+                ", immagini=" + immagini +
                 '}';
     }
 }

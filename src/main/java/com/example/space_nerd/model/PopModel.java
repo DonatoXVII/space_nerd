@@ -37,7 +37,7 @@ public class PopModel {
         }
     }
 
-    public List<PopBean> miglioriPop() throws SQLException {
+    public List<PopBean> getMiglioriPop() {
         List<PopBean> miglioriPop = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -83,7 +83,7 @@ public class PopModel {
         return miglioriPop;
     }
 
-    public List<String> imgPerPop(PopBean popBean) {
+    public List<String> getAllImgPop(PopBean popBean) {
         List<String> immagini = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -126,7 +126,7 @@ public class PopModel {
         return immagini;
     }
 
-    public List<PopBean> allPop() {
+    public List<PopBean> getAllPop() {
         List<PopBean> allPop = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -168,48 +168,6 @@ public class PopModel {
             }
         }
         return allPop;
-    }
-
-    public List<String> oneImgPerPop(){
-        List<String> imgPerPop = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = ds.getConnection();
-            String query = "SELECT Nome FROM " + TABLE_NAME_IMMAGINE + " WHERE (IdPop, IdImmagine) IN (SELECT " +
-                    "IdPop, MIN(IdImmagine) FROM " + TABLE_NAME_IMMAGINE + " GROUP BY IdPop)";
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                imgPerPop.add(rs.getString("Nome"));
-            }
-        } catch (SQLException e) {
-            logger.log(Level.WARNING, e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
-            }
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
-            }
-        }
-        return imgPerPop;
     }
 
     public PopBean getById(int i) {

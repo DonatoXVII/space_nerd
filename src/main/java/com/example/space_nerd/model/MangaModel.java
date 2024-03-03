@@ -36,7 +36,7 @@ public class MangaModel {
         }
     }
 
-    public List<MangaBean> miglioriManga() throws SQLException {
+    public List<MangaBean> getMiglioriManga() throws SQLException {
         List<MangaBean> bestManga = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -85,7 +85,7 @@ public class MangaModel {
         return bestManga;
     }
 
-    public List<MangaBean> allManga() {
+    public List<MangaBean> getAllManga() {
         List<MangaBean> allManga = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;

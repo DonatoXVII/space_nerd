@@ -5,14 +5,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     List<Object> prodotti = (List<Object>) request.getAttribute("prodotti");
-    List<String> imgPerPop = (List<String>) request.getAttribute("imgPop");
-    List<String> imgPerFigure = (List<String>) request.getAttribute("imgFigure");
     if(prodotti == null) {
         response.sendRedirect("./ProdottoControl?action=visualizzaCatalogo");
         return;
     }
-    int countPop = 0;
-    int countFigure = 0;
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -37,18 +33,16 @@
         } else if(prodotto instanceof PopBean) {
 %>
             <div class="gallery">
-                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><img src="img/imgPop/<%=imgPerPop.get(countPop)%>" alt="errore immagine"></a>
+                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
                 <div class="description"><%=((PopBean) prodotto).getDescrizione()%></div>
             </div>
-            <%countPop++;%>
 <%
         } else if(prodotto instanceof FigureBean) {
 %>
             <div class="gallery">
-                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><img src="img/imgFigure/<%=imgPerFigure.get(countFigure)%>" alt="errore immagine"></a>
+                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
                 <div class="description"><%=((FigureBean) prodotto).getPersonaggio()%></div>
             </div>
-            <%countFigure++;%>
 <%
         }
     }

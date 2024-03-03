@@ -5,7 +5,7 @@
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
     <link href="css/accesso.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha384-uSRxk5Ov4BXdL2VvlGOWOI3ZXvpCVCpoqOJzYr2Q3hZGlFqY66q44wBq2G0n1b0H" crossorigin="anonymous"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>

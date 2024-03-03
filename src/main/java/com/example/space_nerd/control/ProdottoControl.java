@@ -143,16 +143,14 @@ public class ProdottoControl extends HttpServlet {
             if(popModel.verificaDisponibilita(id)) {
                 carrelloBean.aggiungiProdotto(popModel.getById(id));
             }
-        } else if (tipo.equalsIgnoreCase(figureParameter)) {
-            if(figureModel.verificaDisponibilita(id)) {
-                carrelloBean.aggiungiProdotto(figureModel.getById(id));
-            }
+        } else if (tipo.equalsIgnoreCase(figureParameter) && figureModel.verificaDisponibilita(id)) {
+            carrelloBean.aggiungiProdotto(figureModel.getById(id));
         }
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
 
-    private void rimuoviDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void rimuoviDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         int id = Integer.parseInt(req.getParameter("Id"));
         carrelloBean.rimuoviProdotto(id);

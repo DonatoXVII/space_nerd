@@ -352,4 +352,33 @@ public class FigureModel {
         }
         return suggerimenti;
     }
+
+    public void decrementaDisponibilita(FigureBean figure) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - 1 WHERE IdFigure = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, figure.getIdFigure());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
 }

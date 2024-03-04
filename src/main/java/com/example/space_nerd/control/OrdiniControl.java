@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 public class OrdiniControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static OrdineModel ordineModel = new OrdineModel();
+    static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
     static IndirizzoModel indirizzoModel = new IndirizzoModel();
@@ -136,11 +137,11 @@ public class OrdiniControl extends HttpServlet {
         List<Object> prodotti = carrelloBean.getListaCarrello();
         for(Object prodotto : prodotti) {
             if(prodotto instanceof MangaBean) {
-                ordineModel.aggiornaComprendeManga(nuovoLast, ((MangaBean) prodotto).getIdManga(), 1);
+                ordineModel.aggiornaComprendeManga(nuovoLast, ((MangaBean) prodotto).getIdManga(), ((MangaBean) prodotto).getQuantitaCarrello());
             } else if(prodotto instanceof PopBean) {
-                ordineModel.aggiornaComprendePop(nuovoLast, ((PopBean) prodotto).getIdPop(), 1);
+                ordineModel.aggiornaComprendePop(nuovoLast, ((PopBean) prodotto).getIdPop(), ((PopBean) prodotto).getQuantitaCarrello());
             } else if(prodotto instanceof FigureBean) {
-                ordineModel.aggiornaComprendeFigure(nuovoLast, ((FigureBean) prodotto).getIdFigure(), 1);
+                ordineModel.aggiornaComprendeFigure(nuovoLast, ((FigureBean) prodotto).getIdFigure(), ((FigureBean) prodotto).getQuantitaCarrello());
             }
         }
 

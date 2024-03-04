@@ -9,6 +9,7 @@ public class MangaBean {
     String lingua;
     int numPagine;
     String img;
+    int quantitaCarrello;
 
     public MangaBean() {
         idManga = 0;
@@ -19,9 +20,10 @@ public class MangaBean {
         lingua = "";
         numPagine = 0;
         img = "";
+        quantitaCarrello = 0;
     }
 
-    public MangaBean(int idManga, float prezzo, String descrizione, int numArticoli, String casaEditrice, String lingua, int numPagine, String img) {
+    public MangaBean(int idManga, float prezzo, String descrizione, int numArticoli, String casaEditrice, String lingua, int numPagine, String img, int quantitaCarrello) {
         this.idManga = idManga;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -30,6 +32,7 @@ public class MangaBean {
         this.lingua = lingua;
         this.numPagine = numPagine;
         this.img = img;
+        this.quantitaCarrello = quantitaCarrello;
     }
 
     public int getIdManga() {
@@ -92,6 +95,14 @@ public class MangaBean {
 
     public void setImg(String img) { this.img = img; }
 
+    public int getQuantitaCarrello() { return quantitaCarrello; }
+
+    public void setQuantitaCarrello(int quantitaCarrello) { this.quantitaCarrello = quantitaCarrello; }
+
+    public void aumentaQuantita() { this.quantitaCarrello++;}
+
+    public void decrementaQuantita() { this.quantitaCarrello--;}
+
     @Override
     public String toString() {
         return "MangaBean{" +
@@ -103,6 +114,7 @@ public class MangaBean {
                 ", lingua='" + lingua + '\'' +
                 ", numPagine=" + numPagine +
                 ", img='" + img + '\'' +
+                ", quantitaCarrello=" + quantitaCarrello +
                 '}';
     }
 }

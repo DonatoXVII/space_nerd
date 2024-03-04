@@ -33,6 +33,7 @@
                     <%=((MangaBean) prodotto).getLingua()%><br>
                     <%=((MangaBean) prodotto).getNumPagine()%><br>
                     <%=((MangaBean) prodotto).getPrezzo()%><br>
+                    <%=((MangaBean) prodotto).getQuantitaCarrello()%>
                 </div>
 <%
             } else if(prodotto instanceof PopBean) {
@@ -55,6 +56,7 @@
                     <%=((PopBean) prodotto).getNumSerie()%><br>
                     <%=((PopBean) prodotto).getSerie()%><br>
                     <%=((PopBean) prodotto).getPrezzo()%><br>
+                    <%=((PopBean) prodotto).getQuantitaCarrello()%>
                 </div>
 <%
             }else if(prodotto instanceof FigureBean) {
@@ -78,6 +80,7 @@
                     <%=((FigureBean) prodotto).getMateriale()%><br>
                     <%=((FigureBean) prodotto).getPersonaggio()%><br>
                     <%=((FigureBean) prodotto).getPrezzo()%><br>
+                    <%=((FigureBean) prodotto).getQuantitaCarrello()%>
                 </div>
 <%
             }

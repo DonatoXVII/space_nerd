@@ -19,18 +19,21 @@
             if(prodotto instanceof MangaBean){
 %>
                 <%=((MangaBean) prodotto).getDescrizione()%>
+                <%=((MangaBean) prodotto).getQuantitaCarrello()%>
                 <a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>">Rimuovi prodotto</a>
 <%
             } else if(prodotto instanceof PopBean){
 
 %>
                 <%=((PopBean) prodotto).getDescrizione()%>
+                <%=((PopBean) prodotto).getQuantitaCarrello()%>
                 <a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>">Rimuovi prodotto</a>
 <%
             } else if (prodotto instanceof FigureBean) {
 
 %>
                 <%=((FigureBean) prodotto).getDescrizione()%>
+                <%=((FigureBean) prodotto).getQuantitaCarrello()%>
                 <a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>">Rimuovi prodotto</a>
 <%
             }

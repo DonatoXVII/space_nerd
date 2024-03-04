@@ -12,6 +12,7 @@ public class FigureBean {
     int altezza;
     String personaggio;
     List<String> immagini;
+    int quantitaCarrello;
 
     public FigureBean() {
         idFigure = 0;
@@ -22,9 +23,10 @@ public class FigureBean {
         altezza = 0;
         personaggio = "";
         immagini = new ArrayList<>();
+        quantitaCarrello = 0;
     }
 
-    public FigureBean(int idFigure, float prezzo, String descrizione, int numArticoli, String materiale, int altezza, String personaggio, List<String> immagini) {
+    public FigureBean(int idFigure, float prezzo, String descrizione, int numArticoli, String materiale, int altezza, String personaggio, List<String> immagini, int quantitaCarrello) {
         this.idFigure = idFigure;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -33,6 +35,7 @@ public class FigureBean {
         this.altezza = altezza;
         this.personaggio = personaggio;
         this.immagini = immagini;
+        this.quantitaCarrello = quantitaCarrello;
     }
 
     public int getIdFigure() {
@@ -99,6 +102,14 @@ public class FigureBean {
         this.immagini.add(immagine);
     }
 
+    public int getQuantitaCarrello() { return quantitaCarrello; }
+
+    public void setQuantitaCarrello(int quantitaCarrello) { this.quantitaCarrello = quantitaCarrello; }
+
+    public void aumentaQuantita() { this.quantitaCarrello++;}
+
+    public void decrementaQuantita() { this.quantitaCarrello--;}
+
     @Override
     public String toString() {
         return "FigureBean{" +
@@ -110,6 +121,7 @@ public class FigureBean {
                 ", altezza=" + altezza +
                 ", personaggio='" + personaggio + '\'' +
                 ", immagini=" + immagini +
+                ", quantitaCarrello=" + quantitaCarrello +
                 '}';
     }
 }

@@ -4,10 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -168,6 +165,176 @@ public class OrdineModel {
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, message, e);
+        }
+    }
+
+    public int getLastIdOrdine() {
+        int i = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT MAX(IdOrdine) AS Max FROM " + TABLE_NAME_ORDINE;
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                i = rs.getInt("Max");
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return i;
+    }
+
+    public void regitraNuovoOrdine(float prezzo, Date data, String fattura, String email) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_ORDINE + "(PrezzoTotale, DataOrdine, Fattura, Email)" +
+                    "VALUES(?, ?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setFloat(1, prezzo);
+            ps.setDate(2, data);
+            ps.setString(3, fattura);
+            ps.setString(4, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void aggiornaComprendeManga(int ordine, int manga, int quantita) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_COMPRENDE_MANGA + "(IdOrdine, IdManga, Quantita)" +
+                    "VALUES(?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, ordine);
+            ps.setInt(2, manga);
+            ps.setInt(3, quantita);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void aggiornaComprendePop(int ordine, int pop, int quantita) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_COMPRENDE_POP + "(IdOrdine, IdPop, Quantita)" +
+                    "VALUES(?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, ordine);
+            ps.setInt(2, pop);
+            ps.setInt(3, quantita);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void aggiornaComprendeFigure(int ordine, int figure, int quantita) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_COMPRENDE_FIGURE + "(IdOrdine, IdFigure, Quantita)" +
+                    "VALUES(?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, ordine);
+            ps.setInt(2, figure);
+            ps.setInt(3, quantita);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
         }
     }
 

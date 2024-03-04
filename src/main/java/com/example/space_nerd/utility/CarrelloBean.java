@@ -35,8 +35,41 @@ public class CarrelloBean implements Serializable {
     }
 
     public void aggiungiProdotto(Object prodotto) {
-        this.listaCarrello.add(prodotto);
+        boolean prodottoGiaPresente = false;
+        for(Object prod : this.listaCarrello) {
+            if(prod instanceof MangaBean && prodotto instanceof MangaBean) {
+                if(((MangaBean) prod).getIdManga() == ((MangaBean) prodotto).getIdManga()) {
+                    ((MangaBean) prod).aumentaQuantita();
+                    prodottoGiaPresente = true;
+                    break;
+                }
+            } else if(prod instanceof PopBean && prodotto instanceof PopBean) {
+                if(((PopBean) prod).getIdPop() == ((PopBean) prodotto).getIdPop()) {
+                    ((PopBean) prod).aumentaQuantita();
+                    prodottoGiaPresente = true;
+                    break;
+                }
+            } else if(prod instanceof FigureBean && prodotto instanceof FigureBean) {
+                if(((FigureBean) prod).getIdFigure() == ((FigureBean) prodotto).getIdFigure()) {
+                    ((FigureBean) prod).aumentaQuantita();
+                    prodottoGiaPresente = true;
+                    break;
+                }
+            }
+        }
+
+        if(!prodottoGiaPresente) {
+            this.listaCarrello.add(prodotto);
+            if(prodotto instanceof MangaBean) {
+                ((MangaBean) prodotto).aumentaQuantita();
+            } else if(prodotto instanceof PopBean) {
+                ((PopBean) prodotto).aumentaQuantita();
+            } else if(prodotto instanceof FigureBean) {
+                ((FigureBean) prodotto).aumentaQuantita();
+            }
+        }
     }
+
     public void rimuoviProdotto(int id) {
         for (Object prod : listaCarrello) {
             boolean rimuovi = prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id
@@ -48,6 +81,19 @@ public class CarrelloBean implements Serializable {
                 break;
             }
         }
+    }
+    public float getPrezzoTotale() {
+        float prezzo = 0;
+        for(Object prodotto : this.listaCarrello) {
+            if(prodotto instanceof MangaBean) {
+                prezzo += ((MangaBean) prodotto).getPrezzo();
+            } else if(prodotto instanceof PopBean) {
+                prezzo += ((PopBean) prodotto).getPrezzo();
+            } else if(prodotto instanceof FigureBean) {
+                prezzo += ((FigureBean) prodotto).getPrezzo();
+            }
+        }
+        return prezzo;
     }
     public void svuotaCarrello() { this.listaCarrello.clear(); }
 }

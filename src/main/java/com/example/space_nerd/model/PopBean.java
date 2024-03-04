@@ -11,6 +11,7 @@ public class PopBean {
     int numSerie;
     String serie;
     List<String> immagini;
+    int quantitaCarrello;
 
     public PopBean() {
         idPop = 0;
@@ -20,9 +21,10 @@ public class PopBean {
         numSerie = 0;
         serie = "";
         immagini = new ArrayList<>();
+        quantitaCarrello = 0;
     }
 
-    public PopBean(int idPop, float prezzo, String descrizione, int numArticoli, int numSerie, String serie, List<String> immagini) {
+    public PopBean(int idPop, float prezzo, String descrizione, int numArticoli, int numSerie, String serie, List<String> immagini, int quantitaCarrello) {
         this.idPop = idPop;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -30,6 +32,7 @@ public class PopBean {
         this.numSerie = numSerie;
         this.serie = serie;
         this.immagini = immagini;
+        this.quantitaCarrello = quantitaCarrello;
     }
 
     public int getIdPop() {
@@ -88,6 +91,14 @@ public class PopBean {
         this.immagini.add(immagine);
     }
 
+    public int getQuantitaCarrello() { return quantitaCarrello; }
+
+    public void setQuantitaCarrello(int quantitaCarrello) { this.quantitaCarrello = quantitaCarrello; }
+
+    public void aumentaQuantita() { this.quantitaCarrello++;}
+
+    public void decrementaQuantita() { this.quantitaCarrello--;}
+
     @Override
     public String toString() {
         return "PopBean{" +
@@ -98,6 +109,7 @@ public class PopBean {
                 ", numSerie=" + numSerie +
                 ", serie='" + serie + '\'' +
                 ", immagini=" + immagini +
+                ", quantitaCarrello=" + quantitaCarrello +
                 '}';
     }
 }

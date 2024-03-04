@@ -263,12 +263,13 @@ public class FigureModel {
 
     public FigureBean getFigurePerDescrizione(String descrizione) {
         FigureBean figure = new FigureBean();
+        descrizione = "%" + descrizione + "%";
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE Descrizione LIKE ?";
+            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE CONCAT(Descrizione, ' ', Personaggio) LIKE ?";
             ps = con.prepareStatement(query);
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
@@ -317,12 +318,12 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT Descrizione FROM " + TABLE_NAME_FIGURE + " WHERE Descrizione LIKE ?";
+            String query = "SELECT CONCAT(Descrizione, ' ', Personaggio) AS Action FROM " + TABLE_NAME_FIGURE + " WHERE CONCAT(Descrizione, ' ', Personaggio) LIKE ?";
             ps = con.prepareStatement(query);
             ps.setString(1, ricerca);
             rs = ps.executeQuery();
             while(rs.next()) {
-                suggerimenti.add(rs.getString("Descrizione"));
+                suggerimenti.add(rs.getString("Action"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

@@ -36,7 +36,7 @@
             }
         }
 %>
-        <a href="ProdottoControl?action=checkout">Procedi al checkout</a>
+        <a href="./elaborazioneOrdine.jsp">Procedi al checkout</a>
         <a href="ProdottoControl?action=svuotaCarrello">Svuota carrello</a>
 <%
     } else {

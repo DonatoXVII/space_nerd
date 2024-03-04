@@ -20,6 +20,8 @@ public class OrdiniControl extends HttpServlet {
     static OrdineModel ordineModel = new OrdineModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
+    static IndirizzoModel indirizzoModel = new IndirizzoModel();
+    static PagamentoModel pagamentoModel = new PagamentoModel();
     static Logger logger = Logger.getLogger(OrdiniControl.class.getName());
 
     public OrdiniControl() {
@@ -37,6 +39,12 @@ public class OrdiniControl extends HttpServlet {
                         break;
                     case "visualizzadettagliordine" :
                         visualizzaDettagliOrdini(req, resp);
+                        break;
+                    case "visualizzaindirizziemetodi" :
+                        visulizzaIndirizziEMetodi(req, resp);
+                        break;
+                    case "checkout" :
+                        checkout(req, resp);
                         break;
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
@@ -86,6 +94,32 @@ public class OrdiniControl extends HttpServlet {
         request.setAttribute("prodottiOrdine", prodottiOrdine);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/dettagliOrdine.jsp");
         dispatcher.forward(request, response);
+
+    }
+
+    private void visulizzaIndirizziEMetodi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+
+        List<Integer> indirizziPerEmail = indirizzoModel.getIndiririzziUtente(email);
+        List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
+        for (int i : indirizziPerEmail) {
+            indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
+        }
+
+        List<Integer> metodiPerEmail = pagamentoModel.getMetodiUtente(email);
+        List<PagamentoBean> metodiUtilizzati = new ArrayList<>();
+        for (Integer i : metodiPerEmail) {
+            metodiUtilizzati.add(pagamentoModel.getMetodo(i));
+        }
+
+        request.setAttribute("indirizzi", indirizziUtilizzati);
+        request.setAttribute("pagamenti", metodiUtilizzati);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/elaborazioneOrdine.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void checkout(HttpServletRequest request, HttpServletResponse repsponse) {
 
     }
 }

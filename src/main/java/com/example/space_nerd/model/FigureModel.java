@@ -14,14 +14,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FigureModel {
-    private static Logger logger = Logger.getLogger(FigureModel.class.getName());
+    private static final Logger logger = Logger.getLogger(FigureModel.class.getName());
     private static final String TABLE_NAME_FIGURE = "Figure";
     private static final String TABLE_NAME_COMPRENDE = "ComprendeFigure";
     private static final String TABLE_NAME_IMMAGINE = "ImmagineFigure";
     private static final String WHERE_IDFIGURE = "WHERE IdFigure = ?";
-    private static String msgCon = "Errore durante la chiusura della Connection";
-    private static String msgPs = "Errore durante la chiusura del PreparedStatement";
-    private static String msgRs = "Errore durante la chiusura del ResultSet";
+    private static final String idFigureParameter = "IdFigure";
+    private static final String personaggioParameter = "Personaggio";
+    private static final String numeroArticoliParameter = "NumeroArticoli";
+    private static final String msgCon = "Errore durante la chiusura della Connection";
+    private static final String msgPs = "Errore durante la chiusura del PreparedStatement";
+    private static final String msgRs = "Errore durante la chiusura del ResultSet";
     private static DataSource ds;
 
     static {
@@ -50,7 +53,7 @@ public class FigureModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 FigureBean figure = new FigureBean();
-                figure.setIdFigure(rs.getInt("IdFigure"));
+                figure.setIdFigure(rs.getInt(idFigureParameter));
                 figure.setDescrizione(rs.getString("Descrizione"));
                 miglioriFigure.add(figure);
             }
@@ -137,8 +140,8 @@ public class FigureModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 FigureBean figure = new FigureBean();
-                figure.setIdFigure(rs.getInt("IdFigure"));
-                figure.setPersonaggio(rs.getString("Personaggio"));
+                figure.setIdFigure(rs.getInt(idFigureParameter));
+                figure.setPersonaggio(rs.getString(personaggioParameter));
                 allFigure.add(figure);
             }
         } catch (SQLException e) {
@@ -184,10 +187,10 @@ public class FigureModel {
                 figure.setIdFigure(i);
                 figure.setPrezzo(rs.getFloat("Prezzo"));
                 figure.setDescrizione(rs.getString("Descrizione"));
-                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
+                figure.setNumArticoli(rs.getInt(numeroArticoliParameter));
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));
-                figure.setPersonaggio(rs.getString("Personaggio"));
+                figure.setPersonaggio(rs.getString(personaggioParameter));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -229,7 +232,7 @@ public class FigureModel {
             ps.setInt(1, i);
             rs = ps.executeQuery();
             while(rs.next()) {
-                if(rs.getInt("NumeroArticoli") > 0) {
+                if(rs.getInt(numeroArticoliParameter) > 0) {
                     res = true;
                 }
             }
@@ -274,13 +277,13 @@ public class FigureModel {
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
             while(rs.next()) {
-                figure.setIdFigure(rs.getInt("IdFigure"));
+                figure.setIdFigure(rs.getInt(idFigureParameter));
                 figure.setPrezzo(rs.getFloat("Prezzo"));
                 figure.setDescrizione(descrizione);
-                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
+                figure.setNumArticoli(rs.getInt(numeroArticoliParameter));
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));
-                figure.setPersonaggio(rs.getString("Personaggio"));
+                figure.setPersonaggio(rs.getString(personaggioParameter));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

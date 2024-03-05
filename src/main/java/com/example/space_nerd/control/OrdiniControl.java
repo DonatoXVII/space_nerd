@@ -26,6 +26,7 @@ public class OrdiniControl extends HttpServlet {
     static FigureModel figureModel = new FigureModel();
     static IndirizzoModel indirizzoModel = new IndirizzoModel();
     static PagamentoModel pagamentoModel = new PagamentoModel();
+    static String emailParameter = "email";
     static Logger logger = Logger.getLogger(OrdiniControl.class.getName());
 
     public OrdiniControl() {
@@ -73,7 +74,7 @@ public class OrdiniControl extends HttpServlet {
     private void visualizzaOrdini(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<OrdineBean> ordini;
         HttpSession session = request.getSession();
-        ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute("email"));
+        ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute(emailParameter));
         request.setAttribute("ordini", ordini);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
         dispatcher.forward(request, response);
@@ -103,7 +104,7 @@ public class OrdiniControl extends HttpServlet {
 
     private void visulizzaIndirizziEMetodi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
+        String email = (String) session.getAttribute(emailParameter);
 
         List<Integer> indirizziPerEmail = indirizzoModel.getIndiririzziUtente(email);
         List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
@@ -125,7 +126,7 @@ public class OrdiniControl extends HttpServlet {
 
     private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
+        String email = (String) session.getAttribute(emailParameter);
         CarrelloBean carrelloBean = (CarrelloBean) session.getAttribute("carrello");
 
         int last = ordineModel.getLastIdOrdine() + 1;

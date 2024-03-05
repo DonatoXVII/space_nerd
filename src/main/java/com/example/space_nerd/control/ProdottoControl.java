@@ -30,6 +30,7 @@ public class ProdottoControl extends HttpServlet {
     static String carrelloJSP = "./carrello.jsp";
     static String mangaParameter = "manga";
     static String figureParameter = "figure";
+    static String ricercaParameter = "ricerca";
 
     public ProdottoControl() {super();}
 
@@ -68,7 +69,7 @@ public class ProdottoControl extends HttpServlet {
             } else {
                 showHomePage(req, resp);
             }
-        } catch (ServletException | IOException | SQLException e) {
+        } catch (ServletException | IOException e) {
             logger.info("Si è verificata un'eccezione:" + e);
         }
     }
@@ -175,33 +176,33 @@ public class ProdottoControl extends HttpServlet {
     }
 
     private void ricerca(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String descrizione = request.getParameter("ricerca");
+        String descrizione = request.getParameter(ricercaParameter);
         MangaBean mangaBean = mangaModel.getMangaPerDescrizione(descrizione);
         PopBean popBean = popModel.getPopPerDescrizione(descrizione);
         FigureBean figureBean = figureModel.getFigurePerDescrizione(descrizione);
         if(mangaBean.getIdManga() != 0){
-            request.setAttribute("prodotto", mangaBean);
+            request.setAttribute(prodottoParameter, mangaBean);
         }
         if(popBean.getIdPop() != 0) {
             List<String> immagini = popModel.getAllImgPop(popBean);
             for(String immagine : immagini) {
                 popBean.aggiungiImmagine(immagine);
             }
-            request.setAttribute("prodotto", popBean);
+            request.setAttribute(prodottoParameter, popBean);
         }
         if(figureBean.getIdFigure() != 0) {
             List<String> immagini = figureModel.getAllImgFigure(figureBean);
             for(String immagine : immagini) {
                 figureBean.aggiungiImmagine(immagine);
             }
-            request.setAttribute("prodotto", figureBean);
+            request.setAttribute(prodottoParameter, figureBean);
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(dettagliJSP);
         dispatcher.forward(request, response);
     }
 
     private void ricercaSuggerimenti(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String ricerca = request.getParameter("ricerca");
+        String ricerca = request.getParameter(ricercaParameter);
         List<String> suggerimenti = new ArrayList<>();
         suggerimenti.addAll(mangaModel.getSuggerimentiManga(ricerca));
         suggerimenti.addAll(popModel.getSuggerimentiPop(ricerca));
@@ -213,7 +214,7 @@ public class ProdottoControl extends HttpServlet {
         out.flush();
     }
 
-    private void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         List<MangaBean> bestManga = mangaModel.getMiglioriManga();
         List<PopBean> bestPop = popModel.getMiglioriPop();
         List<FigureBean> bestFigure = figureModel.getMiglioriFigure();

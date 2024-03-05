@@ -353,14 +353,15 @@ public class FigureModel {
         return suggerimenti;
     }
 
-    public void decrementaDisponibilita(FigureBean figure) {
+    public void decrementaDisponibilita(FigureBean figure, int quantita) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - 1 WHERE IdFigure = ?";
+            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, figure.getIdFigure());
+            ps.setInt(1, quantita);
+            ps.setInt(2, figure.getIdFigure());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

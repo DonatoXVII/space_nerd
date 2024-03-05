@@ -314,14 +314,15 @@ public class MangaModel {
         }
         return suggerimenti;
     }
-    public void decrementaDisponibilita(MangaBean manga) {
+    public void decrementaDisponibilita(MangaBean manga, int quantita) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - 1 WHERE IdManga = ?";
+            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdManga = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, manga.getIdManga());
+            ps.setInt(1, quantita);
+            ps.setInt(2, manga.getIdManga());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

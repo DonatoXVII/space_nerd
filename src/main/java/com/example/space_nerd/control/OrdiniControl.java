@@ -138,10 +138,13 @@ public class OrdiniControl extends HttpServlet {
         for(Object prodotto : prodotti) {
             if(prodotto instanceof MangaBean) {
                 ordineModel.aggiornaComprendeManga(nuovoLast, ((MangaBean) prodotto).getIdManga(), ((MangaBean) prodotto).getQuantitaCarrello());
+                mangaModel.decrementaDisponibilita((MangaBean) prodotto, ((MangaBean) prodotto).getQuantitaCarrello());
             } else if(prodotto instanceof PopBean) {
                 ordineModel.aggiornaComprendePop(nuovoLast, ((PopBean) prodotto).getIdPop(), ((PopBean) prodotto).getQuantitaCarrello());
+                popModel.decrementaDisponibilita((PopBean) prodotto, ((PopBean) prodotto).getQuantitaCarrello());
             } else if(prodotto instanceof FigureBean) {
                 ordineModel.aggiornaComprendeFigure(nuovoLast, ((FigureBean) prodotto).getIdFigure(), ((FigureBean) prodotto).getQuantitaCarrello());
+                figureModel.decrementaDisponibilita((FigureBean) prodotto, ((FigureBean) prodotto).getQuantitaCarrello());
             }
         }
 

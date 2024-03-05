@@ -351,14 +351,15 @@ public class PopModel {
         return suggerimenti;
     }
 
-    public void decrementaDisponibilita(PopBean pop) {
+    public void decrementaDisponibilita(PopBean pop, int quantita) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli - 1 WHERE IdPop = ?";
+            String query = "UPDATE " + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdPop = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, pop.getIdPop());
+            ps.setInt(1, quantita);
+            ps.setInt(2, pop.getIdPop());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

@@ -39,7 +39,17 @@
             }
         }
 %>
+<%
+    if(emailUtente != null) {
+%>
         <a href="./elaborazioneOrdine.jsp">Procedi al checkout</a>
+<%
+    } else {
+%>
+        <a href="./login.jsp">Procedi al checkout</a>
+<%
+    }
+%>
         <a href="ProdottoControl?action=svuotaCarrello">Svuota carrello</a>
 <%
     } else {

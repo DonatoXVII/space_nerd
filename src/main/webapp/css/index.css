@@ -1,142 +1,131 @@
-body {
-    background-color: #f1f2f4
+#homePage {
+    height: 70vh;
+    width: 100%;
 }
 
-.welcome-container {
-    width: 100%;
-    max-width: 800px;
-    height: 400px;
-    overflow: hidden;
-    position: relative;
-    margin: 0 auto;
-}
-
-.welcome-container .slideshow {
-    width: 100%;
-    height: 100%;
+#hero{
+    background: #f1f2f4;
+    height: 70vh;
+    padding: 0 80px;
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    align-items: center;
 }
 
-.welcome-container .slide {
-    width: auto;
-    height: 100%;
-    object-fit: contain;
-    max-height: 100%;
+#hero h2, h4, p{
+    margin: 0 0 10px;
+    color: #302B63FF;
 }
 
-.welcome-container .slide img {
-    width: 100%;
-    height: auto;
+#hero h1 {
+    margin: 0 0 10px;
+    color: #E87C08FF;
 }
 
-.slideshow {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.slide {
-    max-width: 100%;
-    max-height: 400px;
-    height: auto;
-    margin: 0 auto;
-}
-
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    font-size: 18px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.prev {
-    left: 10px;
-}
-
-.next {
-    right: 10px;
-}
-
-.prodotti-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
-}
-
-.manga-container, .pop-container, .figure-container {
-    width: calc(33.33% - 20px);
-    display: inline-block;
-    vertical-align: top;
-    text-align: center;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.manga-container a, .pop-container a, .figure-container a{
+#hero a {
     text-decoration: none;
-    color: inherit;
 }
 
-.manga-container h2, .pop-container h2, .figure-container h2 {
-    font-weight: bold;
-    font-family: Montserrat, serif;
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.manga-items, .pop-items, .figure-items {
+.acquista-ora {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+    padding: 0.8em 1.3em 0.8em 0.9em;
+    color: white;
+    background: #ad5389;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    border: none;
+    letter-spacing: 0.05em;
+    border-radius: 16px;
 }
 
-.manga-item, .pop-item, .figure-item {
-    margin: 10px;
-    text-align: center;
-    width: 200px;
+.acquista-ora svg {
+    margin-right: 3px;
+    transform: rotate(30deg);
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.acquista-ora span {
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.acquista-ora:hover svg {
+    transform: translateX(5px) rotate(90deg);
+}
+
+.acquista-ora:hover span {
+    transform: translateX(7px);
+}
+
+#piuVenduti {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.manga-item img, .pop-item img, .figure-item img {
+#piuVenduti h2 {
+    color: #302B63FF;
+}
+
+.prodotti{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.mangaPiuVenuti,
+.popPiuVenuti,
+.figurePiuVenuti{
+    width: 27%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    box-shadow: 20px 20px 34px rgb(48, 43, 99);
+    padding: 25px 15px;
+    border-radius: 4px;
+    margin: 50px 0;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.item {
+    width: 160px;
+}
+
+.mangaPiuVenuti img,
+.popPiuVenuti img,
+.figurePiuVenuti img {
     max-width: 100%;
     height: auto;
+    margin-right: 10px;
 }
 
-.description {
-    max-height: 200px;
-    overflow-y: auto;
-    font-weight: bold;
-    font-family: Montserrat, serif;
-    width: 100%;
-    padding: 20px;
+.mangaPiuVenuti img:hover,
+.popPiuVenuti img:hover,
+.figurePiuVenuti img:hover {
+    box-shadow: 7px 7px 14px rgb(232, 124, 8);
+    transition: 0.3s ease;
+    transform: translateY(-3px);
+}
+
+.mangaPiuVenuti h6,
+.popPiuVenuti h6,
+.figurePiuVenuti h6{
+    max-width: 100%;
+    height: auto;
+    margin-right: 10px;
+    color: #302B63FF;
+}
+
+.mangaPiuVenuti a,
+.popPiuVenuti a,
+.figurePiuVenuti a{
     text-decoration: none;
-    color: inherit;
-}
-
-@media screen and (max-width: 780px) {
-    .manga-item img, .pop-item img, .figure-item img {
-        max-width: 70%;
-        height: auto;
-    }
-
-    .description {
-        max-height: 200px;
-        overflow-y: auto;
-        font-weight: bold;
-        font-family: Montserrat, serif;
-        width: 70%;
-        padding: 20px;
-        text-decoration: none;
-        color: inherit;
-    }
 }

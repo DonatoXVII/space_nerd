@@ -21,10 +21,21 @@
 <%@include file="navbar.jsp"%>
 
 <section id="homePage">
-
+    <div class="slider-wrapper">
+        <div class="slider">
+            <img id="slide-1" src="img/index1.jpg" alt="errore immagine">
+            <img id="slide-2" src="img/index2.jpg" alt="errore immagine">
+            <img id="slide-3" src="img/index3.jpg" alt="errore immagine">
+        </div>
+        <div class="slider-nav">
+            <button class="slider-nav-btn" onclick="prevSlide()">&#10094;</button>
+            <button class="slider-nav-btn" onclick="nextSlide()">&#10095;</button>
+        </div>
+    </div>
 </section>
 
 <section id="hero">
+    <div class="welcome">
     <h4>Un mondo di offerte</h4>
     <h2>Per gli appassionati di anime</h2>
     <h1>Di ogni genere</h1>
@@ -44,6 +55,10 @@
         </svg>
         <span>Acquista ora!</span>
     </button></a>
+    </div>
+    <div class="welcome-img">
+    <img src="img/index4.jpg" alt="errore immagine">
+    </div>
 </section>
 
 <section id="piuVenduti">
@@ -101,6 +116,33 @@
         </div>
     </div>
 </section>
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slider img');
 
+    function showSlide(n) {
+        if (n >= slides.length) {
+            slideIndex = 0;
+        } else if (n < 0) {
+            slideIndex = slides.length - 1;
+        } else {
+            slideIndex = n;
+        }
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.transform = 'translateX(' + (-slideIndex * 100) + '%)';
+        }
+    }
+
+    function nextSlide() {
+        showSlide(slideIndex + 1);
+    }
+
+    function prevSlide() {
+        showSlide(slideIndex - 1);
+    }
+
+    showSlide(slideIndex);
+</script>
 </body>
 </html>

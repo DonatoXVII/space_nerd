@@ -1,16 +1,88 @@
 #homePage {
-    height: 70vh;
-    width: 100%;
+    padding: 2rem;
+    background: radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%,
+    #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%,
+    #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%);;
+}
+
+.slider-wrapper {
+    position: relative;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+.slider {
+    display: flex;
+    aspect-ratio: 16 / 9;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+}
+
+.slider img {
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+    object-fit: cover;
+}
+
+.slider-nav {
+    display: flex;
+    column-gap: 1rem;
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.slider-nav-btn {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.5rem;
+    background: rgba(255, 255, 255, 0.75);
+    border: none;
+    color: #333;
+    margin: 0 0.5rem;
+    cursor: pointer;
+}
+
+.slider-nav-btn:hover {
+    background: #fff;
+    opacity: 1;
 }
 
 #hero{
-    background: #f1f2f4;
     height: 70vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.welcome {
+    background-color: white;
     padding: 0 80px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+}
+
+.welcome-img {
+    display: flex;
+    padding-right: 100px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 35%;
+}
+
+.welcome-img img {
+    width: auto;
+    height: 90%;
 }
 
 #hero h2, h4, p{
@@ -129,3 +201,4 @@
 .figurePiuVenuti a{
     text-decoration: none;
 }
+

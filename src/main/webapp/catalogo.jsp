@@ -26,7 +26,10 @@
 %>
             <div class="gallery">
                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"></a>
-                <div class="description"><%=((MangaBean) prodotto).getDescrizione()%></div>
+                <div class="description">
+                    <%=((MangaBean) prodotto).getDescrizione()%><br>
+                    <%=((MangaBean) prodotto).getPrezzo()%>€
+                </div>
             </div>
 
 <%
@@ -34,14 +37,20 @@
 %>
             <div class="gallery">
                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
-                <div class="description"><%=((PopBean) prodotto).getDescrizione()%></div>
+                <div class="description">
+                    <%=((PopBean) prodotto).getDescrizione()%><br>
+                    <%=((PopBean) prodotto).getPrezzo()%>€
+                </div>
             </div>
 <%
         } else if(prodotto instanceof FigureBean) {
 %>
             <div class="gallery">
                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
-                <div class="description"><%=((FigureBean) prodotto).getPersonaggio()%></div>
+                <div class="description">
+                    <%=((FigureBean) prodotto).getPersonaggio()%><br>
+                    <%=((FigureBean) prodotto).getPrezzo()%>€
+                </div>
             </div>
 <%
         }

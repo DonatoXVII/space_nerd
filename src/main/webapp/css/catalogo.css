@@ -1,26 +1,22 @@
-body {
-    background-color: #f1f2f4
-}
-
 .catalogo {
-    display: flex;
-    padding: 2px;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: minmax(200px, auto);
+    gap: 10px;
+    padding: 10px;
 }
 
 .gallery {
-    margin: 5px;
-    float: left;
-    width: 180px;
-    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
-    rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
-    rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
-}
-
-.gallery:hover {
-    border: 3px solid rgba(60, 60, 93, 0.7);
+    width: 80%;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #144C63FF;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
 }
 
 .gallery img {
@@ -28,95 +24,16 @@ body {
     height: auto;
 }
 
+.gallery:hover {
+    box-shadow: 7px 7px 14px rgb(232, 124, 8);
+    transition: 0.3s ease;
+    transform: translateY(-3px);
+}
+
 .description {
-    padding: 15px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
     font-family: Montserrat, serif;
-    font-weight: bold;
-    color: #f1f2f4;
-}
-
-.dettagliOrdine {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: flex-start;
-}
-
-.prodottoOrdine {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    max-width: 450px;
-}
-
-.imgOrdine {
-    width: 100%;
-    max-width: 700px;
-    height: 500px;
-    overflow: hidden;
-    position: relative;
-    margin: 0 auto;
-}
-
-.imgOrdine .ordManga {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.imgOrdine .slideshow {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.imgOrdine .slide {
-    width: auto;
-    max-width: 800px;
-    height: 100%;
-    object-fit: cover;
-    max-height: 100%;
-}
-
-.imgOrdine .slide img {
-    max-width: 70%;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-.slideshow {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.slide {
-    max-width: 100%;
-    max-height: 400px;
-    height: auto;
-    margin: 0 auto;
-}
-
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    font-size: 18px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.prev {
-    left: 10px;
-}
-
-.next {
-    right: 10px;
+    color: #302B63FF;
 }

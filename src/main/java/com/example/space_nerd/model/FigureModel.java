@@ -135,13 +135,14 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdFigure, Personaggio FROM " + TABLE_NAME_FIGURE;
+            String query = "SELECT IdFigure, Personaggio, Prezzo FROM " + TABLE_NAME_FIGURE;
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
                 FigureBean figure = new FigureBean();
                 figure.setIdFigure(rs.getInt(idFigureParameter));
                 figure.setPersonaggio(rs.getString(personaggioParameter));
+                figure.setPrezzo(rs.getFloat("Prezzo"));
                 allFigure.add(figure);
             }
         } catch (SQLException e) {

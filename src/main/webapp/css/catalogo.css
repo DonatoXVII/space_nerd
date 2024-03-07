@@ -19,6 +19,100 @@
     position: relative;
 }
 
+#dettagliProdotto {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.galleryProdotto {
+    width: 23%;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #144C63FF;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.descrizioneProdotto {
+    width: 50%;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    position: relative;
+}
+
+.descrizioneProdotto p {
+    font-family: Montserrat, serif;
+    color: #302B63FF;
+    font-size: 30px;
+}
+
+.descrizioneProdotto h1 {
+    color: #302B63FF;
+}
+
+.descrizioneProdotto img {
+    width: 50px;
+    height: auto;
+}
+
+#dettagliProdotto a {
+    text-decoration: none;
+    height: 60px;
+    width: 200px;
+    margin-top: 20px;
+    border-radius: 50px;
+}
+
+.addToCart {
+    height: 60px;
+    width: 200px;
+    background-color: #132233;
+    border: 2px solid rgb(182, 128, 128);
+    color: #eee;
+    transition: .6s;
+    font-size: 15px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.addToCart span {
+    transform: translateX(10px);
+    transition: .5s;
+}
+
+.addToCart svg {
+    transform: translateX(-300px);
+    transition: .6s;
+    z-index: 3;
+    height: 20px;
+}
+
+.addToCart:hover {
+    width: 60px;
+    background-color: rgba(51, 34, 51, 0.815);
+    box-shadow: 20px 20px 96px #bebebe,-20px -20px 96px #ffffff;
+}
+
+.addToCart:hover svg {
+    transform: translateX(-5px);
+}
+
+.addToCart:hover span {
+    transform: translateY(70px);
+    font-size: .1rem;
+}
+
 .gallery img {
     width: 100%;
     height: auto;
@@ -31,9 +125,69 @@
 }
 
 .description {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
     text-align: left;
     font-family: Montserrat, serif;
     color: #302B63FF;
+}
+
+.description h5 {
+    margin: 10px;
+}
+
+
+.slider-wrapper {
+    width: 25%;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #144C63FF;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.slider img {
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+.slider-nav {
+    display: flex;
+    column-gap: 1rem;
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.slider-nav-btn {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.5rem;
+    background: rgba(255, 255, 255, 0.75);
+    border: none;
+    color: #333;
+    margin: 0 0.5rem;
+    cursor: pointer;
+}
+
+.slider-nav-btn:hover {
+    background: #fff;
+    opacity: 1;
 }

@@ -23,9 +23,9 @@
 <section id="homePage">
     <div class="slider-wrapper">
         <div class="slider">
-            <img id="slide-1" src="img/index1.jpg" alt="errore immagine">
-            <img id="slide-2" src="img/index2.jpg" alt="errore immagine">
-            <img id="slide-3" src="img/index3.jpg" alt="errore immagine">
+            <img src="img/index1.jpg" alt="errore immagine">
+            <img src="img/index2.jpg" alt="errore immagine">
+            <img src="img/index3.jpg" alt="errore immagine">
         </div>
         <div class="slider-nav">
             <button class="slider-nav-btn" onclick="prevSlide()">&#10094;</button>
@@ -72,7 +72,9 @@
             <a href="ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>">
                 <div class="item">
                 <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
-                <h6><%=((MangaBean) prodotto).getDescrizione()%></h6>
+                    <div class="descrizione">
+                        <h6><%=((MangaBean) prodotto).getDescrizione()%></h6>
+                    </div>
                 </div>
             </a>
             <%
@@ -89,7 +91,9 @@
             <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>">
                 <div class="item">
                 <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
-                    <h6><%=((PopBean) prodotto).getDescrizione()%></h6>
+                    <div class="descrizione">
+                        <h6><%=((PopBean) prodotto).getDescrizione()%></h6>
+                    </div>
                 </div>
             </a>
             <%
@@ -106,7 +110,9 @@
             <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>">
                 <div class="item">
                 <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
-                <h6><%=((FigureBean) prodotto).getDescrizione()%></h6>
+                    <div class="descrizione">
+                        <h6><%=((FigureBean) prodotto).getDescrizione()%></h6>
+                    </div>
                 </div>
             </a>
             <%
@@ -116,6 +122,7 @@
         </div>
     </div>
 </section>
+
 <script>
     let slideIndex = 0;
     const slides = document.querySelectorAll('.slider img');
@@ -144,5 +151,6 @@
 
     showSlide(slideIndex);
 </script>
+
 </body>
 </html>

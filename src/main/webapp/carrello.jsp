@@ -15,26 +15,47 @@
 
 <%
     if(carrelloBean != null && !carrelloBean.getListaCarrello().isEmpty()) {
+%>
+    <div class="carrello">
+<%
         for(Object prodotto : carrelloBean.getListaCarrello()) {
             if(prodotto instanceof MangaBean){
 %>
-                <%=((MangaBean) prodotto).getDescrizione()%>
-                <%=((MangaBean) prodotto).getQuantitaCarrello()%>
-                <a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>">Rimuovi prodotto</a>
+            <div class="prodottoCarrello">
+                <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+                <div class="descrizioneCarrello">
+                    <h1><%=((MangaBean) prodotto).getDescrizione()%></h1>
+                    <p>Quantità: <%=((MangaBean) prodotto).getQuantitaCarrello()%></p>
+                    <p><a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>">Aggiungi</a></p>
+                    <p><a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>">Rimuovi</a></p>
+                </div>
+            </div>
 <%
             } else if(prodotto instanceof PopBean){
 
 %>
-                <%=((PopBean) prodotto).getDescrizione()%>
-                <%=((PopBean) prodotto).getQuantitaCarrello()%>
-                <a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>">Rimuovi prodotto</a>
+            <div class="prodottoCarrello">
+                <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
+                <div class="descrizioneCarrello">
+                    <h1><%=((PopBean) prodotto).getDescrizione()%></h1>
+                    <p>Quantità: <%=((PopBean) prodotto).getQuantitaCarrello()%></p>
+                    <p><a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>">Aggiungi</a></p>
+                    <p><a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>">Rimuovi prodotto</a></p>
+                </div>
+            </div>
 <%
             } else if (prodotto instanceof FigureBean) {
 
 %>
-                <%=((FigureBean) prodotto).getDescrizione()%>
-                <%=((FigureBean) prodotto).getQuantitaCarrello()%>
-                <a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>">Rimuovi prodotto</a>
+            <div class="prodottoCarrello">
+                <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
+                <div class="descrizioneCarrello">
+                    <h1><%=((FigureBean) prodotto).getDescrizione()%></h1>
+                    <p>Quantità: <%=((FigureBean) prodotto).getQuantitaCarrello()%></p>
+                    <p><a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>">Aggiungi</a></p>
+                    <p><a href="ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>">Rimuovi prodotto</a></p>
+                </div>
+            </div>
 <%
             }
         }
@@ -51,10 +72,11 @@
     }
 %>
         <a href="ProdottoControl?action=svuotaCarrello">Svuota carrello</a>
+    </div>
 <%
     } else {
 %>
-        <h2> ancora nessun prodotto nel carrello</h2>
+        <h1> Ancora nessun prodotto nel carrello</h1><img class="h1-img" src="img/triste.jpg" alt="errore immagine">
 <%
     }
 %>

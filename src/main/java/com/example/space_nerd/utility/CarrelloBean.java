@@ -8,6 +8,8 @@ import java.util.List;
 
 public class CarrelloBean implements Serializable {
     transient List<Object> listaCarrello;
+    static PopModel popModel = new PopModel();
+    static FigureModel figureModel = new FigureModel();
 
     public CarrelloBean() {
         listaCarrello = new ArrayList<>();
@@ -53,26 +55,23 @@ public class CarrelloBean implements Serializable {
             for(Object prod : this.listaCarrello) {
                 if(prod instanceof MangaBean && prodotto instanceof MangaBean && ((MangaBean) prod).getIdManga()==((MangaBean) prodotto).getIdManga() && count < ((MangaBean) prodotto).getNumArticoli()) {
                     ((MangaBean) prod).aumentaQuantita();
-                    break;
                 } else if(prod instanceof PopBean && prodotto instanceof PopBean && ((PopBean) prod).getIdPop()==((PopBean) prodotto).getIdPop() && count < ((PopBean) prodotto).getNumArticoli()) {
                     ((PopBean) prod).aumentaQuantita();
-                    break;
                 } else if(prod instanceof FigureBean && prodotto instanceof FigureBean && ((FigureBean) prod).getIdFigure()==((FigureBean) prodotto).getIdFigure() && count < ((FigureBean) prodotto).getNumArticoli()) {
                     ((FigureBean) prod).aumentaQuantita();
-                    break;
-                } else {
-                    break;
                 }
             }
         } else {
-            this.listaCarrello.add(prodotto);
             if(prodotto instanceof MangaBean) {
                 ((MangaBean) prodotto).setQuantitaCarrello(1);
             } else if(prodotto instanceof PopBean) {
+                ((PopBean) prodotto).setImmagini(popModel.getAllImgPop((PopBean) prodotto));
                 ((PopBean) prodotto).setQuantitaCarrello(1);
             } else if(prodotto instanceof FigureBean) {
+                ((FigureBean) prodotto).setImmagini(figureModel.getAllImgFigure((FigureBean) prodotto));
                 ((FigureBean) prodotto).setQuantitaCarrello(1);
             }
+            this.listaCarrello.add(prodotto);
         }
     }
 
@@ -83,7 +82,21 @@ public class CarrelloBean implements Serializable {
                     || prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id;
 
             if (rimuovi) {
-                this.listaCarrello.remove(prod);
+                if(prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id && ((MangaBean) prod).getQuantitaCarrello() == 1
+                        || prod instanceof PopBean && ((PopBean) prod).getIdPop() == id && ((PopBean) prod).getQuantitaCarrello() == 1
+                        || prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id && ((FigureBean) prod).getQuantitaCarrello() == 1){
+                    this.listaCarrello.remove(prod);
+                } else if(prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id && ((MangaBean) prod).getQuantitaCarrello() > 1
+                        || prod instanceof PopBean && ((PopBean) prod).getIdPop() == id && ((PopBean) prod).getQuantitaCarrello() > 1
+                        || prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id && ((FigureBean) prod).getQuantitaCarrello() > 1){
+                    if(prod instanceof MangaBean) {
+                        ((MangaBean) prod).decrementaQuantita();
+                    } else if(prod instanceof PopBean) {
+                        ((PopBean) prod).decrementaQuantita();
+                    } else {
+                        ((FigureBean) prod).decrementaQuantita();
+                    }
+                }
                 break;
             }
         }

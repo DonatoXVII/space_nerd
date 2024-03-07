@@ -27,8 +27,8 @@
             <div class="gallery">
                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"></a>
                 <div class="description">
-                    <%=((MangaBean) prodotto).getDescrizione()%><br>
-                    <%=((MangaBean) prodotto).getPrezzo()%>€
+                    <h5><%=((MangaBean) prodotto).getDescrizione()%></h5>
+                    <h5><%=((MangaBean) prodotto).getPrezzo()%>€</h5>
                 </div>
             </div>
 
@@ -38,8 +38,8 @@
             <div class="gallery">
                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
                 <div class="description">
-                    <%=((PopBean) prodotto).getDescrizione()%><br>
-                    <%=((PopBean) prodotto).getPrezzo()%>€
+                    <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
+                    <h5><%=((PopBean) prodotto).getPrezzo()%>€</h5>
                 </div>
             </div>
 <%
@@ -48,8 +48,8 @@
             <div class="gallery">
                 <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
                 <div class="description">
-                    <%=((FigureBean) prodotto).getPersonaggio()%><br>
-                    <%=((FigureBean) prodotto).getPrezzo()%>€
+                    <h5><%=((FigureBean) prodotto).getPersonaggio()%></h5>
+                    <h5><%=((FigureBean) prodotto).getPrezzo()%>€</h5>
                 </div>
             </div>
 <%

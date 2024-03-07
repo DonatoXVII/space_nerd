@@ -1,3 +1,62 @@
 body {
     background-color: #f1f2f4
 }
+
+h1{
+    font-family: Montserrat, serif;
+    color: #302B63FF;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.h1-img {
+    width: 100px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.carrello {
+    display: grid;
+    grid-auto-rows: minmax(200px, auto);
+    gap: 10px;
+    padding: 10px;
+}
+
+.prodottoCarrello {
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+.prodottoCarrello img {
+    width: 80%;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #144C63FF;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.descrizioneCarrello {
+    width: 80%;
+    margin: 10px;
+    padding: 30px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.descrizioneCarrello p {
+    font-family: Montserrat, serif;
+    color: #302B63FF;
+    font-size: 30px;
+    padding-left: 10px;
+}
+
+.descrizioneCarrello a {
+    text-decoration: none;
+}

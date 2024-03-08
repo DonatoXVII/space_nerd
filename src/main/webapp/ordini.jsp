@@ -18,6 +18,11 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+<style>
+    body {
+       background: #f1f2f4;
+    }
+</style>
 
 <div class="ordini-container">
     <h1>I tuoi ordini</h1>
@@ -35,7 +40,7 @@
         <div class="contentOrdine">
             <p class="heading">ORDINE DEL <%=ordine.getData()%>
             </p><p class="para">
-            Prezzo totale dell' ordine : <%=ordine.getPrezzo()%><br>
+            Prezzo totale dell' ordine : <%=ordine.getPrezzo()%>€<br>
             Qui puoi visualizzare i dettagli di questo ordine e scaricarne la fattura
         </p>
             <button class="btnOrdine" onclick="location.href='OrdiniControl?action=visualizzaDettagliOrdine&IdOrdine=<%=ordine.getId()%>'">Dettagli ordine</button>

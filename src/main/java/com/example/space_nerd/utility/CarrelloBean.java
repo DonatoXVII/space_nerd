@@ -106,14 +106,18 @@ public class CarrelloBean implements Serializable {
         float prezzo = 0;
         for(Object prodotto : this.listaCarrello) {
             if(prodotto instanceof MangaBean) {
-                prezzo += ((MangaBean) prodotto).getPrezzo();
+                float parziale = ((MangaBean) prodotto).getPrezzo() * ((MangaBean) prodotto).getQuantitaCarrello();
+                prezzo += parziale;
             } else if(prodotto instanceof PopBean) {
-                prezzo += ((PopBean) prodotto).getPrezzo();
+                float parziale = ((PopBean) prodotto).getPrezzo() * ((PopBean) prodotto).getQuantitaCarrello();
+                prezzo += parziale;
             } else if(prodotto instanceof FigureBean) {
-                prezzo += ((FigureBean) prodotto).getPrezzo();
+                float parziale = ((FigureBean) prodotto).getPrezzo() * ((FigureBean) prodotto).getQuantitaCarrello();
+                prezzo += parziale;
             }
         }
         return prezzo;
     }
+
     public void svuotaCarrello() { this.listaCarrello.clear(); }
 }

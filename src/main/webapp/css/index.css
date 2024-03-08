@@ -218,21 +218,30 @@
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
+    .welcome-img {
+        display: flex;
+        padding-right: 0;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 35%;
+    }
+
     .welcome-img img {
         width: auto;
         height: 65%;
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 800px) {
     .welcome-img img {
         width: auto;
-        height: 50%;
+        height: 45%;
     }
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 700px) {
     .welcome-img {
         display: none;
     }

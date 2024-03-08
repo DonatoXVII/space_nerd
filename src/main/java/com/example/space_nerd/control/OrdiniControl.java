@@ -132,7 +132,7 @@ public class OrdiniControl extends HttpServlet {
         int last = ordineModel.getLastIdOrdine() + 1;
         LocalDate oggi = LocalDate.now();
         Date dataSQL = Date.valueOf(oggi);
-        ordineModel.regitraNuovoOrdine(carrelloBean.getPrezzoTotale(), dataSQL, "Fattura." +last+".pdf", email);
+        ordineModel.regitraNuovoOrdine(carrelloBean.getPrezzoTotale()+5, dataSQL, "Fattura." +last+".pdf", email);
 
         int nuovoLast = ordineModel.getLastIdOrdine();
         List<Object> prodotti = carrelloBean.getListaCarrello();

@@ -1,9 +1,6 @@
 body {
-    background-image: url("../img/sfondo.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: radial-gradient(circle at 50% -20.71%, #d7c35d 0, #deba54 8.33%, #e4b04d 16.67%, #e9a546 25%, #ed9841 33.33%,
+    #f0893e 41.67%, #f2793c 50%, #f3673d 58.33%, #f35542 66.67%, #f34249 75%, #f22b52 83.33%, #f0065d 91.67%, #ec0069 100%);
 }
 
 .carta-container {
@@ -334,6 +331,7 @@ body {
     flex-wrap: wrap;
     margin-top: 20px;
     margin-bottom: 20px;
+    gap: 10px;
 }
 
 .ordini-container h1 {
@@ -342,7 +340,7 @@ body {
     justify-content: center;
     font-family: Montserrat, serif;
     font-weight: bold;
-    color : #f1f2f4;
+    color: #E87C08FF;
 }
 
 .cardOrdine {

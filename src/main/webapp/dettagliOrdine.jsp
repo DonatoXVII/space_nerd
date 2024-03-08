@@ -16,136 +16,63 @@
 <body>
 <%@include file="navbar.jsp"%>
 
-<div class="dettagliOrdine">
+<div class="catalogoOrdini">
 <%
     if(prodottiOrdine != null && !prodottiOrdine.isEmpty()) {
         for(Object prodotto : prodottiOrdine) {
 
 %>
-            <div class = "prodottoOrdine">
 <%
             if(prodotto instanceof MangaBean) {
 %>
-               <div class="imgOrdine"><div class="ordManga"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"></div></div>
-                <div class="dettagliProd">
-                    <%=((MangaBean) prodotto).getDescrizione()%><br>
-                    <%=((MangaBean) prodotto).getCasaEditrice()%><br>
-                    <%=((MangaBean) prodotto).getLingua()%><br>
-                    <%=((MangaBean) prodotto).getNumPagine()%><br>
-                    <%=((MangaBean) prodotto).getPrezzo()%><br>
-                    <%=((MangaBean) prodotto).getQuantitaCarrello()%>
-                </div>
+               <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+                   <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
+                   <div class="description">
+                       <h5><%=((MangaBean) prodotto).getDescrizione()%></h5>
+                       <h5><%=((MangaBean) prodotto).getCasaEditrice()%></h5>
+                       <h5><%=((MangaBean) prodotto).getLingua()%></h5>
+                       <h5>Numero pagine: <%=((MangaBean) prodotto).getNumPagine()%></h5>
+                       <h5>Prezzo unità: <%=((MangaBean) prodotto).getPrezzo()%>€</h5>
+                       <h5>Quantità: <%=((MangaBean) prodotto).getQuantitaCarrello()%></h5>
+                    </div>
+               </div>
 <%
             } else if(prodotto instanceof PopBean) {
 %>
-                <div class="imgOrdine">
-                    <div class="slideshow">
-                    <%
-                        for(String immagine : ((PopBean) prodotto).getImmagini()){
-                    %>
-                    <img class="slide" src="img/imgPop/<%=immagine%>" alt="errore immagine">
-                    <%
-                        }
-                    %>
+                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
+                    <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
+                    <div class="description">
+                        <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
+                        <h5>Seriale: <%=((PopBean) prodotto).getNumSerie()%></h5>
+                        <h5>Anime: <%=((PopBean) prodotto).getSerie()%></h5>
+                        <h5>Prezzo unità: <%=((PopBean) prodotto).getPrezzo()%>€</h5>
+                        <h5>Quantità: <%=((PopBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-                <div class="dettagliProd">
-                    <%=((PopBean) prodotto).getDescrizione()%><br>
-                    <%=((PopBean) prodotto).getNumSerie()%><br>
-                    <%=((PopBean) prodotto).getSerie()%><br>
-                    <%=((PopBean) prodotto).getPrezzo()%><br>
-                    <%=((PopBean) prodotto).getQuantitaCarrello()%>
                 </div>
 <%
             }else if(prodotto instanceof FigureBean) {
 %>
-                <div class="imgOrdine">
-                    <div class="slideshow">
-                    <%
-                        for(String immagine : ((FigureBean) prodotto).getImmagini()){
-                    %>
-                    <img class="slide" src="img/imgFigure/<%=immagine%>" alt="errore immagine">
-                    <%
-                        }
-                    %>
+                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+                    <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
+                    <div class="description">
+                        <h5><%=((FigureBean) prodotto).getDescrizione()%></h5>
+                        <h5><%=((FigureBean) prodotto).getAltezza()%> cm</h5>
+                        <h5>Materiale: <%=((FigureBean) prodotto).getMateriale()%></h5>
+                        <h5><%=((FigureBean) prodotto).getPersonaggio()%></h5>
+                        <h5>Prezzo unità: <%=((FigureBean) prodotto).getPrezzo()%>€</h5>
+                        <h5>Quantità: <%=((FigureBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-                <div class="dettagliProd">
-                    <%=((FigureBean) prodotto).getDescrizione()%><br>
-                    <%=((FigureBean) prodotto).getAltezza()%><br>
-                    <%=((FigureBean) prodotto).getMateriale()%><br>
-                    <%=((FigureBean) prodotto).getPersonaggio()%><br>
-                    <%=((FigureBean) prodotto).getPrezzo()%><br>
-                    <%=((FigureBean) prodotto).getQuantitaCarrello()%>
                 </div>
 <%
             }
 %>
-            </div>
 <%
         }
 %>
 <%
     }
 %>
+
 </div>
-
-<script>
-    function initSlideshows() {
-        const slideshows = document.querySelectorAll(".slideshow");
-
-        slideshows.forEach(slideshow => {
-            const slides = slideshow.querySelectorAll(".slide");
-            let slideIndex = 0;
-
-            function showSlides(index) {
-                if (index >= slides.length) { slideIndex = 0; }
-                if (index < 0) { slideIndex = slides.length - 1; }
-
-                slides.forEach((slide, i) => {
-                    if (i === slideIndex) {
-                        slide.style.display = "block";
-                    } else {
-                        slide.style.display = "none";
-                    }
-                });
-
-                const images = slideshow.querySelectorAll(".slide img");
-                images.forEach((img, i) => {
-                    // Aggiunta: Centra l'immagine all'interno dello slide
-                    img.style.display = "block";
-                    img.style.margin = "auto";
-                    img.style.maxWidth = "100%";
-                    img.style.maxHeight = "100%";
-                });
-            }
-
-            function plusSlides(n) {
-                showSlides(slideIndex += n);
-            }
-
-            showSlides(slideIndex);
-
-            const prevBtn = slideshow.parentElement.querySelector(".prev");
-            const nextBtn = slideshow.parentElement.querySelector(".next");
-
-            prevBtn.addEventListener("click", () => {
-                plusSlides(-1);
-            });
-
-            nextBtn.addEventListener("click", () => {
-                plusSlides(1);
-            });
-        });
-    }
-
-    // Chiama la funzione per inizializzare gli slideshow
-    initSlideshows();
-</script>
-
 </body>
 </html>

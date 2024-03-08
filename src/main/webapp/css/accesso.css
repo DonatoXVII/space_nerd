@@ -1,5 +1,8 @@
 body {
-    background-color: #f1f2f4
+    background: radial-gradient(circle at 50% -20.71%, #ffe7d5 0, #ffe8d2 6.25%,
+    #ffe9cf 12.5%, #ffebce 18.75%, #ffeccc 25%, #ffeecb 31.25%, #fcefcb 37.5%, #f7f1cc 43.75%,
+    #f2f2cd 50%, #edf3cf 56.25%, #e7f5d1 62.5%, #e2f6d4 68.75%, #ddf7d7 75%, #d8f8db 81.25%,
+    #d3f9df 87.5%, #cff9e3 93.75%, #cbfae8 100%);
 }
 
 .form-container-accesso {

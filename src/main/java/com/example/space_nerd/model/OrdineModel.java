@@ -96,9 +96,9 @@ public class OrdineModel {
         ResultSet rsFigure = null;
         try {
             con = ds.getConnection();
-            String queryManga = "SELECT IdManga FROM " + TABLE_NAME_COMPRENDE_MANGA + " " + WHERE_IDORDINE;
-            String queryPop = "SELECT IdPop FROM " + TABLE_NAME_COMPRENDE_POP + " " + WHERE_IDORDINE;
-            String queryFigure = "SELECT IdFigure FROM " + TABLE_NAME_COMPRENDE_FIGURE + " " + WHERE_IDORDINE;
+            String queryManga = "SELECT IdManga, Quantita FROM " + TABLE_NAME_COMPRENDE_MANGA + " " + WHERE_IDORDINE;
+            String queryPop = "SELECT IdPop, Quantita FROM " + TABLE_NAME_COMPRENDE_POP + " " + WHERE_IDORDINE;
+            String queryFigure = "SELECT IdFigure, Quantita FROM " + TABLE_NAME_COMPRENDE_FIGURE + " " + WHERE_IDORDINE;
 
             psManga = con.prepareStatement(queryManga);
             psPop = con.prepareStatement(queryPop);
@@ -113,13 +113,19 @@ public class OrdineModel {
             rsFigure = psFigure.executeQuery();
 
             while(rsManga.next()) {
-                prodottiOrdine.add(mangaModel.getById(rsManga.getInt("IdManga")));
+                MangaBean manga = (mangaModel.getById(rsManga.getInt("IdManga")));
+                manga.setQuantitaCarrello(rsManga.getInt("Quantita"));
+                prodottiOrdine.add(manga);
             }
             while(rsPop.next()) {
-                prodottiOrdine.add(popModel.getById(rsPop.getInt("IdPop")));
+                PopBean pop = popModel.getById(rsPop.getInt("IdPop"));
+                pop.setQuantitaCarrello(rsPop.getInt("Quantita"));
+                prodottiOrdine.add(pop);
             }
             while(rsFigure.next()) {
-                prodottiOrdine.add(figureModel.getById(rsFigure.getInt("IdFigure")));
+                FigureBean figure = figureModel.getById(rsFigure.getInt("IdFigure"));
+                figure.setQuantitaCarrello(rsFigure.getInt("Quantita"));
+                prodottiOrdine.add(figure);
             }
 
         } catch (SQLException e) {

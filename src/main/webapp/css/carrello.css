@@ -24,7 +24,8 @@ h1{
 
 .prodottoCarrello {
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
 }
 
 .prodottoCarrello img {
@@ -43,11 +44,11 @@ h1{
 .descrizioneCarrello {
     width: 80%;
     margin: 10px;
-    padding: 30px 10px 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    position: relative;
 }
 
 .descrizioneCarrello p {
@@ -60,3 +61,153 @@ h1{
 .descrizioneCarrello a {
     text-decoration: none;
 }
+
+.comandiProdotto {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.descrizioneCarrello img {
+    width: 50px;
+    height: auto;
+    border: none;
+    background: none;
+}
+
+.riepilogo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 3px solid #144C63FF;
+    border-radius: 30px;
+    margin: 20px;
+    background: radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%,
+    #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%,
+    #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%);;
+    box-shadow: 20px 20px 34px rgb(48, 43, 99);
+}
+
+.datiRiepilogo p {
+    font-family: Montserrat, serif;
+    color: #302B63FF;
+    font-size: 30px;
+    padding-left: 10px;
+}
+
+.comandi {
+    padding: 10px;
+}
+
+.comandi {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    gap: 1px;
+}
+
+.svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+}
+
+.svgIcon path {
+    fill: white;
+}
+
+.button:hover {
+    width: 140px;
+    border-radius: 50px;
+    transition-duration: 0.3s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+    gap: 0;
+}
+
+.button:hover .bin-bottom {
+    width: 50px;
+    transition-duration: 0.3s;
+    transform: translateY(60%);
+}
+.bin-top {
+    transform-origin: bottom right;
+}
+.button:hover .bin-top {
+    width: 50px;
+    transition-duration: 0.3s;
+    transform: translateY(60%) rotate(160deg);
+}
+.button::before {
+    position: absolute;
+    top: -20px;
+    content: "Svuota";
+    color: white;
+    transition-duration: 0.3s;
+    font-size: 2px;
+}
+
+.button:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(35px);
+    transition-duration: 0.3s;
+}
+
+.checkout {
+    cursor: pointer;
+    font-weight: 700;
+    font-family: Helvetica,"sans-serif";
+    transition: all .2s;
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
+    rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
+    rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #f1f2f4;
+}
+
+.checkout:hover {
+    background: linear-gradient(14deg, rgba(0, 36, 1, 0.8) 0%, rgba(80, 208, 85, 0.7) 66%,
+    rgb(5, 239, 41) 100%), radial-gradient(circle, rgba(95, 227, 22, 0.5) 0%,
+    rgba(49, 96, 29, 0.2) 65%, rgba(157, 236, 117, 0.9) 100%);;
+}
+
+.checkout > svg {
+    width: 34px;
+    margin-left: 10px;
+    transition: transform .5s ease-in-out;
+}
+
+.checkout:hover svg {
+    transform: translateX(5px);
+}
+
+.checkout:active {
+    transform: scale(0.95);
+}
+

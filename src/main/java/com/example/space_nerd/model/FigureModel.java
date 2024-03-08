@@ -19,12 +19,13 @@ public class FigureModel {
     private static final String TABLE_NAME_COMPRENDE = "ComprendeFigure";
     private static final String TABLE_NAME_IMMAGINE = "ImmagineFigure";
     private static final String WHERE_IDFIGURE = "WHERE IdFigure = ?";
-    private static final String idFigureParameter = "IdFigure";
-    private static final String personaggioParameter = "Personaggio";
-    private static final String numeroArticoliParameter = "NumeroArticoli";
-    private static final String msgCon = "Errore durante la chiusura della Connection";
-    private static final String msgPs = "Errore durante la chiusura del PreparedStatement";
-    private static final String msgRs = "Errore durante la chiusura del ResultSet";
+    private static final String ID_FIGURE_PARAMETER = "IdFigure";
+    private static final String PERSONAGGIO_PARAMETER = "Personaggio";
+    private static final String N_ARTICOLI_PARAMETER = "NumeroArticoli";
+    private static final String PREZZO_PARAMETER = "Prezzo";
+    private static final String MSG_CON = "Errore durante la chiusura della Connection";
+    private static final String MSG_PS = "Errore durante la chiusura del PreparedStatement";
+    private static final String MSG_RS = "Errore durante la chiusura del ResultSet";
     private static DataSource ds;
 
     static {
@@ -53,7 +54,7 @@ public class FigureModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 FigureBean figure = new FigureBean();
-                figure.setIdFigure(rs.getInt(idFigureParameter));
+                figure.setIdFigure(rs.getInt(ID_FIGURE_PARAMETER));
                 figure.setDescrizione(rs.getString("Descrizione"));
                 miglioriFigure.add(figure);
             }
@@ -65,21 +66,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return miglioriFigure;
@@ -108,21 +109,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return immagini;
@@ -140,9 +141,9 @@ public class FigureModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 FigureBean figure = new FigureBean();
-                figure.setIdFigure(rs.getInt(idFigureParameter));
-                figure.setPersonaggio(rs.getString(personaggioParameter));
-                figure.setPrezzo(rs.getFloat("Prezzo"));
+                figure.setIdFigure(rs.getInt(ID_FIGURE_PARAMETER));
+                figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
+                figure.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
                 allFigure.add(figure);
             }
         } catch (SQLException e) {
@@ -153,21 +154,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return allFigure;
@@ -186,12 +187,12 @@ public class FigureModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 figure.setIdFigure(i);
-                figure.setPrezzo(rs.getFloat("Prezzo"));
+                figure.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
                 figure.setDescrizione(rs.getString("Descrizione"));
-                figure.setNumArticoli(rs.getInt(numeroArticoliParameter));
+                figure.setNumArticoli(rs.getInt(N_ARTICOLI_PARAMETER));
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));
-                figure.setPersonaggio(rs.getString(personaggioParameter));
+                figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -201,21 +202,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return figure;
@@ -233,7 +234,7 @@ public class FigureModel {
             ps.setInt(1, i);
             rs = ps.executeQuery();
             while(rs.next()) {
-                if(rs.getInt(numeroArticoliParameter) > 0) {
+                if(rs.getInt(N_ARTICOLI_PARAMETER) > 0) {
                     res = true;
                 }
             }
@@ -245,21 +246,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return res;
@@ -278,13 +279,13 @@ public class FigureModel {
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
             while(rs.next()) {
-                figure.setIdFigure(rs.getInt(idFigureParameter));
-                figure.setPrezzo(rs.getFloat("Prezzo"));
+                figure.setIdFigure(rs.getInt(ID_FIGURE_PARAMETER));
+                figure.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
                 figure.setDescrizione(descrizione);
-                figure.setNumArticoli(rs.getInt(numeroArticoliParameter));
+                figure.setNumArticoli(rs.getInt(N_ARTICOLI_PARAMETER));
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));
-                figure.setPersonaggio(rs.getString(personaggioParameter));
+                figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -294,21 +295,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return figure;
@@ -337,21 +338,21 @@ public class FigureModel {
                     rs.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgRs, e);
+                logger.log(Level.WARNING, MSG_RS, e);
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
         return suggerimenti;
@@ -375,14 +376,14 @@ public class FigureModel {
                     ps.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgPs, e);
+                logger.log(Level.WARNING, MSG_PS, e);
             }
             try {
                 if (con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
-                logger.log(Level.WARNING, msgCon, e);
+                logger.log(Level.WARNING, MSG_CON, e);
             }
         }
     }

@@ -25,8 +25,7 @@
     </div>
 
     <div class="btn-container">
-        <a href="./modifica.jsp">
-        <button class="button">
+        <button class="button" onclick="location.href='./modifica.jsp'">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20"
                  height="20" fill="none" class="svg-icon">
                 <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">
@@ -38,10 +37,8 @@
             </svg>
             <span class="lable">Modifica</span>
         </button>
-        </a>
 
-        <a href="./indirizzi.jsp">
-            <button class="button">
+            <button class="button" onclick="location.href='./indirizzi.jsp'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20"
                      height="20" fill="none" class="svg-icon">
                     <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">
@@ -53,10 +50,8 @@
                 </svg>
                 <span class="lable">Indirizzi</span>
             </button>
-        </a>
 
-        <a href="./metodiPagamento.jsp">
-            <button class="button">
+            <button class="button" onclick="location.href='./metodiPagamento.jsp'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20"
                      height="20" fill="none" class="svg-icon">
                     <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">
@@ -68,7 +63,6 @@
                 </svg>
                 <span class="lable">Pagamenti</span>
             </button>
-        </a>
 
     </div>
 </div>

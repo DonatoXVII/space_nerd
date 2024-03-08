@@ -40,7 +40,7 @@
     <h2>Per gli appassionati di anime</h2>
     <h1>Di ogni genere</h1>
     <p>Non lasciarti sfuggire nessuna occasione, saldi in ogni periodo dell'anno</p>
-    <a href="./catalogo.jsp" ><button class="acquista-ora">
+    <button class="acquista-ora" onclick="location.href='./catalogo.jsp'">
         <svg
                 height="24"
                 width="24"
@@ -54,7 +54,7 @@
             ></path>
         </svg>
         <span>Acquista ora!</span>
-    </button></a>
+    </button>
     </div>
     <div class="welcome-img">
     <img src="img/index4.jpg" alt="errore immagine">
@@ -69,14 +69,12 @@
                 for(Object prodotto : bestProdotti){
                     if(prodotto instanceof MangaBean) {
             %>
-            <a href="ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>">
-                <div class="item">
+                <div class="item" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
                 <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
                     <div class="descrizione">
                         <h6><%=((MangaBean) prodotto).getDescrizione()%></h6>
                     </div>
                 </div>
-            </a>
             <%
                     }
                 }
@@ -88,14 +86,12 @@
                 for(Object prodotto : bestProdotti) {
                     if(prodotto instanceof PopBean) {
             %>
-            <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>">
-                <div class="item">
+                <div class="item" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
                 <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                     <div class="descrizione">
                         <h6><%=((PopBean) prodotto).getDescrizione()%></h6>
                     </div>
                 </div>
-            </a>
             <%
                     }
                 }
@@ -107,14 +103,12 @@
                 for(Object prodotto : bestProdotti){
                     if(prodotto instanceof FigureBean) {
             %>
-            <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>">
-                <div class="item">
+                <div class="item" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
                 <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                     <div class="descrizione">
                         <h6><%=((FigureBean) prodotto).getDescrizione()%></h6>
                     </div>
                 </div>
-            </a>
             <%
                     }
                 }

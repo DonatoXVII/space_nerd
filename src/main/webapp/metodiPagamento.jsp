@@ -135,8 +135,7 @@
                 </div>
             </div>
         </div>
-        <a href="UtenteControl?action=rimuoviMetodo&IdMetodo=<%=metodo.getId()%>">
-            <button type="button" class="button">
+            <button type="button" class="button" onclick="location.href='UtenteControl?action=rimuoviMetodo&IdMetodo=<%=metodo.getId()%>'">
                 <span class="button__text">Elimina</span>
                 <span class="button__icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="512" viewBox="0 0 512 512" height="512" class="svg">
@@ -147,7 +146,6 @@
                     <line y2="400" y1="176" x2="320" x1="328" style="fill:none;stroke:#323232;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></line>
                 </svg></span>
             </button>
-        </a>
     </div>
         <%
             }

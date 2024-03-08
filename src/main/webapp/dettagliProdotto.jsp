@@ -28,38 +28,23 @@
             <p><img src="img/lingua.jpg" alt="errore immagine">  Lingua: <%=((MangaBean) prodotto).getLingua()%></p>
             <p><img src="img/libro.jpg" alt="errore immagine">  Numero Pagine: <%=((MangaBean) prodotto).getNumPagine()%></p>
             <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=((MangaBean) prodotto).getPrezzo()%>€</p>
-            <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>">
-                <button class="addToCart">
-                    <span>Aggiungi al carrello</span>
-                    <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                        <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
-                        <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
-                            <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
-                            <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
-                            <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
-                            <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
-                        </g>
-                        </g>
-                    </svg>
-                </button>
-            </a>
+            <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+                <span>Aggiungi al carrello</span>
+                <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                    <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                    <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
+                        <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
+                        <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
+                        <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
+                        <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
+                    </g>
+                    </g>
+                </svg>
+            </button>
         </div>
 <%
     } else if(prodotto instanceof PopBean){
 %>
-
-
-    <!--<div class="immaginiProdotto">
-        <%
-            for(String img : ((PopBean) prodotto).getImmagini()) {
-        %>
-                <img src="img/imgPop/<%=img%>" alt="errore immagine">
-        <%
-            }
-        %>
-    </div>-->
-
-
     <div class="slider-wrapper">
         <div class="slider">
 <%
@@ -80,21 +65,19 @@
         <p><img src="img/serie.jpg" alt="errore immagine">  Serie: <%=((PopBean) prodotto).getSerie()%></p>
         <p><img src="img/numeri.jpg" alt="errore immagine">  Numero di serie: <%=((PopBean) prodotto).getNumSerie()%></p>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=((PopBean) prodotto).getPrezzo()%></p>
-        <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>">
-            <button class="addToCart">
-                <span>Aggiungi al carrello</span>
-                <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                    <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
-                    <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
-                        <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
-                        <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
-                        <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
-                        <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
-                    </g>
-                    </g>
-                </svg>
-            </button>
-        </a>
+        <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
+            <span>Aggiungi al carrello</span>
+            <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
+                    <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
+                    <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
+                    <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
+                    <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
+                </g>
+                </g>
+            </svg>
+        </button>
     </div>
 <%
     } else if(prodotto instanceof FigureBean) {
@@ -120,21 +103,19 @@
         <p><img src="img/altezza.jpg" alt="errore immagine">  Altezza : <%=((FigureBean) prodotto).getAltezza()%></p>
         <p><img src="img/materiale.jpg" alt="errore immagine">  Materiale : <%=((FigureBean) prodotto).getMateriale()%></p>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=((FigureBean) prodotto).getPrezzo()%></p>
-        <a href="ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>">
-            <button class="addToCart">
-                <span>Aggiungi al carrello</span>
-                <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                    <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
-                    <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
-                        <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
-                        <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
-                        <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
-                        <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
-                    </g>
-                    </g>
-                </svg>
-            </button>
-        </a>
+        <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+            <span>Aggiungi al carrello</span>
+            <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
+                    <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
+                    <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
+                    <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
+                    <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
+                </g>
+                </g>
+            </svg>
+        </button>
     </div>
 <%
     }

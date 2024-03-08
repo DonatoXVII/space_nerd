@@ -85,9 +85,9 @@
         <div class="carta-container">
             <div class="card">
                 <div class="tools">
-                    <a href="UtenteControl?action=rimuoviIndirizzo&IdIndirizzo=<%=indirizzo.getId()%>"><div class="circle">
+                    <div class="circle" onclick="location.href='UtenteControl?action=rimuoviIndirizzo&IdIndirizzo=<%=indirizzo.getId()%>'">
                         <span class="red box"></span>
-                    </div></a>
+                    </div>
                     <div class="circle">
                         <span class="yellow box"></span>
                     </div>

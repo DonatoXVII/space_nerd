@@ -38,7 +38,7 @@
             Prezzo totale dell' ordine : <%=ordine.getPrezzo()%><br>
             Qui puoi visualizzare i dettagli di questo ordine e scaricarne la fattura
         </p>
-            <a href="OrdiniControl?action=visualizzaDettagliOrdine&IdOrdine=<%=ordine.getId()%>"><button class="btnOrdine">Dettagli ordine</button></a>
+            <button class="btnOrdine" onclick="location.href='OrdiniControl?action=visualizzaDettagliOrdine&IdOrdine=<%=ordine.getId()%>'">Dettagli ordine</button>
         </div>
     </div>
     <%

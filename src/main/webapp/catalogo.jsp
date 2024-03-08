@@ -24,8 +24,8 @@
     for(Object prodotto : prodotti) {
         if(prodotto instanceof MangaBean) {
 %>
-            <div class="gallery">
-                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>"><img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine"></a>
+            <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+               <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
                 <div class="description">
                     <h5><%=((MangaBean) prodotto).getDescrizione()%></h5>
                     <h5><%=((MangaBean) prodotto).getPrezzo()%>€</h5>
@@ -35,8 +35,8 @@
 <%
         } else if(prodotto instanceof PopBean) {
 %>
-            <div class="gallery">
-                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>"><img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
+            <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
+                <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                 <div class="description">
                     <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
                     <h5><%=((PopBean) prodotto).getPrezzo()%>€</h5>
@@ -45,8 +45,8 @@
 <%
         } else if(prodotto instanceof FigureBean) {
 %>
-            <div class="gallery">
-                <a href="ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>"><img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine"></a>
+            <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+                <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                 <div class="description">
                     <h5><%=((FigureBean) prodotto).getPersonaggio()%></h5>
                     <h5><%=((FigureBean) prodotto).getPrezzo()%>€</h5>

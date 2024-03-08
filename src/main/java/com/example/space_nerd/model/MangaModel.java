@@ -17,9 +17,9 @@ public class MangaModel {
     private static Logger logger = Logger.getLogger(MangaModel.class.getName());
     private static final String TABLE_NAME_MANGA = "Manga";
     private static final String TABLE_NAME_COMPRENDE = "ComprendeManga";
-    private static String ID_MANGA = "IdManga";
-    private static String PREZZO_PARAMETER = "Prezzo";
-    private static String N_ARTICOLI_PARAMETER = "NumeroArticoli";
+    private static String idManga = "IdManga";
+    private static String prezzoParameter = "Prezzo";
+    private static String numeroArticoliParameter = "NumeroArticoli";
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
@@ -55,7 +55,7 @@ public class MangaModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 MangaBean manga = new MangaBean();
-                manga.setIdManga(rs.getInt(ID_MANGA));
+                manga.setIdManga(rs.getInt(idManga));
                 manga.setDescrizione(rs.getString(descrizioneParameter));
                 manga.setImg(rs.getString(immagineParameter));
                 bestManga.add(manga);
@@ -100,10 +100,10 @@ public class MangaModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 MangaBean manga = new MangaBean();
-                manga.setIdManga(rs.getInt(ID_MANGA));
+                manga.setIdManga(rs.getInt(idManga));
                 manga.setDescrizione(rs.getString(descrizioneParameter));
                 manga.setImg(rs.getString(immagineParameter));
-                manga.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
+                manga.setPrezzo(rs.getFloat(prezzoParameter));
                 allManga.add(manga);
             }
         } catch (SQLException e) {
@@ -147,9 +147,9 @@ public class MangaModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 manga.setIdManga(i);
-                manga.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
+                manga.setPrezzo(rs.getFloat(prezzoParameter));
                 manga.setDescrizione(rs.getString(descrizioneParameter));
-                manga.setNumArticoli(rs.getInt(N_ARTICOLI_PARAMETER));
+                manga.setNumArticoli(rs.getInt(numeroArticoliParameter));
                 manga.setCasaEditrice(rs.getString("CasaEditrice"));
                 manga.setLingua(rs.getString("Lingua"));
                 manga.setNumPagine(rs.getInt("NumeroPagine"));
@@ -195,7 +195,7 @@ public class MangaModel {
             ps.setInt(1, i);
             rs = ps.executeQuery();
             while(rs.next()) {
-                if(rs.getInt(N_ARTICOLI_PARAMETER) > 0) {
+                if(rs.getInt(numeroArticoliParameter) > 0) {
                     res = true;
                 }
             }
@@ -239,10 +239,10 @@ public class MangaModel {
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
             while(rs.next()) {
-                manga.setIdManga(rs.getInt(ID_MANGA));
-                manga.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
+                manga.setIdManga(rs.getInt(idManga));
+                manga.setPrezzo(rs.getFloat(prezzoParameter));
                 manga.setDescrizione(descrizione);
-                manga.setNumArticoli(rs.getInt(N_ARTICOLI_PARAMETER));
+                manga.setNumArticoli(rs.getInt(numeroArticoliParameter));
                 manga.setCasaEditrice(rs.getString("CasaEditrice"));
                 manga.setLingua(rs.getString("Lingua"));
                 manga.setNumPagine(rs.getInt("NumeroPagine"));

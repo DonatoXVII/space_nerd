@@ -22,7 +22,7 @@ public class OrdineModel {
     private static final String WHERE_IDORDINE = "WHERE IdOrdine = ?";
     private static final String INSERT_INTO = "INSERT INTO";
     private static final String VALUES = "VALUES(?, ?, ?)";
-    private static final String quantitaParameter = "Quantita";
+    private static final String QUANTITA_PARAMETER = "Quantita";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -117,17 +117,17 @@ public class OrdineModel {
 
             while(rsManga.next()) {
                 MangaBean manga = (mangaModel.getById(rsManga.getInt("IdManga")));
-                manga.setQuantitaCarrello(rsManga.getInt(quantitaParameter));
+                manga.setQuantitaCarrello(rsManga.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(manga);
             }
             while(rsPop.next()) {
                 PopBean pop = popModel.getById(rsPop.getInt("IdPop"));
-                pop.setQuantitaCarrello(rsPop.getInt(quantitaParameter));
+                pop.setQuantitaCarrello(rsPop.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(pop);
             }
             while(rsFigure.next()) {
                 FigureBean figure = figureModel.getById(rsFigure.getInt("IdFigure"));
-                figure.setQuantitaCarrello(rsFigure.getInt(quantitaParameter));
+                figure.setQuantitaCarrello(rsFigure.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(figure);
             }
 

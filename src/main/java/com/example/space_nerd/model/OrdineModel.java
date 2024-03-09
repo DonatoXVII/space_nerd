@@ -20,6 +20,9 @@ public class OrdineModel {
     private static final PopModel popModel = new PopModel();
     private static final FigureModel figureModel = new FigureModel();
     private static final String WHERE_IDORDINE = "WHERE IdOrdine = ?";
+    private static final String INSERT_INTO = "INSERT INTO";
+    private static final String VALUES = "VALUES(?, ?, ?)";
+    private static final String quantitaParameter = "Quantita";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -114,17 +117,17 @@ public class OrdineModel {
 
             while(rsManga.next()) {
                 MangaBean manga = (mangaModel.getById(rsManga.getInt("IdManga")));
-                manga.setQuantitaCarrello(rsManga.getInt("Quantita"));
+                manga.setQuantitaCarrello(rsManga.getInt(quantitaParameter));
                 prodottiOrdine.add(manga);
             }
             while(rsPop.next()) {
                 PopBean pop = popModel.getById(rsPop.getInt("IdPop"));
-                pop.setQuantitaCarrello(rsPop.getInt("Quantita"));
+                pop.setQuantitaCarrello(rsPop.getInt(quantitaParameter));
                 prodottiOrdine.add(pop);
             }
             while(rsFigure.next()) {
                 FigureBean figure = figureModel.getById(rsFigure.getInt("IdFigure"));
-                figure.setQuantitaCarrello(rsFigure.getInt("Quantita"));
+                figure.setQuantitaCarrello(rsFigure.getInt(quantitaParameter));
                 prodottiOrdine.add(figure);
             }
 
@@ -220,7 +223,7 @@ public class OrdineModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_ORDINE + "(PrezzoTotale, DataOrdine, Fattura, Email)" +
+            String query = INSERT_INTO + " " + TABLE_NAME_ORDINE + "(PrezzoTotale, DataOrdine, Fattura, Email)" +
                     "VALUES(?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setFloat(1, prezzo);
@@ -253,8 +256,8 @@ public class OrdineModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_COMPRENDE_MANGA + "(IdOrdine, IdManga, Quantita)" +
-                    "VALUES(?, ?, ?)";
+            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_MANGA + "(IdOrdine, IdManga, Quantita)" +
+                    VALUES;
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, manga);
@@ -285,8 +288,8 @@ public class OrdineModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_COMPRENDE_POP + "(IdOrdine, IdPop, Quantita)" +
-                    "VALUES(?, ?, ?)";
+            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_POP + "(IdOrdine, IdPop, Quantita)" +
+                    VALUES;
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, pop);
@@ -317,8 +320,8 @@ public class OrdineModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_COMPRENDE_FIGURE + "(IdOrdine, IdFigure, Quantita)" +
-                    "VALUES(?, ?, ?)";
+            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_FIGURE + "(IdOrdine, IdFigure, Quantita)" +
+                    VALUES;
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, figure);

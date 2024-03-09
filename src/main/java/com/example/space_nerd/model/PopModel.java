@@ -19,6 +19,9 @@ public class PopModel {
     private static final String TABLE_NAME_COMPRENDE = "ComprendePop";
     private static final String TABLE_NAME_IMMAGINE = "ImmaginePop";
     private static final String WHERE_IDPOP = "WHERE IdPop = ?";
+    private static final String idPop = "IdPop";
+    private static final String prezzoParameter = "Prezzo";
+    private static final String articoliParameter = "NumeroArticoli";
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
@@ -51,7 +54,7 @@ public class PopModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 PopBean pop = new PopBean();
-                pop.setIdPop(rs.getInt("IdPop"));
+                pop.setIdPop(rs.getInt(idPop));
                 pop.setDescrizione(rs.getString(descrizioneParameter));
                 miglioriPop.add(pop);
             }
@@ -138,9 +141,9 @@ public class PopModel {
             rs = ps.executeQuery();
             while(rs.next()) {
                 PopBean pop = new PopBean();
-                pop.setIdPop(rs.getInt("IdPop"));
+                pop.setIdPop(rs.getInt(idPop));
                 pop.setDescrizione(rs.getString(descrizioneParameter));
-                pop.setPrezzo(rs.getFloat("Prezzo"));
+                pop.setPrezzo(rs.getFloat(prezzoParameter));
                 allPop.add(pop);
             }
         } catch (SQLException e) {
@@ -184,9 +187,9 @@ public class PopModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 pop.setIdPop(i);
-                pop.setPrezzo(rs.getFloat("Prezzo"));
+                pop.setPrezzo(rs.getFloat(prezzoParameter));
                 pop.setDescrizione(rs.getString(descrizioneParameter));
-                pop.setNumArticoli(rs.getInt("NumeroArticoli"));
+                pop.setNumArticoli(rs.getInt(articoliParameter));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
                 pop.setSerie(rs.getString("Serie"));
             }
@@ -230,7 +233,7 @@ public class PopModel {
             ps.setInt(1, i);
             rs = ps.executeQuery();
             while(rs.next()) {
-                if(rs.getInt("NumeroArticoli") > 0) {
+                if(rs.getInt(articoliParameter) > 0) {
                     res = true;
                 }
             }
@@ -274,10 +277,10 @@ public class PopModel {
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
             while(rs.next()) {
-                pop.setIdPop(rs.getInt("IdPop"));
-                pop.setPrezzo(rs.getFloat("Prezzo"));
+                pop.setIdPop(rs.getInt(idPop));
+                pop.setPrezzo(rs.getFloat(prezzoParameter));
                 pop.setDescrizione(descrizione);
-                pop.setNumArticoli(rs.getInt("NumeroArticoli"));
+                pop.setNumArticoli(rs.getInt(articoliParameter));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
                 pop.setSerie(rs.getString("Serie"));
             }

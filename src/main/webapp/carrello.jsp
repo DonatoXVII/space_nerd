@@ -36,7 +36,7 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <img class="add" src="img/plus.jpg" alt="errore immagine" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+                        <div onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"><img class="add" src="img/plus.jpg" alt="errore immagine"></div>
                         <img class="remove" src="img/minus.jpg" alt="errore immagine" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
                     </div>
                 </div>

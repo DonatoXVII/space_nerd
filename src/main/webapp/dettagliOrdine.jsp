@@ -25,7 +25,7 @@
 <%
             if(prodotto instanceof MangaBean) {
 %>
-               <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'" role="button">
+               <button style="cursor: pointer" class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'" role="button">
                    <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
                    <div class="description">
                        <h5><%=((MangaBean) prodotto).getDescrizione()%></h5>
@@ -35,11 +35,11 @@
                        <h5>Prezzo unità: <%=((MangaBean) prodotto).getPrezzo()%>€</h5>
                        <h5>Quantità: <%=((MangaBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
-               </div>
+               </button>
 <%
             } else if(prodotto instanceof PopBean) {
 %>
-                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'" role="button">
+                <button style="cursor: pointer" class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'" role="button">
                     <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                     <div class="description">
                         <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
@@ -48,11 +48,11 @@
                         <h5>Prezzo unità: <%=((PopBean) prodotto).getPrezzo()%>€</h5>
                         <h5>Quantità: <%=((PopBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
-                </div>
+                </button>
 <%
             }else if(prodotto instanceof FigureBean) {
 %>
-                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'" role="button">
+                <button style="cursor: pointer" class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'" role="button">
                     <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                     <div class="description">
                         <h5><%=((FigureBean) prodotto).getDescrizione()%></h5>
@@ -62,7 +62,7 @@
                         <h5>Prezzo unità: <%=((FigureBean) prodotto).getPrezzo()%>€</h5>
                         <h5>Quantità: <%=((FigureBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
-                </div>
+                </button>
 <%
             }
 %>

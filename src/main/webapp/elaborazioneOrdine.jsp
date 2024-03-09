@@ -42,7 +42,7 @@
 <form action="OrdiniControl?action=checkout" method="POST">
 <div class="container">
     <div class="cardCheckout cart">
-        <label class="titleCardOrdine">ELABORAZIONE ORDINE</label>
+        <h1 class="titleCardOrdine">ELABORAZIONE ORDINE</h1>
         <div class="steps">
             <div class="step">
                 <div>

@@ -118,6 +118,10 @@
         </button>
     </div>
 <%
+    } else if(prodotto instanceof String) {
+%>
+        <h1 style="color: #302B63FF; font-family: Montserrat, serif; margin-left: 10px;"><%=prodotto%></h1>
+<%
     }
 %>
 </section>

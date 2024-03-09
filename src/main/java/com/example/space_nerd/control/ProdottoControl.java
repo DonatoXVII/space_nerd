@@ -196,6 +196,9 @@ public class ProdottoControl extends HttpServlet {
             }
             request.setAttribute(prodottoParameter, figureBean);
         }
+        if(mangaBean.getIdManga() == 0 && popBean.getIdPop() == 0 && figureBean.getIdFigure() == 0) {
+            request.setAttribute(prodottoParameter, "Nessun Prodotto Trovato!");
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher(dettagliJSP);
         dispatcher.forward(request, response);
     }

@@ -63,13 +63,12 @@
                 </div>
             </form>
             <li><a class="active" href="./catalogo.jsp">CATALOGO</a></li>
-            <li><a href="./login.jsp">PROFILO</a></li>
+            <li id="userIconLi"><a href="./login.jsp"><img src="img/user.jpg" id="userIcon"></a></li>
             <%if(emailUtente == null){%>
-                <li><a href="./login.jsp">CARRELLO</a></li>
+                <li><a href="./login.jsp"><img src="img/cart.jpg"></a></li>
             <%}else{%>
-                <li><a href="./ordini.jsp">ORDINI</a></li>
-                <li><a href="./carrello.jsp">CARRELLO</a></li>
-                <li><a href="UtenteControl?action=logout">LOGOUT</a></li>
+                <li><a href="./carrello.jsp"><img src="img/cart.jpg"></a></li>
+                <li><a href="UtenteControl?action=logout"><img src="img/logout.jpg"></a></li>
             <%}%>
         </ul>
     </div>
@@ -99,6 +98,51 @@
             }
         })
     })
+</script>
+
+<script>
+    const userIcon = document.getElementById("userIcon");
+    const userIconCard = document.createElement("div");
+    userIconCard.id = "userIconCard";
+    userIconCard.innerHTML = `<a style="color: black; font-family: Montserrat, serif" class="cardActive" href="./ordini.jsp">Ordini</a>`;
+
+    const userIconLi = document.getElementById("userIconLi");
+    userIconLi.appendChild(userIconCard);
+
+    let isMouseOverIcon = false;
+    let isMouseOverCard = false;
+
+    userIcon.addEventListener("mouseover", function() {
+        isMouseOverIcon = true;
+        showCard();
+    });
+
+    userIcon.addEventListener("mouseout", function() {
+        isMouseOverIcon = false;
+        setTimeout(hideCard, 150); // Ritardo di 200ms prima di nascondere la card
+    });
+
+    userIconCard.addEventListener("mouseover", function() {
+        isMouseOverCard = true;
+        showCard();
+    });
+
+    userIconCard.addEventListener("mouseout", function() {
+        isMouseOverCard = false;
+        setTimeout(hideCard, 150); // Ritardo di 200ms prima di nascondere la card
+    });
+
+    function showCard() {
+        if (isMouseOverIcon || isMouseOverCard) {
+            userIconCard.style.display = "block";
+        }
+    }
+
+    function hideCard() {
+        if (!isMouseOverIcon && !isMouseOverCard) {
+            userIconCard.style.display = "none";
+        }
+    }
 </script>
 
 </body>

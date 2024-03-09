@@ -268,7 +268,6 @@ public class FigureModel {
 
     public FigureBean getFigurePerDescrizione(String descrizione) {
         FigureBean figure = new FigureBean();
-        descrizione = "%" + descrizione + "%";
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

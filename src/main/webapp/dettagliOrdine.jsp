@@ -25,7 +25,7 @@
 <%
             if(prodotto instanceof MangaBean) {
 %>
-               <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+               <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'" role="button">
                    <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
                    <div class="description">
                        <h5><%=((MangaBean) prodotto).getDescrizione()%></h5>
@@ -39,7 +39,7 @@
 <%
             } else if(prodotto instanceof PopBean) {
 %>
-                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
+                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'" role="button">
                     <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                     <div class="description">
                         <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
@@ -52,7 +52,7 @@
 <%
             }else if(prodotto instanceof FigureBean) {
 %>
-                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+                <div class="gallery" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'" role="button">
                     <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                     <div class="description">
                         <h5><%=((FigureBean) prodotto).getDescrizione()%></h5>

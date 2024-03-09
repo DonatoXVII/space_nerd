@@ -138,13 +138,6 @@ hr {
     background-color: rgba(16, 86, 82, .5);
 }
 
-.price {
-    position: relative;
-    font-size: 22px;
-    color: #2B2B2F;
-    font-weight: 900;
-}
-
 .checkout .checkout-btn {
     display: flex;
     flex-direction: row;
@@ -154,10 +147,8 @@ hr {
     height: 36px;
     background: rgba(16, 86, 82, .55);
     box-shadow: 0px 0.5px 0.5px rgba(16, 86, 82, .75), 0px 1px 0.5px rgba(16, 86, 82, .75);
-;
     border-radius: 7px;
     border: 1px solid rgb(16, 86, 82);
-;
     color: #000000;
     font-size: 13px;
     font-weight: 600;

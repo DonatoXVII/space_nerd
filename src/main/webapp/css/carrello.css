@@ -66,6 +66,9 @@ h1{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    margin-top: 20px;
+    padding-left: 20px;
+    gap: 30px;
 }
 
 .descrizioneCarrello img {
@@ -82,9 +85,7 @@ h1{
     border: 3px solid #144C63FF;
     border-radius: 30px;
     margin: 20px;
-    background: radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%,
-    #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%,
-    #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%);;
+    background: radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%, #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%, #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%);;
     box-shadow: 20px 20px 34px rgb(48, 43, 99);
 }
 
@@ -96,15 +97,12 @@ h1{
 }
 
 .comandi {
-    padding: 10px;
-}
-
-.comandi {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    padding: 10px;
 }
 
 .button {
@@ -192,9 +190,7 @@ h1{
 }
 
 .checkout:hover {
-    background: linear-gradient(14deg, rgba(0, 36, 1, 0.8) 0%, rgba(80, 208, 85, 0.7) 66%,
-    rgb(5, 239, 41) 100%), radial-gradient(circle, rgba(95, 227, 22, 0.5) 0%,
-    rgba(49, 96, 29, 0.2) 65%, rgba(157, 236, 117, 0.9) 100%);;
+    background: linear-gradient(14deg, rgba(0, 36, 1, 0.8) 0%, rgba(80, 208, 85, 0.7) 66%, rgb(5, 239, 41) 100%), radial-gradient(circle, rgba(95, 227, 22, 0.5) 0%, rgba(49, 96, 29, 0.2) 65%, rgba(157, 236, 117, 0.9) 100%);;
 }
 
 .checkout > svg {
@@ -211,3 +207,24 @@ h1{
     transform: scale(0.95);
 }
 
+.buttonAdd {
+    width: 50px;
+    height: 50px;
+    background-image: url("../img/plus.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+}
+
+.buttonRemove {
+    width: 50px;
+    height: 50px;
+    background-image: url("../img/minus.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+}

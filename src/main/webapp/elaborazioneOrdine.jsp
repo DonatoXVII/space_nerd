@@ -52,12 +52,12 @@
                         for (IndirizzoBean indirizzo : indirizzi) {
                     %>
                         <div>
-                        <label for="<%=indirizzo.getId()%>"></label>
-                            <input type="radio" name="indirizzoScelto" value="<%=indirizzo.getId()%>" id="
-                    <%=indirizzo.getId()%>" required>
+                        <label for="<%=indirizzo.getId()%>">
+                            <input type="radio" name="indirizzoScelto" value="<%=indirizzo.getId()%>" id="<%=indirizzo.getId()%>" required>
                                 <%=indirizzo.getNome()%> <%=indirizzo.getCognome()%><br>
                                 <%=indirizzo.getComune()%>, <%=indirizzo.getProvincia()%><br>
                                 Via <%=indirizzo.getVia()%>, <%=indirizzo.getCivico()%><br>
+                        </label>
                         </div>
                     <%
                         }
@@ -72,12 +72,13 @@
                         for (PagamentoBean pagamento : pagamenti) {
                     %>
                         <div>
-                            <label for="<%=pagamento.getId()%>"></label>
+                            <label for="<%=pagamento.getId()%>">
                                 <input type="radio" name="metodoScelto" value="<%=pagamento.getId()%>" id="<%=pagamento.getId()%>" required>
                                     <%=pagamento.getTitolare()%><br>
                                     <%=pagamento.getNumeroCarta()%><br>
                                     <%=pagamento.getScadenza()%><br>
                                     <%=pagamento.getCcv()%>
+                            </label>
                         </div>
                     <%
                         }
@@ -103,7 +104,7 @@
 
     <div class="card checkout">
         <div class="footer">
-            <label class="price"><%=PrezzoTotaleString%>€</label>
+            <p style="font-family: Montserrat, serif; font-weight: bold"><%=PrezzoTotaleString%>€</p>
             <button class="checkout-btn">Conferma</button>
         </div>
     </div>

@@ -36,8 +36,8 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button style="border: none" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"><img class="add" src="img/plus.jpg" alt="errore immagine"></button>
-                        <button style="border: none" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'"><img class="remove" src="img/minus.jpg" alt="errore immagine"></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
+                        <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
                     </div>
                 </div>
             </div>
@@ -57,8 +57,8 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button style="border: none" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'"><img class="add" src="img/plus.jpg" alt="errore immagine"></button>
-                        <button style="border: none" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>'"><img class="remove" src="img/minus.jpg" alt="errore immagine"></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'"></button>
+                        <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>'"></button>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,8 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button style="border: none" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"><img class="add" src="img/plus.jpg" alt="errore immagine"></button>
-                        <button style="border: none" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"><img class="remove" src="img/minus.jpg" alt="errore immagine"></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"></button>
+                        <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"></button>
                     </div>
                     </div>
             </div>

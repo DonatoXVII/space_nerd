@@ -136,13 +136,14 @@ public class PopModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdPop, Descrizione, Prezzo FROM " + TABLE_NAME_POP;
+            String query = "SELECT IdPop, Descrizione, Serie, Prezzo FROM " + TABLE_NAME_POP;
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
                 PopBean pop = new PopBean();
                 pop.setIdPop(rs.getInt(ID_POP));
                 pop.setDescrizione(rs.getString(descrizioneParameter));
+                pop.setSerie(rs.getString("Serie"));
                 pop.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
                 allPop.add(pop);
             }

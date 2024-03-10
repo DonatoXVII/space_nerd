@@ -1,9 +1,37 @@
+.catalogoEFiltri {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    height: 100%;
+}
+
+.filtri {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 10px;
+    height: 100%;
+    justify-content: flex-start;
+    padding-top: 10px;
+    padding-left: 15px;
+    border: 2px solid #144C63FF;
+    border-radius: 10px;
+    background: radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%, #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%, #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%);
+    color: #144C63FF;
+    font-family: Montserrat, serif;
+    font-weight: bold;
+}
+
+#applicaFiltriBtn {
+    width: 50%;
+}
+
 .catalogo {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     grid-auto-rows: minmax(200px, auto);
     gap: 10px;
-    padding: 10px;
+    justify-content: space-evenly;
+    padding: 5px;
 }
 
 .catalogoOrdini {
@@ -34,6 +62,7 @@
 
 .galleryProdotto {
     width: 23%;
+    height: 100%;
     margin: 10px;
     padding: 10px;
     border: 2px solid #144C63FF;
@@ -147,6 +176,7 @@
 
 .slider-wrapper {
     width: 25%;
+    height: 100%;
     margin: 10px;
     padding: 10px;
     border: 2px solid #144C63FF;

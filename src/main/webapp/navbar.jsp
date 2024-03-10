@@ -104,7 +104,7 @@
     const userIcon = document.getElementById("userIcon");
     const userIconCard = document.createElement("div");
     userIconCard.id = "userIconCard";
-    userIconCard.innerHTML = `<a style="color: black; font-family: Montserrat, serif" class="cardActive" href="./ordini.jsp">Ordini</a>`;
+    userIconCard.innerHTML = <%if(emailUtente!=null){%> `<a style="color: black; font-family: Montserrat, serif" class="cardActive" href="./ordini.jsp">Ordini</a>` <%}%>;
 
     const userIconLi = document.getElementById("userIconLi");
     userIconLi.appendChild(userIconCard);

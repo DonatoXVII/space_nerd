@@ -1,9 +1,15 @@
 <%@ page import="com.example.space_nerd.model.MangaBean" %>
 <%@ page import="com.example.space_nerd.model.PopBean" %>
 <%@ page import="com.example.space_nerd.model.FigureBean" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     Object prodotto = request.getAttribute("prodotto");
+%>
+<%
+    Locale.setDefault(Locale.US);
+    String PrezzoeString;
+    Locale.setDefault(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -27,7 +33,10 @@
             <p><img src="img/editrice.jpg" alt="errore immagine">  Casa Editrice: <%=((MangaBean) prodotto).getCasaEditrice()%></p>
             <p><img src="img/lingua.jpg" alt="errore immagine">  Lingua: <%=((MangaBean) prodotto).getLingua()%></p>
             <p><img src="img/libro.jpg" alt="errore immagine">  Numero Pagine: <%=((MangaBean) prodotto).getNumPagine()%></p>
-            <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=((MangaBean) prodotto).getPrezzo()%>€</p>
+            <%
+                PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
+            %>
+            <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
             <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
                 <span>Aggiungi al carrello</span>
                 <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -64,7 +73,10 @@
         <h1><%=((PopBean) prodotto).getDescrizione()%></h1>
         <p><img src="img/serie.jpg" alt="errore immagine">  Serie: <%=((PopBean) prodotto).getSerie()%></p>
         <p><img src="img/numeri.jpg" alt="errore immagine">  Numero di serie: <%=((PopBean) prodotto).getNumSerie()%></p>
-        <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=((PopBean) prodotto).getPrezzo()%></p>
+        <%
+            PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
+        %>
+        <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -102,7 +114,10 @@
         <p><img src="img/personaggio.jpg" alt="errore immagine">  Personaggio : <%=((FigureBean) prodotto).getPersonaggio()%></p>
         <p><img src="img/altezza.jpg" alt="errore immagine">  Altezza : <%=((FigureBean) prodotto).getAltezza()%></p>
         <p><img src="img/materiale.jpg" alt="errore immagine">  Materiale : <%=((FigureBean) prodotto).getMateriale()%></p>
-        <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=((FigureBean) prodotto).getPrezzo()%></p>
+        <%
+            PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
+        %>
+        <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>

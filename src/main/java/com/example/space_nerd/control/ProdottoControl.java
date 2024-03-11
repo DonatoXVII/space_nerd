@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.print.attribute.standard.MediaName;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -143,9 +144,15 @@ public class ProdottoControl extends HttpServlet {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         String tipo = req.getParameter("Tipo");
         int id = Integer.parseInt(req.getParameter("Id"));
+        int countProdotto = 0;
         if (tipo.equalsIgnoreCase(mangaParameter)) {
             if(mangaModel.verificaDisponibilita(id)) {
                 carrelloBean.aggiungiProdotto(mangaModel.getById(id));
+                for(Object manga : carrelloBean.getListaCarrello()){
+                    if(manga instanceof MangaBean) {
+                        countProdotto = ((MangaBean) manga).getQuantitaCarrello();
+                    }
+                }
             }
         }else if (tipo.equalsIgnoreCase("pop")) {
             if(popModel.verificaDisponibilita(id)) {
@@ -154,6 +161,8 @@ public class ProdottoControl extends HttpServlet {
         } else if (tipo.equalsIgnoreCase(figureParameter) && figureModel.verificaDisponibilita(id)) {
             carrelloBean.aggiungiProdotto(figureModel.getById(id));
         }
+        req.getSession().removeAttribute("countProdotto");
+        req.getSession().setAttribute("countProdotto", countProdotto);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
@@ -161,7 +170,15 @@ public class ProdottoControl extends HttpServlet {
     private void rimuoviDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
         int id = Integer.parseInt(req.getParameter("Id"));
+        int count = 0;
         carrelloBean.rimuoviProdotto(id);
+        for(Object proddotto : carrelloBean.getListaCarrello()) {
+            if(proddotto instanceof MangaBean) {
+                count = ((MangaBean) proddotto).getQuantitaCarrello();
+            }
+        }
+        req.getSession().removeAttribute("countProdotto");
+        req.getSession().setAttribute("countProdotto", count);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
@@ -169,6 +186,14 @@ public class ProdottoControl extends HttpServlet {
     private void svuotaCarrello(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         CarrelloBean carrelloBean = getCarrelloBeanFromSession(request);
         carrelloBean.svuotaCarrello();
+        int count = 0;
+        for(Object proddotto : carrelloBean.getListaCarrello()) {
+            if(proddotto instanceof MangaBean) {
+                count = ((MangaBean) proddotto).getQuantitaCarrello();
+            }
+        }
+        request.getSession().removeAttribute("countProdotto");
+        request.getSession().setAttribute("countProdotto", count);
         request.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/carrello.jsp");
         dispatcher.forward(request, response);

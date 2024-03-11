@@ -3,142 +3,143 @@ CREATE SCHEMA spacenerd;
 USE spacenerd;
 
 CREATE TABLE Utente(
-    Email varchar(100) NOT NULL COLLATE utf8_bin,
-    Pass varchar(50) NOT NULL COLLATE utf8_bin,
-    Tipo bit NOT NULL, -- 0 utente registrato, 1 admin
-    PRIMARY KEY(Email)
+                       Email varchar(100) NOT NULL COLLATE utf8_bin,
+                       Pass varchar(50) NOT NULL COLLATE utf8_bin,
+                       Tipo bit NOT NULL, -- 0 utente registrato, 1 admin
+                       PRIMARY KEY(Email)
 );
 
 CREATE TABLE DatiSensibili(
-    Email varchar(50) NOT NULL COLLATE utf8_bin,
-    Nome varchar(16) NOT NULL,
-    Cognome varchar(16) NOT NULL,
-    DataNascita date NOT NULL,
-    Via varchar(16) NOT NULL,
-    Civico int NOT NULL,
-    Provincia varchar(16) NOT NULL,
-    Comune varchar(16) NOT NULL,
-    PRIMARY KEY(Email),
-    FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
+                              Email varchar(50) NOT NULL COLLATE utf8_bin,
+                              Nome varchar(16) NOT NULL,
+                              Cognome varchar(16) NOT NULL,
+                              DataNascita date NOT NULL,
+                              Via varchar(16) NOT NULL,
+                              Civico int NOT NULL,
+                              Provincia varchar(16) NOT NULL,
+                              Comune varchar(16) NOT NULL,
+                              PRIMARY KEY(Email),
+                              FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IndirizzoSpedizione(
-    IdIndirizzo int NOT NULL auto_increment,
-    Nome varchar(16) NOT NULL,
-    Cognome varchar(16) NOT NULL,
-    Via varchar(16) NOT NULL,
-    Civico int NOT NULL,
-    Provincia varchar(16) NOT NULL,
-    Comune varchar(50) NOT NULL,
-    Cap int NOT NULL,
-    PRIMARY KEY(IdIndirizzo)
+                                    IdIndirizzo int NOT NULL auto_increment,
+                                    Nome varchar(16) NOT NULL,
+                                    Cognome varchar(16) NOT NULL,
+                                    Via varchar(16) NOT NULL,
+                                    Civico int NOT NULL,
+                                    Provincia varchar(16) NOT NULL,
+                                    Comune varchar(50) NOT NULL,
+                                    Cap int NOT NULL,
+                                    PRIMARY KEY(IdIndirizzo)
 );
 
 CREATE TABLE Utilizza(
-    Email varchar(50) NOT NULL COLLATE utf8_bin,
-    IdIndirizzo int NOT NULL,
-    PRIMARY KEY(Email, IdIndirizzo),
-    FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(IdIndirizzo) REFERENCES IndirizzoSpedizione(IdIndirizzo) ON UPDATE CASCADE ON DELETE CASCADE
+                         Email varchar(50) NOT NULL COLLATE utf8_bin,
+                         IdIndirizzo int NOT NULL,
+                         PRIMARY KEY(Email, IdIndirizzo),
+                         FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE,
+                         FOREIGN KEY(IdIndirizzo) REFERENCES IndirizzoSpedizione(IdIndirizzo) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE MetodoPagamento(
-    IdMetodo int NOT NULL auto_increment,
-    NumeroCarta varchar(50) NOT NULL,
-    DataScadenza date NOT NULL,
-    Ccv int NOT NULL,
-    Titolare varchar(50) NOT NULL,
-    PRIMARY KEY(IdMetodo)
+                                IdMetodo int NOT NULL auto_increment,
+                                NumeroCarta varchar(50) NOT NULL,
+                                DataScadenza date NOT NULL,
+                                Ccv int NOT NULL,
+                                Titolare varchar(50) NOT NULL,
+                                PRIMARY KEY(IdMetodo)
 );
 
 CREATE TABLE Registra(
-     Email varchar(50) NOT NULL COLLATE utf8_bin,
-     IdMetodo int NOT NULL,
-     FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE,
-     FOREIGN KEY(IdMetodo) REFERENCES MetodoPagamento(IdMetodo) ON UPDATE CASCADE ON DELETE CASCADE
+                         Email varchar(50) NOT NULL COLLATE utf8_bin,
+                         IdMetodo int NOT NULL,
+                         FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE,
+                         FOREIGN KEY(IdMetodo) REFERENCES MetodoPagamento(IdMetodo) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Ordine(
-    IdOrdine int NOT NULL auto_increment,
-    PrezzoTotale float NOT NULL,
-    DataOrdine date NOT NULL,
-    Fattura varchar(16) NOT NULL UNIQUE,
-    Email varchar(50) NOT NULL COLLATE utf8_bin,
-    PRIMARY KEY(IdOrdine),
-    FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
+                       IdOrdine int NOT NULL auto_increment,
+                       PrezzoTotale float NOT NULL,
+                       DataOrdine date NOT NULL,
+                       Fattura varchar(16) NOT NULL UNIQUE,
+                       Email varchar(50) NOT NULL COLLATE utf8_bin,
+                       PRIMARY KEY(IdOrdine),
+                       FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Manga(
-    IdManga int NOT NULL auto_increment,
-    Prezzo float NOT NULL,
-    Descrizione varchar(50) NOT NULL,
-    NumeroArticoli int NOT NULL,
-    CasaEditrice varchar(16) NOT NULL,
-    Lingua varchar(16) NOT NULL,
-    NumeroPagine int NOT NULL,
-    Immagine varchar(50) NOT NULL,
-    PRIMARY KEY(IdManga)
+                      IdManga int NOT NULL auto_increment,
+                      Prezzo float NOT NULL,
+                      Descrizione varchar(50) NOT NULL,
+                      NumeroArticoli int NOT NULL,
+                      CasaEditrice varchar(16) NOT NULL,
+                      Lingua varchar(16) NOT NULL,
+                      NumeroPagine int NOT NULL,
+                      Immagine varchar(50) NOT NULL,
+                      PRIMARY KEY(IdManga)
 );
 
 CREATE TABLE Pop(
-    IdPop int NOT NULL auto_increment,
-    Prezzo float NOT NULL,
-    Descrizione varchar(50) NOT NULL,
-    NumeroArticoli int NOT NULL,
-    NumeroSerie int NOT NULL,
-    Serie varchar(16) NOT NULL,
-    PRIMARY KEY(IdPop)
+                    IdPop int NOT NULL auto_increment,
+                    Prezzo float NOT NULL,
+                    Descrizione varchar(50) NOT NULL,
+                    NumeroArticoli int NOT NULL,
+                    NumeroSerie int NOT NULL,
+                    Serie varchar(16) NOT NULL,
+                    PRIMARY KEY(IdPop)
 );
 
 CREATE TABLE Figure(
-    IdFigure int NOT NULL auto_increment,
-    Prezzo float NOT NULL,
-    Descrizione varchar(50) NOT NULL,
-    NumeroArticoli int NOT NULL,
-    Materiale varchar(16) NOT NULL,
-    Altezza int NOT NULL,
-    Personaggio varchar(50) NOT NULL,
-    PRIMARY KEY(IdFigure)
+                       IdFigure int NOT NULL auto_increment,
+                       Prezzo float NOT NULL,
+                       Descrizione varchar(50) NOT NULL,
+                       NumeroArticoli int NOT NULL,
+                       Materiale varchar(16) NOT NULL,
+                       Altezza int NOT NULL,
+                       Personaggio varchar(50) NOT NULL,
+                       PRIMARY KEY(IdFigure)
 );
 
 CREATE TABLE ComprendeManga(
-    IdOrdine int NOT NULL,
-    IdManga int NOT NULL,
-    Quantita int NOT NULL,
-    FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(IdManga) REFERENCES Manga(IdManga) ON UPDATE CASCADE ON DELETE CASCADE
+                               IdOrdine int NOT NULL,
+                               IdManga int NOT NULL,
+                               Quantita int NOT NULL,
+                               PrezzoUnitario float NOT NULL,
+                               FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
+                               FOREIGN KEY(IdManga) REFERENCES Manga(IdManga) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ComprendePop(
-    IdOrdine int NOT NULL,
-    IdPop int NOT NULL,
-    Quantita int NOT NULL,
-    FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(IdPop) REFERENCES Pop(IdPop) ON UPDATE CASCADE ON DELETE CASCADE
+                             IdOrdine int NOT NULL,
+                             IdPop int NOT NULL,
+                             Quantita int NOT NULL,
+                             FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
+                             FOREIGN KEY(IdPop) REFERENCES Pop(IdPop) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ComprendeFigure(
-    IdOrdine int NOT NULL,
-    IdFigure int NOT NULL,
-    Quantita int NOT NULL,
-    FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY(IdFigure) REFERENCES Figure(IdFigure) ON UPDATE CASCADE ON DELETE CASCADE
+                                IdOrdine int NOT NULL,
+                                IdFigure int NOT NULL,
+                                Quantita int NOT NULL,
+                                FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
+                                FOREIGN KEY(IdFigure) REFERENCES Figure(IdFigure) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ImmaginePop(
-    IdImmagine int NOT NULL auto_increment,
-    Nome varchar(50) NOT NULL,
-    IdPop int NOT NULL,
-    PRIMARY KEY(IdImmagine),
-    FOREIGN KEY(IdPop) REFERENCES Pop(IdPop) ON UPDATE CASCADE ON DELETE CASCADE
+                            IdImmagine int NOT NULL auto_increment,
+                            Nome varchar(50) NOT NULL,
+                            IdPop int NOT NULL,
+                            PRIMARY KEY(IdImmagine),
+                            FOREIGN KEY(IdPop) REFERENCES Pop(IdPop) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ImmagineFigure(
-    IdImmagine int NOT NULL auto_increment,
-    Nome varchar(50) NOT NULL,
-    IdFigure int NOT NULL,
-    PRIMARY KEY(IdImmagine),
-    FOREIGN KEY(IdFigure) REFERENCES Figure(IdFigure) ON UPDATE CASCADE ON DELETE CASCADE
+                               IdImmagine int NOT NULL auto_increment,
+                               Nome varchar(50) NOT NULL,
+                               IdFigure int NOT NULL,
+                               PRIMARY KEY(IdImmagine),
+                               FOREIGN KEY(IdFigure) REFERENCES Figure(IdFigure) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO Utente(Email, Pass, Tipo)
@@ -197,11 +198,11 @@ INSERT INTO Ordine(PrezzoTotale, DataOrdine, Fattura, Email)
 VALUES('85', '2022-12-12', 'Fattura4.pdf', 'a.digiorgio@studenti.unisa.it');
 
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 1', '15', 'StarComics', 'Italiano', '200', 'imgOP1.jpg');
+VALUES('5.20', 'One Piece New Edition vol 1', '0', 'StarComics', 'Italiano', '200', 'imgOP1.jpg');
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 2', '15', 'StarComics', 'Italiano', '200', 'imgOP2.jpg');
+VALUES('5.20', 'One Piece New Edition vol 2', '2', 'StarComics', 'Italiano', '200', 'imgOP2.jpg');
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 3', '15', 'StarComics', 'Italiano', '200', 'imgOP3.jpg');
+VALUES('5.20', 'One Piece New Edition vol 3', '1', 'StarComics', 'Italiano', '200', 'imgOP3.jpg');
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
 VALUES('5.20', 'One Piece New Edition vol 4', '15', 'StarComics', 'Italiano', '200', 'imgOP4.jpg');
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
@@ -218,7 +219,7 @@ INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, Num
 VALUES('5.20', 'DragonBall Evergreen Edition vol 42', '1255', 'StarComics', 'Italiano', '200', 'imgDB42.jpg');
 
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Zoro', '12', '926', 'One Piece');
+VALUES('16.90', 'FunkoPop Zoro', '0', '926', 'One Piece');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
 VALUES('16.90', 'FunkoPop Luffy', '18', '887', 'One Piece');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
@@ -226,63 +227,63 @@ VALUES('16.90', 'FunkoPop Goku', '11', '625', 'DragonBall');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
 VALUES('16.90', 'FunkoPop Naruto', '8', '789', 'Naruto');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Tony Stark', '16', '112', 'Marvel');
+VALUES('16.90', 'FunkoPop Tony Stark', '1', '112', 'Marvel');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
 VALUES('16.90', 'FunkoPop Zoro Limited Edition', '2', '632', 'One Piece');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Eren', '17', '714', 'Attacck On Titan');
+VALUES('16.90', 'FunkoPop Eren', '0', '714', 'Attacck On Titan');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
 VALUES('16.90', 'FunkoPop Scarlet Witch', '22', '564', 'Marvel');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
 VALUES('16.90', 'FunkoPop Captain America', '9', '645', 'Marvel');
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Vegeta Limited Edition', '3', '465', 'DragonBall');
+VALUES('16.90', 'FunkoPop Vegeta Limited Edition', '1', '465', 'DragonBall');
 
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
 VALUES('100', 'Action Figure One Piece', '10', 'PVC', '28', 'Luffy Gear 5');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
 VALUES('120', 'Action Figure One Piece', '10', 'PVC', '40', 'Zoro');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('80', 'Action Figure DragonBall', '10', 'PVC', '30', 'Goku Super Sayan 4');
+VALUES('80', 'Action Figure DragonBall', '1', 'PVC', '30', 'Goku Super Sayan 4');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
 VALUES('120', 'Action Figure Naruto', '10', 'PVC', '32', 'Itachi');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
 VALUES('100', 'Action Figure DragonBall', '10', 'PVC', '40', 'Goku Super Sayan');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Goku Banpresto');
+VALUES('25', 'Action Figure DragonBall', '1', 'PVC', '15', 'Goku Banpresto');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Freezer Banpresto');
+VALUES('25', 'Action Figure DragonBall', '0', 'PVC', '15', 'Freezer Banpresto');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
 VALUES('40', 'Action Figure One Piece', '10', 'PVC', '26', 'TrafalgarLaw Banpresto');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
 VALUES('55', 'Action Figure Death Note', '10', 'PVC', '40', 'Ruyk');
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('30', 'Action Figure DragonBall', '10', 'PVC', '25', 'Jiren');
+VALUES('30', 'Action Figure DragonBall', '0', 'PVC', '25', 'Jiren');
 
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('1', '1', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('1', '2', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('1', '3', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('1', '4', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('1', '5', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('2', '6', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('2', '7', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('2', '8', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('4', '1', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('3', '6', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('3', '7', '1');
-INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita)
-VALUES('3', '8', '1');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('1', '1', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('1', '2', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('1', '3', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('1', '4', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('1', '5', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('2', '6', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('2', '7', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('2', '8', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('4', '1', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('3', '6', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('3', '7', '1', '5.20');
+INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
+VALUES('3', '8', '1', '5.20');
 
 INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
 VALUES('1', '1', '1');

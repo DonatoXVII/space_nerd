@@ -99,7 +99,7 @@ public class OrdineModel {
         ResultSet rsFigure = null;
         try {
             con = ds.getConnection();
-            String queryManga = "SELECT IdManga, Quantita FROM " + TABLE_NAME_COMPRENDE_MANGA + " " + WHERE_IDORDINE;
+            String queryManga = "SELECT IdManga, Quantita, PrezzoUnitario FROM " + TABLE_NAME_COMPRENDE_MANGA + " " + WHERE_IDORDINE;
             String queryPop = "SELECT IdPop, Quantita FROM " + TABLE_NAME_COMPRENDE_POP + " " + WHERE_IDORDINE;
             String queryFigure = "SELECT IdFigure, Quantita FROM " + TABLE_NAME_COMPRENDE_FIGURE + " " + WHERE_IDORDINE;
 
@@ -117,6 +117,7 @@ public class OrdineModel {
 
             while(rsManga.next()) {
                 MangaBean manga = (mangaModel.getById(rsManga.getInt("IdManga")));
+                manga.setPrezzo(rsManga.getFloat("PrezzoUnitario"));
                 manga.setQuantitaCarrello(rsManga.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(manga);
             }
@@ -251,17 +252,18 @@ public class OrdineModel {
         }
     }
 
-    public void aggiornaComprendeManga(int ordine, int manga, int quantita) {
+    public void aggiornaComprendeManga(int ordine, int manga, int quantita, float prezzo) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_MANGA + "(IdOrdine, IdManga, Quantita)" +
-                    VALUES;
+            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_MANGA + "(IdOrdine, IdManga, Quantita, PrezzoUnitario)" +
+                    "VALUES(?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, manga);
             ps.setInt(3, quantita);
+            ps.setFloat(4, prezzo);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

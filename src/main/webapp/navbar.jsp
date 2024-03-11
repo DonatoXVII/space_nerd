@@ -6,6 +6,7 @@
     String nome = "";
     String cognome = "";
     CarrelloBean carrelloBean = null;
+    int count = 0;
 %>
 <%
     synchronized (session) {
@@ -15,6 +16,11 @@
         cognome = (String) session.getAttribute("cognome");
         tipoUtente = (Boolean) session.getAttribute("tipo");
         carrelloBean = (CarrelloBean) session.getAttribute("carrello");
+        if(session.getAttribute("countProdotto") != null) {
+            count = (int) session.getAttribute("countProdotto");
+        } else {
+            count = 0;
+        }
     }
 %>
 

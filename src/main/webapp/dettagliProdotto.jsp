@@ -37,7 +37,9 @@
                 PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
             %>
             <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-            <%if(emailUtente!=null){%>
+            <%
+                if(count < ((MangaBean) prodotto).getNumArticoli()){
+            %>
             <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"<%if(((MangaBean) prodotto).getNumArticoli() == 0) {%> style="display: none" <%}%>>
                 <span>Aggiungi al carrello</span>
                 <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -51,9 +53,11 @@
                     </g>
                 </svg>
             </button>
-            <%}else{%>
-            <button class="addToCart" onclick="location.href='login.jsp'">
-                <span>Aggiungi al carrello</span>
+            <%
+                }else{
+            %>
+            <button class="addToCart">
+                <span>Prodotto esaurito</span>
                 <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                     <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
                     <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
@@ -86,7 +90,7 @@
     </div>
     <div class="descrizioneProdotto">
         <h1><%=((PopBean) prodotto).getDescrizione()%></h1>
-        <p><img src="img/serie.jpg" alt="errore immagine">  Serie: <%=((PopBean) prodotto).getSerie()%></p>
+        <p><img src="img/serie.jpg" alt="errore immagine">  Universo: <%=((PopBean) prodotto).getSerie()%></p>
         <p><img src="img/numeri.jpg" alt="errore immagine">  Numero di serie: <%=((PopBean) prodotto).getNumSerie()%></p>
         <%
             PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
@@ -107,7 +111,7 @@
             </svg>
         </button>
         <%}else{%>
-        <button class="addToCart" onclick="location.href='login.jsp'">
+        <button class="addToCart">
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                 <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -163,7 +167,7 @@
             </svg>
         </button>
         <%}else{%>
-        <button class="addToCart" onclick="location.href='login.jsp'">
+        <button class="addToCart">
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                 <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>

@@ -59,11 +59,12 @@
             <label>
                 <input type="checkbox" name="marvel" value="marvel" class="filtro-descrizione"> Marvel
             </label><br><br><br>
-
             <label for="rangeInput">Seleziona prezzo massimo <br>
                 <span id="minValue" style="display: none">10</span> <input type="range" id="rangeInput" name="rangeInput" class="filtro-prezzo" min="10" max="500" value="500"><span id="maxValue">500</span>€
-            </label>
-
+            </label><br><br><br>
+            <!--<label>
+                <input type="checkbox" name="disp" value="disp" class="filtro-disponibile"> Mostra solo disponibili
+            </label>-->
         </form>
         <button id="applicaFiltriBtn">Applica Filtri</button>
 

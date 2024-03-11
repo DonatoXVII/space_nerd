@@ -37,7 +37,7 @@
                 PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
             %>
             <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-            <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+            <button class="addToCart" <%if(((MangaBean) prodotto).getNumArticoli() > 0) {%>onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"<%}%>>
                 <span>Aggiungi al carrello</span>
                 <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                     <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -77,7 +77,7 @@
             PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
+        <button class="addToCart" <%if(((PopBean) prodotto).getNumArticoli() > 0) {%>onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'"<%}%>>
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                 <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -118,7 +118,7 @@
             PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+        <button class="addToCart" <%if(((FigureBean) prodotto).getNumArticoli() > 0) {%>onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"<%}%>>
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                 <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>

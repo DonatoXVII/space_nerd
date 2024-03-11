@@ -12,7 +12,7 @@
     height: 100%;
     justify-content: flex-start;
     padding-top: 10px;
-    padding-left: 15px;
+    padding-left: 10px;
     border: 2px solid #144C63FF;
     border-radius: 10px;
     background: radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%, #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%, #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%);
@@ -22,7 +22,16 @@
 }
 
 #applicaFiltriBtn {
-    width: 50%;
+    margin-top: 20px;
+    width: 70%;
+    font-family: Montserrat, serif;
+    font-weight: bold;
+    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
+    rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
+    rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    color: #f1f2f4;
+    cursor: pointer;
 }
 
 .catalogo {

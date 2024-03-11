@@ -53,8 +53,14 @@
             <label>
                 <input type="checkbox" name="marvel" value="marvel" class="filtro-descrizione"> Marvel
             </label><br><br><br>
+
+            <label for="rangeInput">Seleziona prezzo massimo <br>
+                <span id="minValue" style="display: none">10</span> <input type="range" id="rangeInput" name="rangeInput" class="filtro-prezzo" min="10" max="500" value="500"><span id="maxValue">500</span>€
+            </label>
+
         </form>
         <button id="applicaFiltriBtn">Applica Filtri</button>
+
     </div>
 
 <div class="catalogo">
@@ -112,6 +118,7 @@
     $(document).ready(function() {
         var selectedTipi = [];
         var selectedDescrizione = [];
+        var selectedPrezzo = 500;
 
         $(".filtro-tipo").change(function() {
             var tipo = $(this).val();
@@ -137,23 +144,32 @@
             }
         });
 
+        $(".filtro-prezzo").change(function() {
+            var maxPrezzo = parseFloat($(this).val());
+            $("#maxValue").text(maxPrezzo); // Aggiorna il valore massimo visualizzato
+            selectedPrezzo = maxPrezzo;
+        });
+
         $("#applicaFiltriBtn").click(function() {
             $(".catalogo button.gallery").each(function() {
                 var tipoProdotto = $(this).data('tipo');
                 var descrizione = $(this).find('.description h5').text().toLowerCase();
+                var prezzoString = $(this).find('.description').text(); // Otteniamo tutto il testo all'interno di .description
+                var prezzo = extractPrice(prezzoString); // Estraiamo il prezzo utilizzando la funzione extractPrice
                 var includeProdotto = false;
 
                 // Controlla se il tipo del prodotto è incluso negli elementi selezionati della prima form
-                if (selectedTipi.length === 0 || selectedTipi.includes(tipoProdotto) ) {
-                    if(selectedDescrizione.length === 0) {
-                        includeProdotto = true;
-                    }
-                    else {
+                if (selectedTipi.length === 0 || selectedTipi.includes(tipoProdotto)) {
+                    if(prezzo <= selectedPrezzo){
+                        if(selectedDescrizione.length === 0) {
+                            includeProdotto = true;
+                        } else {
                         // Controlla se almeno una delle parole selezionate è presente nella descrizione
-                        for (var i = 0; i < selectedDescrizione.length; i++) {
-                            if (descrizione.includes(selectedDescrizione[i])) {
-                                includeProdotto = true;
-                                break;
+                            for (var i = 0; i < selectedDescrizione.length; i++) {
+                                if (descrizione.includes(selectedDescrizione[i])) {
+                                    includeProdotto = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -167,6 +183,34 @@
                 }
             });
         });
+
+        function extractPrice(text) {
+            var regex = /([\d,]+(?:\.\d{1,2})?)\s*€/; // RegEx per trovare il prezzo seguito dal simbolo €
+            var match = regex.exec(text);
+            if (match) {
+                return parseFloat(match[1].replace(',', '.')); // Converte il prezzo in float
+            }
+            return 0; // Se non viene trovato il prezzo, restituisce 0
+        }
+    });
+</script>
+
+<script>
+    // Ottieni riferimenti agli elementi
+    var rangeInput = document.getElementById("rangeInput");
+    var minValueDisplay = document.getElementById("minValue");
+    console.log(minValueDisplay);
+    var maxValueDisplay = document.getElementById("maxValue");
+    console.log(maxValueDisplay);
+
+    // Aggiorna i valori visualizzati iniziali
+    minValueDisplay.textContent = rangeInput.min;
+    maxValueDisplay.textContent = rangeInput.value;
+
+    // Aggiungi un listener per il cambiamento del valore
+    rangeInput.addEventListener("input", function() {
+        minValueDisplay.textContent = rangeInput.min;
+        maxValueDisplay.textContent = rangeInput.value;
     });
 </script>
 

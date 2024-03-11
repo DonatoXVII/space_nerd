@@ -18,6 +18,12 @@
     Locale.setDefault(Locale.ITALY);
 %>
 
+<%
+    String disponibile = "DISPONIBILE";
+    String nonDisp = "NON DISPONIBILE";
+    String quantDisp = "DISPONIBILE SOLO 1";
+%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -76,6 +82,9 @@
                         PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
                     %>
                     <h5><%=PrezzoeString%>€</h5>
+                    <%if(((MangaBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5>
+                    <%}else if(((MangaBean) prodotto).getNumArticoli() == 1){%><h5 style="color: #c5a31d; margin-top: 20px"><%=quantDisp%></h5>
+                    <%} else {%><h5 style="color: red; margin-top: 20px"><%=nonDisp%></h5><%}%>
                 </div>
             </button>
 
@@ -91,6 +100,9 @@
                         PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
                     %>
                     <h5><%=PrezzoeString%>€</h5>
+                    <%if(((PopBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5>
+                    <%}else if(((PopBean) prodotto).getNumArticoli() == 1){%><h5 style="color: #c5a31d; margin-top: 20px"><%=quantDisp%></h5>
+                    <%} else {%><h5 style="color: red; margin-top: 20px"><%=nonDisp%></h5><%}%>
                 </div>
             </button>
 <%
@@ -105,6 +117,9 @@
                         PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
                     %>
                     <h5><%=PrezzoeString%>€</h5>
+                    <%if(((FigureBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5>
+                    <%}else if(((FigureBean) prodotto).getNumArticoli() == 1){%><h5 style="color: #c5a31d; margin-top: 20px"><%=quantDisp%></h5>
+                    <%} else {%><h5 style="color: red; margin-top: 20px"><%=nonDisp%></h5><%}%>
                 </div>
             </button>
 <%

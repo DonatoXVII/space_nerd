@@ -37,7 +37,8 @@
                 PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
             %>
             <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-            <button class="addToCart" <%if(((MangaBean) prodotto).getNumArticoli() > 0) {%>onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"<%}%>>
+            <%if(emailUtente!=null){%>
+            <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"<%if(((MangaBean) prodotto).getNumArticoli() == 0) {%> style="display: none" <%}%>>
                 <span>Aggiungi al carrello</span>
                 <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                     <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -50,6 +51,20 @@
                     </g>
                 </svg>
             </button>
+            <%}else{%>
+            <button class="addToCart" onclick="location.href='login.jsp'">
+                <span>Aggiungi al carrello</span>
+                <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                    <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                    <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
+                        <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
+                        <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
+                        <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
+                        <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
+                    </g>
+                    </g>
+                </svg>
+            <%}%>
         </div>
 <%
     } else if(prodotto instanceof PopBean){
@@ -77,7 +92,8 @@
             PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <button class="addToCart" <%if(((PopBean) prodotto).getNumArticoli() > 0) {%>onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'"<%}%>>
+        <%if(emailUtente!=null){%>
+        <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'"<%if(((PopBean) prodotto).getNumArticoli() == 0) {%> style="display: none" <%}%>>
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                 <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -90,6 +106,20 @@
                 </g>
             </svg>
         </button>
+        <%}else{%>
+        <button class="addToCart" onclick="location.href='login.jsp'">
+            <span>Aggiungi al carrello</span>
+            <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
+                    <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
+                    <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
+                    <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
+                    <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
+                </g>
+                </g>
+            </svg>
+        <%}%>
     </div>
 <%
     } else if(prodotto instanceof FigureBean) {
@@ -118,7 +148,8 @@
             PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <button class="addToCart" <%if(((FigureBean) prodotto).getNumArticoli() > 0) {%>onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"<%}%>>
+        <%if(emailUtente!=null){%>
+        <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"<%if(((FigureBean) prodotto).getNumArticoli() == 0) {%> style="display: none" <%}%>>
             <span>Aggiungi al carrello</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                 <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -131,6 +162,20 @@
                 </g>
             </svg>
         </button>
+        <%}else{%>
+        <button class="addToCart" onclick="location.href='login.jsp'">
+            <span>Aggiungi al carrello</span>
+            <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                <g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart">
+                    <circle r="1.91" cy="20.59" cx="10.07" class="cls-1"></circle>
+                    <circle r="1.91" cy="20.59" cx="18.66" class="cls-1"></circle>
+                    <path d="M.52,1.5H3.18a2.87,2.87,0,0,1,2.74,2L9.11,13.91H8.64A2.39,2.39,0,0,0,6.25,16.3h0a2.39,2.39,0,0,0,2.39,2.38h10" class="cls-1"></path>
+                    <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1"></polyline>
+                </g>
+                </g>
+            </svg>
+        <%}%>
     </div>
 <%
     } else if(prodotto instanceof String) {

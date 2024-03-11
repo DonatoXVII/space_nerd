@@ -136,7 +136,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdFigure, Personaggio, Descrizione, Prezzo FROM " + TABLE_NAME_FIGURE;
+            String query = "SELECT IdFigure, Personaggio, Descrizione, Prezzo, NumeroArticoli FROM " + TABLE_NAME_FIGURE;
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -144,6 +144,7 @@ public class FigureModel {
                 figure.setIdFigure(rs.getInt(ID_FIGURE_PARAMETER));
                 figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
                 figure.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
+                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
                 figure.setDescrizione(rs.getString("Descrizione"));
                 allFigure.add(figure);
             }

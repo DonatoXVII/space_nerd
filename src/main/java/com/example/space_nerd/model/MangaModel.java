@@ -95,7 +95,7 @@ public class MangaModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdManga, Descrizione, Immagine, Prezzo FROM " + TABLE_NAME_MANGA;
+            String query = "SELECT IdManga, Descrizione, Immagine, Prezzo, NumeroArticoli FROM " + TABLE_NAME_MANGA;
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -104,6 +104,7 @@ public class MangaModel {
                 manga.setDescrizione(rs.getString(descrizioneParameter));
                 manga.setImg(rs.getString(immagineParameter));
                 manga.setPrezzo(rs.getFloat(prezzoParameter));
+                manga.setNumArticoli(rs.getInt(numeroArticoliParameter));
                 allManga.add(manga);
             }
         } catch (SQLException e) {

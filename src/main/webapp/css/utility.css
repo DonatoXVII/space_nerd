@@ -392,6 +392,10 @@ body {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.btnOrdine {
+    height: 50px;
+}
+
 .cardOrdine::before {
     content: "";
     position: absolute;

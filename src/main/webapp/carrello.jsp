@@ -36,7 +36,7 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'" <%if(((MangaBean) prodotto).getQuantitaCarrello() == ((MangaBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
                         <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'"></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'" <%if(((PopBean) prodotto).getQuantitaCarrello() == ((PopBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
                         <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>'"></button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'" <%if(((FigureBean) prodotto).getQuantitaCarrello() == ((FigureBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
                         <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"></button>
                     </div>
                     </div>

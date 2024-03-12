@@ -129,13 +129,22 @@ public class ProdottoControl extends HttpServlet {
             prodotto = manga;
 
         } else if(tipo.equalsIgnoreCase("pop")) {
-            prodotto = popModel.getById(id);
+            PopBean pop = popModel.getById(id);
+            if(carrello != null && carrello.isPresente(pop) > 0) {
+                pop.setQuantitaCarrello(carrello.isPresente(pop));
+            }
+            prodotto = pop;
             List<String> immaginiPop = popModel.getAllImgPop((PopBean) prodotto);
             for(String immagine : immaginiPop) {
                 ((PopBean) prodotto).aggiungiImmagine(immagine);
             }
+
         } else if(tipo.equalsIgnoreCase(figureParameter)) {
-            prodotto = figureModel.getById(id);
+            FigureBean figure = figureModel.getById(id);
+            if(carrello != null && carrello.isPresente(figure) > 0) {
+                figure.setQuantitaCarrello(carrello.isPresente(figure));
+            }
+            prodotto = figure;
             List<String> immaginiFIgure = figureModel.getAllImgFigure((FigureBean) prodotto);
             for(String immagine : immaginiFIgure) {
                 ((FigureBean) prodotto).aggiungiImmagine(immagine);

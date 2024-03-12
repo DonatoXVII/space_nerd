@@ -23,6 +23,7 @@ public class FigureModel {
     private static final String PERSONAGGIO_PARAMETER = "Personaggio";
     private static final String N_ARTICOLI_PARAMETER = "NumeroArticoli";
     private static final String PREZZO_PARAMETER = "Prezzo";
+    private static final String DESCRIZIONE_PARAMETER = "Descrizione";
     private static final String MSG_CON = "Errore durante la chiusura della Connection";
     private static final String MSG_PS = "Errore durante la chiusura del PreparedStatement";
     private static final String MSG_RS = "Errore durante la chiusura del ResultSet";
@@ -55,7 +56,7 @@ public class FigureModel {
             while(rs.next()) {
                 FigureBean figure = new FigureBean();
                 figure.setIdFigure(rs.getInt(ID_FIGURE_PARAMETER));
-                figure.setDescrizione(rs.getString("Descrizione"));
+                figure.setDescrizione(rs.getString(DESCRIZIONE_PARAMETER));
                 miglioriFigure.add(figure);
             }
         } catch (SQLException e) {
@@ -144,8 +145,8 @@ public class FigureModel {
                 figure.setIdFigure(rs.getInt(ID_FIGURE_PARAMETER));
                 figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
                 figure.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
-                figure.setNumArticoli(rs.getInt("NumeroArticoli"));
-                figure.setDescrizione(rs.getString("Descrizione"));
+                figure.setNumArticoli(rs.getInt(N_ARTICOLI_PARAMETER));
+                figure.setDescrizione(rs.getString(DESCRIZIONE_PARAMETER));
                 allFigure.add(figure);
             }
         } catch (SQLException e) {
@@ -190,7 +191,7 @@ public class FigureModel {
             while (rs.next()) {
                 figure.setIdFigure(i);
                 figure.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
-                figure.setDescrizione(rs.getString("Descrizione"));
+                figure.setDescrizione(rs.getString(DESCRIZIONE_PARAMETER));
                 figure.setNumArticoli(rs.getInt(N_ARTICOLI_PARAMETER));
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));

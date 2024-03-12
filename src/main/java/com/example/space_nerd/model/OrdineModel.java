@@ -21,7 +21,7 @@ public class OrdineModel {
     private static final FigureModel figureModel = new FigureModel();
     private static final String WHERE_IDORDINE = "WHERE IdOrdine = ?";
     private static final String INSERT_INTO = "INSERT INTO";
-    private static final String VALUES = "VALUES(?, ?, ?)";
+    private static final String VALUES = "VALUES(?, ?, ?, ?)";
     private static final String QUANTITA_PARAMETER = "Quantita";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
@@ -100,8 +100,8 @@ public class OrdineModel {
         try {
             con = ds.getConnection();
             String queryManga = "SELECT IdManga, Quantita, PrezzoUnitario FROM " + TABLE_NAME_COMPRENDE_MANGA + " " + WHERE_IDORDINE;
-            String queryPop = "SELECT IdPop, Quantita FROM " + TABLE_NAME_COMPRENDE_POP + " " + WHERE_IDORDINE;
-            String queryFigure = "SELECT IdFigure, Quantita FROM " + TABLE_NAME_COMPRENDE_FIGURE + " " + WHERE_IDORDINE;
+            String queryPop = "SELECT IdPop, Quantita, PrezzoUnitario FROM " + TABLE_NAME_COMPRENDE_POP + " " + WHERE_IDORDINE;
+            String queryFigure = "SELECT IdFigure, Quantita, PrezzoUnitario FROM " + TABLE_NAME_COMPRENDE_FIGURE + " " + WHERE_IDORDINE;
 
             psManga = con.prepareStatement(queryManga);
             psPop = con.prepareStatement(queryPop);
@@ -123,11 +123,13 @@ public class OrdineModel {
             }
             while(rsPop.next()) {
                 PopBean pop = popModel.getById(rsPop.getInt("IdPop"));
+                pop.setPrezzo(rsPop.getFloat("PrezzoUnitario"));
                 pop.setQuantitaCarrello(rsPop.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(pop);
             }
             while(rsFigure.next()) {
                 FigureBean figure = figureModel.getById(rsFigure.getInt("IdFigure"));
+                figure.setPrezzo(rsFigure.getFloat("PrezzoUnitario"));
                 figure.setQuantitaCarrello(rsFigure.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(figure);
             }
@@ -258,7 +260,7 @@ public class OrdineModel {
         try {
             con = ds.getConnection();
             String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_MANGA + "(IdOrdine, IdManga, Quantita, PrezzoUnitario)" +
-                    "VALUES(?, ?, ?, ?)";
+                    VALUES;
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, manga);
@@ -285,17 +287,18 @@ public class OrdineModel {
         }
     }
 
-    public void aggiornaComprendePop(int ordine, int pop, int quantita) {
+    public void aggiornaComprendePop(int ordine, int pop, int quantita, float prezzo) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_POP + "(IdOrdine, IdPop, Quantita)" +
+            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_POP + "(IdOrdine, IdPop, Quantita, PrezzoUnitario)" +
                     VALUES;
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, pop);
             ps.setInt(3, quantita);
+            ps.setFloat(4, prezzo);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -317,17 +320,18 @@ public class OrdineModel {
         }
     }
 
-    public void aggiornaComprendeFigure(int ordine, int figure, int quantita) {
+    public void aggiornaComprendeFigure(int ordine, int figure, int quantita, float prezzo) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_FIGURE + "(IdOrdine, IdFigure, Quantita)" +
+            String query = INSERT_INTO + " " + TABLE_NAME_COMPRENDE_FIGURE + "(IdOrdine, IdFigure, Quantita, PrezzoUnitario)" +
                     VALUES;
             ps = con.prepareStatement(query);
             ps.setInt(1, ordine);
             ps.setInt(2, figure);
             ps.setInt(3, quantita);
+            ps.setFloat(4, prezzo);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

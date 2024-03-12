@@ -2,9 +2,15 @@
 <%@ page import="com.example.space_nerd.model.MangaBean" %>
 <%@ page import="com.example.space_nerd.model.PopBean" %>
 <%@ page import="com.example.space_nerd.model.FigureBean" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     List<Object> prodottiOrdine = (List<Object>) request.getAttribute("prodottiOrdine");
+%>
+<%
+    Locale.setDefault(Locale.US);
+    String PrezzoeString;
+    Locale.setDefault(Locale.ITALY);
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -32,7 +38,10 @@
                        <h5><%=((MangaBean) prodotto).getCasaEditrice()%></h5>
                        <h5><%=((MangaBean) prodotto).getLingua()%></h5>
                        <h5>Numero pagine: <%=((MangaBean) prodotto).getNumPagine()%></h5>
-                       <h5>Prezzo unità: <%=((MangaBean) prodotto).getPrezzo()%>€</h5>
+                       <%
+                           PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
+                       %>
+                       <h5>Prezzo unità: <%=PrezzoeString%>€</h5>
                        <h5>Quantità: <%=((MangaBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
                </button>
@@ -45,7 +54,10 @@
                         <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
                         <h5>Seriale: <%=((PopBean) prodotto).getNumSerie()%></h5>
                         <h5>Anime: <%=((PopBean) prodotto).getSerie()%></h5>
-                        <h5>Prezzo unità: <%=((PopBean) prodotto).getPrezzo()%>€</h5>
+                        <%
+                            PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
+                        %>
+                        <h5>Prezzo unità: <%=PrezzoeString%>€</h5>
                         <h5>Quantità: <%=((PopBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
                 </button>
@@ -59,7 +71,10 @@
                         <h5><%=((FigureBean) prodotto).getAltezza()%> cm</h5>
                         <h5>Materiale: <%=((FigureBean) prodotto).getMateriale()%></h5>
                         <h5><%=((FigureBean) prodotto).getPersonaggio()%></h5>
-                        <h5>Prezzo unità: <%=((FigureBean) prodotto).getPrezzo()%>€</h5>
+                        <%
+                            PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
+                        %>
+                        <h5>Prezzo unità: <%=PrezzoeString%>€</h5>
                         <h5>Quantità: <%=((FigureBean) prodotto).getQuantitaCarrello()%></h5>
                     </div>
                 </button>

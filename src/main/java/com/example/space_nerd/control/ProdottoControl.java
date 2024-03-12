@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import javax.print.attribute.standard.MediaName;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ public class ProdottoControl extends HttpServlet {
     static String mangaParameter = "manga";
     static String figureParameter = "figure";
     static String ricercaParameter = "ricerca";
+    static String COUNT_PRODOTTO = "countProdotto";
 
     public ProdottoControl() {super();}
 
@@ -161,8 +161,8 @@ public class ProdottoControl extends HttpServlet {
         } else if (tipo.equalsIgnoreCase(figureParameter) && figureModel.verificaDisponibilita(id)) {
             carrelloBean.aggiungiProdotto(figureModel.getById(id));
         }
-        req.getSession().removeAttribute("countProdotto");
-        req.getSession().setAttribute("countProdotto", countProdotto);
+        req.getSession().removeAttribute(COUNT_PRODOTTO);
+        req.getSession().setAttribute(COUNT_PRODOTTO, countProdotto);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
@@ -177,8 +177,8 @@ public class ProdottoControl extends HttpServlet {
                 count = ((MangaBean) proddotto).getQuantitaCarrello();
             }
         }
-        req.getSession().removeAttribute("countProdotto");
-        req.getSession().setAttribute("countProdotto", count);
+        req.getSession().removeAttribute(COUNT_PRODOTTO);
+        req.getSession().setAttribute(COUNT_PRODOTTO, count);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
@@ -192,8 +192,8 @@ public class ProdottoControl extends HttpServlet {
                 count = ((MangaBean) proddotto).getQuantitaCarrello();
             }
         }
-        request.getSession().removeAttribute("countProdotto");
-        request.getSession().setAttribute("countProdotto", count);
+        request.getSession().removeAttribute(COUNT_PRODOTTO);
+        request.getSession().setAttribute(COUNT_PRODOTTO, count);
         request.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/carrello.jsp");
         dispatcher.forward(request, response);

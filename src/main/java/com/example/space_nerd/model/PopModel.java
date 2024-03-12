@@ -22,6 +22,7 @@ public class PopModel {
     private static final String ID_POP = "IdPop";
     private static final String PREZZO_PARAMETER = "Prezzo";
     private static final String ARTICOLI_PARAMETER = "NumeroArticoli";
+    private static final String SERIE_PARAMETER = "Serie";
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
@@ -143,9 +144,9 @@ public class PopModel {
                 PopBean pop = new PopBean();
                 pop.setIdPop(rs.getInt(ID_POP));
                 pop.setDescrizione(rs.getString(descrizioneParameter));
-                pop.setSerie(rs.getString("Serie"));
+                pop.setSerie(rs.getString(SERIE_PARAMETER));
                 pop.setPrezzo(rs.getFloat(PREZZO_PARAMETER));
-                pop.setNumArticoli(rs.getInt("NumeroArticoli"));
+                pop.setNumArticoli(rs.getInt(ARTICOLI_PARAMETER));
                 allPop.add(pop);
             }
         } catch (SQLException e) {
@@ -193,7 +194,7 @@ public class PopModel {
                 pop.setDescrizione(rs.getString(descrizioneParameter));
                 pop.setNumArticoli(rs.getInt(ARTICOLI_PARAMETER));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
-                pop.setSerie(rs.getString("Serie"));
+                pop.setSerie(rs.getString(SERIE_PARAMETER));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -284,7 +285,7 @@ public class PopModel {
                 pop.setDescrizione(descrizione);
                 pop.setNumArticoli(rs.getInt(ARTICOLI_PARAMETER));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
-                pop.setSerie(rs.getString("Serie"));
+                pop.setSerie(rs.getString(SERIE_PARAMETER));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

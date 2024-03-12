@@ -69,12 +69,12 @@
                 </div>
             </form>
             <li><a class="active" href="./catalogo.jsp">CATALOGO</a></li>
-            <li id="userIconLi"><a href="./login.jsp"><img src="img/user.jpg" id="userIcon"></a></li>
+            <li id="userIconLi"><a href="./login.jsp"><img src="img/user.jpg" id="userIcon" alt="errore immagine"></a></li>
             <%if(emailUtente == null){%>
-                <li><a href="./login.jsp"><img src="img/cart.jpg"></a></li>
+                <li><a href="./login.jsp"><img src="img/cart.jpg" alt="errore immagine"></a></li>
             <%}else{%>
-                <li><a href="./carrello.jsp"><img src="img/cart.jpg"></a></li>
-                <li><a href="UtenteControl?action=logout"><img src="img/logout.jpg"></a></li>
+                <li><a href="./carrello.jsp"><img src="img/cart.jpg" alt="errore immagine"></a></li>
+                <li><a href="UtenteControl?action=logout"><img src="img/logout.jpg" alt="errore immagine"></a></li>
             <%}%>
         </ul>
     </div>

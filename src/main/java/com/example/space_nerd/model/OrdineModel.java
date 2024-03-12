@@ -23,6 +23,7 @@ public class OrdineModel {
     private static final String INSERT_INTO = "INSERT INTO";
     private static final String VALUES = "VALUES(?, ?, ?, ?)";
     private static final String QUANTITA_PARAMETER = "Quantita";
+    private static final String PREZZO_UNITARIO_PARAMETER = "PrezzoUnitario";
     private static DataSource ds;
     private static String msgCon = "Errore durante la chiusura della Connection";
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
@@ -117,19 +118,19 @@ public class OrdineModel {
 
             while(rsManga.next()) {
                 MangaBean manga = (mangaModel.getById(rsManga.getInt("IdManga")));
-                manga.setPrezzo(rsManga.getFloat("PrezzoUnitario"));
+                manga.setPrezzo(rsManga.getFloat(PREZZO_UNITARIO_PARAMETER));
                 manga.setQuantitaCarrello(rsManga.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(manga);
             }
             while(rsPop.next()) {
                 PopBean pop = popModel.getById(rsPop.getInt("IdPop"));
-                pop.setPrezzo(rsPop.getFloat("PrezzoUnitario"));
+                pop.setPrezzo(rsPop.getFloat(PREZZO_UNITARIO_PARAMETER));
                 pop.setQuantitaCarrello(rsPop.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(pop);
             }
             while(rsFigure.next()) {
                 FigureBean figure = figureModel.getById(rsFigure.getInt("IdFigure"));
-                figure.setPrezzo(rsFigure.getFloat("PrezzoUnitario"));
+                figure.setPrezzo(rsFigure.getFloat(PREZZO_UNITARIO_PARAMETER));
                 figure.setQuantitaCarrello(rsFigure.getInt(QUANTITA_PARAMETER));
                 prodottiOrdine.add(figure);
             }
@@ -227,7 +228,7 @@ public class OrdineModel {
         try {
             con = ds.getConnection();
             String query = INSERT_INTO + " " + TABLE_NAME_ORDINE + "(PrezzoTotale, DataOrdine, Fattura, Email)" +
-                    "VALUES(?, ?, ?, ?)";
+                    VALUES;
             ps = con.prepareStatement(query);
             ps.setFloat(1, prezzo);
             ps.setDate(2, data);

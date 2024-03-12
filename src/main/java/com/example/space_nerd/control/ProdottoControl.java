@@ -30,7 +30,7 @@ public class ProdottoControl extends HttpServlet {
     static String mangaParameter = "manga";
     static String figureParameter = "figure";
     static String ricercaParameter = "ricerca";
-    static String COUNT_PRODOTTO = "countProdotto";
+    static String countDispProdotto = "countProdotto";
 
     public ProdottoControl() {super();}
 
@@ -161,8 +161,8 @@ public class ProdottoControl extends HttpServlet {
         } else if (tipo.equalsIgnoreCase(figureParameter) && figureModel.verificaDisponibilita(id)) {
             carrelloBean.aggiungiProdotto(figureModel.getById(id));
         }
-        req.getSession().removeAttribute(COUNT_PRODOTTO);
-        req.getSession().setAttribute(COUNT_PRODOTTO, countProdotto);
+        req.getSession().removeAttribute(countDispProdotto);
+        req.getSession().setAttribute(countDispProdotto, countProdotto);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
@@ -177,8 +177,8 @@ public class ProdottoControl extends HttpServlet {
                 count = ((MangaBean) proddotto).getQuantitaCarrello();
             }
         }
-        req.getSession().removeAttribute(COUNT_PRODOTTO);
-        req.getSession().setAttribute(COUNT_PRODOTTO, count);
+        req.getSession().removeAttribute(countDispProdotto);
+        req.getSession().setAttribute(countDispProdotto, count);
         req.getSession().setAttribute(carrelloParameter, carrelloBean);
         resp.sendRedirect(carrelloJSP);
     }
@@ -192,8 +192,8 @@ public class ProdottoControl extends HttpServlet {
                 count = ((MangaBean) proddotto).getQuantitaCarrello();
             }
         }
-        request.getSession().removeAttribute(COUNT_PRODOTTO);
-        request.getSession().setAttribute(COUNT_PRODOTTO, count);
+        request.getSession().removeAttribute(countDispProdotto);
+        request.getSession().setAttribute(countDispProdotto, count);
         request.getSession().setAttribute(carrelloParameter, carrelloBean);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/carrello.jsp");
         dispatcher.forward(request, response);

@@ -36,7 +36,7 @@
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'" <%if(count >= ((MangaBean) prodotto).getNumArticoli()){%>style="display: none" <%}%>></button>
+                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
                         <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
                     </div>
                 </div>

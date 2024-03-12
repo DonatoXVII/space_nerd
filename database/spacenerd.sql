@@ -114,6 +114,7 @@ CREATE TABLE ComprendePop(
                              IdOrdine int NOT NULL,
                              IdPop int NOT NULL,
                              Quantita int NOT NULL,
+                             PrezzoUnitario float NOT NULL,
                              FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
                              FOREIGN KEY(IdPop) REFERENCES Pop(IdPop) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -122,6 +123,7 @@ CREATE TABLE ComprendeFigure(
                                 IdOrdine int NOT NULL,
                                 IdFigure int NOT NULL,
                                 Quantita int NOT NULL,
+                                PrezzoUnitario float NOT NULL,
                                 FOREIGN KEY(IdOrdine) REFERENCES Ordine(IdOrdine) ON UPDATE CASCADE ON DELETE CASCADE,
                                 FOREIGN KEY(IdFigure) REFERENCES Figure(IdFigure) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -285,37 +287,37 @@ VALUES('3', '7', '1', '5.20');
 INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
 VALUES('3', '8', '1', '5.20');
 
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('1', '1', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('1', '2', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('1', '6', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('3', '1', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('3', '2', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('4', '1', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('4', '5', '1');
-INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita)
-VALUES('4', '6', '1');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('1', '1', '1', '100');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('1', '2', '1', '120');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('1', '6', '1', '25');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('3', '1', '1', '100');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('3', '2', '1', '120');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('4', '1', '1', '100');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('4', '5', '1', '100');
+INSERT INTO ComprendeFigure(IdOrdine, IdFigure, Quantita, PrezzoUnitario)
+VALUES('4', '6', '1', '25');
 
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('1', '6', '1');
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('1', '2', '1');
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('1', '5', '1');
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('1', '4', '1');
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('1', '9', '1');
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('3', '6', '1');
-INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita)
-VALUES('3', '2', '1');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('1', '6', '1', '16.90');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('1', '2', '1', '16.90');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('1', '5', '1', '16.90');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('1', '4', '1', '16.90');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('1', '9', '1', '16.90');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('3', '6', '1', '16.90');
+INSERT INTO ComprendePop(IdOrdine, IdPop, Quantita, PrezzoUnitario)
+VALUES('3', '2', '1', '16.90');
 
 INSERT INTO ImmaginePop(Nome, IdPop)
 VALUES('img_popzoro1.jpg', '1');

@@ -102,6 +102,19 @@ public class CarrelloBean implements Serializable {
         }
     }
 
+    public int isPresente(Object prodotto) {
+        for(Object prod : this.listaCarrello) {
+            if(prodotto instanceof MangaBean && prod instanceof MangaBean && ((MangaBean) prodotto).getIdManga() == ((MangaBean) prod).getIdManga()) {
+                return ((MangaBean) prod).getQuantitaCarrello();
+            } else if(prodotto instanceof PopBean && prod instanceof PopBean && ((PopBean) prodotto).getIdPop() == ((PopBean) prod).getIdPop()) {
+                return ((PopBean) prod).getQuantitaCarrello();
+            } else if(prodotto instanceof FigureBean && prod instanceof FigureBean && ((FigureBean) prodotto).getIdFigure() == ((FigureBean) prod).getIdFigure()) {
+                return ((FigureBean) prod).getQuantitaCarrello();
+            }
+        }
+        return 0;
+    }
+
     public float getPrezzoTotale() {
         float prezzo = 0;
         for(Object prodotto : this.listaCarrello) {

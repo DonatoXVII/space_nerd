@@ -5,12 +5,12 @@
 }
 
 .foot {
-    font-size: 25px;
+    font-size: 18px;
     font-weight: bold;
 }
 
 .foot p {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .formNewsLetter p {
@@ -60,8 +60,9 @@
 }
 
 #sectionFooter {
-    width: 100%;
-    display: flex; flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,

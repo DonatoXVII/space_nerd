@@ -4,11 +4,9 @@ body {
 }
 
 .view-profilo {
-    position: absolute;
-    top: 50%;
+    position: relative;
     left: 50%;
-    transform: translate(-50%, -50%);
-    display: block;
+    transform: translate(-50%, 10%);
     padding: 2.2rem;
     width: 500px;
     height: 415px;

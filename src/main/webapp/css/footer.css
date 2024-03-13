@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-hr {
-    border: none;
-}
-
 .foot, .foot p{
     font-family: Montserrat, serif;
     color: #f1f2f4;
+}
+
+.foot {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.foot p {
+    font-size: 20px;
 }
 
 .formNewsLetter p {
@@ -25,12 +30,13 @@ hr {
     flex-direction: column;
     justify-content: center;
     max-width: 400px;
-    margin: 0 auto;
     padding: 20px;
     border: 2px solid #333;
     border-radius: 8px;
     background-color: #f7f7f7;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .formNewsLetter input[type="email"] {
@@ -55,7 +61,7 @@ hr {
 
 #sectionFooter {
     width: 100%;
-    display: flex; flex-direction: column;
+    display: flex; flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
@@ -64,21 +70,14 @@ hr {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
 
-.sectionNews {
-    width:100%;
+.infoFooter {
+    gap: 40px;
+    padding-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    align-items: center;
-    color: #f1f2f4;
-    margin-top:20px;
-    margin-bottom: 40px;
 }
 
-.infoFooter {
-    padding-top: 20px;
-    width:100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.infoFooter img {
+    height: 50px;
 }

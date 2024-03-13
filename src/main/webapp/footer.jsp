@@ -8,10 +8,19 @@
 <body>
 
 <section id="sectionFooter">
-    <div class="sectionNews">
-        <div style="font-family: Montserrat, serif">
-            RIMANI SEMPRE AGGIORNATO SU TUTTI I NOSTRI PRODOTTI
+        <div class="infoFooter">
+            <li class="foot">CHI SIAMO<p>Donato Folgieri<br>SpaceNerd</p></li>
+            <li class="foot">CONTATTI<p>spacenerd@gmail.com</p></li>
+            <li class="foot">PAGAMENTI SICURI
+                <div style="display:flex; justify-content: space-evenly; margin-top: 10px">
+                    <img src="img/visa.jpg" alt="errore immagine"><img src="img/mastercard.jpg" alt="errore immagine"><img src="img/paypal.jpg" alt="errore immagine">
+                </div>
+            </li>
         </div>
+    <div>
+        <h1 style="font-size: 35px; line-height: 44px; font-family: Montserrat, serif; color: #f1f2f4">NON PERDERTI TUTTE LE OFFERTE</h1>
+        <h2 style="font-size: 25px; line-height: 34px; font-family: Montserrat, serif; color: #E87C08FF">IN ARRIVO SUI NOSTRI PRODOTTI</h2>
+    </div>
         <div class="newsFoot">
             <form class="formNewsLetter">
                 <p>ISCRIVITI ALLA NOSTRA NEWSLETTER</p>
@@ -21,17 +30,6 @@
                 <input type="submit" value="Invia">
             </form>
         </div>
-    </div>
-    <div style="background-color: #f1f2f4; width: 100%">
-        <hr>
-        <hr>
-        <hr>
-    </div>
-    <div class="infoFooter">
-        <li class="foot">CHI SIAMO<p>Donato Folgieri<br>SpaceNerd</p></li>
-        <li class="foot">CONTATTI<p>spacenerd@gmail.com</p></li>
-        <li class="foot">PAGAMENTI SICURI<p>Visa<br>Mastercard<br>Paypal</p></li>
-    </div>
 </section>
 
 </body>

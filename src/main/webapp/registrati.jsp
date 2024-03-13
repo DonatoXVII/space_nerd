@@ -9,7 +9,7 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
-<div class="form-container-accesso">
+<div class="form-container-accesso" style="height: 100%">
     <form action="UtenteControl?action=registrati" method="post" class="form-registrazione" name="registrazione" onsubmit="return validate()">
         <div class="form-title"><span>registrati anche tu nello</span></div>
         <div class="title-2"><span>SPACE</span></div>

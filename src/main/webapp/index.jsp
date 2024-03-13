@@ -37,7 +37,7 @@
 <section id="hero">
     <div class="welcome">
     <h4>Un mondo di offerte</h4>
-    <h2>Per gli appassionati di anime</h2>
+    <h2 style="font-family: Montserrat, serif">Per gli appassionati di anime</h2>
     <h1>Di ogni genere</h1>
     <p>Non lasciarti sfuggire nessuna occasione, saldi in ogni periodo dell'anno</p>
     <button class="acquista-ora" onclick="location.href='./catalogo.jsp'">
@@ -116,6 +116,8 @@
         </div>
     </div>
 </section>
+
+<%@include file="footer.jsp"%>
 
 <script>
     let slideIndex = 0;

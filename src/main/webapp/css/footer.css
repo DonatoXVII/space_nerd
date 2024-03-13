@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+hr {
+    border: none;
+}
+
+.foot, .foot p{
+    font-family: Montserrat, serif;
+    color: #f1f2f4;
+}
+
+.formNewsLetter p {
+    font-family: Montserrat, serif;
+    color: black;
+    font-weight: bold;
+}
+
+.newsFoot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formNewsLetter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.formNewsLetter input[type="email"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formNewsLetter input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff6600;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#sectionFooter {
+    width: 100%;
+    display: flex; flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%,
+    rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%,
+    rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.sectionNews {
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #f1f2f4;
+    margin-top:20px;
+    margin-bottom: 40px;
+}
+
+.infoFooter {
+    padding-top: 20px;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

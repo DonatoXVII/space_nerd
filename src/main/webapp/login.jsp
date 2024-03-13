@@ -19,7 +19,7 @@
     }
 %>
 
-<div class="form-container-accesso">
+<div class="form-container-accesso" style="height: 100%">
     <form action="UtenteControl?action=login" method="post" class="form" name="registrazione" onsubmit="return validate()">
         <div class="form-title"><span>entra nel tuo</span></div>
         <div class="title-2"><span>SPACE</span></div>

@@ -20,7 +20,7 @@
 <body>
 <%@include file="navbar.jsp"%>
 
-<div class="form-container-accesso">
+<div class="form-container-accesso" style="height:100%;">
     <form action="UtenteControl?action=inserisciIndirizzo" method="post" class="form-registrazione">
         <div class="form-title"><span>nuovo indirizzo dello</span></div>
         <div class="title-2"><span>SPACE</span></div>

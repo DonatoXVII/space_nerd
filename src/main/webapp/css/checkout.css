@@ -1,9 +1,7 @@
-/* Body */
 .container {
     display: grid;
     grid-template-columns: auto;
     justify-content: center;
-    margin-top: 50px;
 }
 
 hr {
@@ -14,6 +12,7 @@ hr {
 }
 
 .cardCheckout {
+    margin-top: 50px;
     width: 400px;
     background: rgb(255, 250, 235);
     box-shadow: 0 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05),
@@ -136,6 +135,7 @@ hr {
     justify-content: space-between;
     padding: 10px 10px 10px 20px;
     background-color: rgba(16, 86, 82, .5);
+    margin-bottom: 20px;
 }
 
 .checkout .checkout-btn {

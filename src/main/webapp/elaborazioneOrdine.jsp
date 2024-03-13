@@ -20,6 +20,11 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+<style>
+    body {
+        background-color: rgba(171, 151, 71, 0.66);
+    }
+</style>
 
 <%
     Object prezzoTotaleObj = session.getAttribute("PrezzoTotale");
@@ -48,6 +53,7 @@
                 <div>
                     <span>INDIRIZZO DI SPEDIZIONE</span>
                     <div class="indirizziOrdine">
+                        <%if(indirizzi.isEmpty()){%>Inserire un indirizzo di spedizione per proseguire<%}%>
                     <%
                         for (IndirizzoBean indirizzo : indirizzi) {
                     %>
@@ -64,10 +70,12 @@
                     %>
                     </div>
                 </div>
+                <a style="display:flex; justify-content: center; text-decoration: none; font-family:Montserrat, serif; font-weight: bold; color: #f1f2f4; border: 1px solid #f1f2f4; background-color: #506e2b" href="indirizzi.jsp">Inserisci nuovo indirizzo</a>
                 <hr>
                 <div>
                     <span>METODO DI PAGAMENTO</span>
                     <div class="metodiOrdine">
+                        <%if(pagamenti.isEmpty()){%>Inserire un metodo di pagamento per proseguire<%}%>
                     <%
                         for (PagamentoBean pagamento : pagamenti) {
                     %>
@@ -85,6 +93,7 @@
                     %>
                     </div>
                 </div>
+                <a style="display:flex; justify-content: center; text-decoration: none; font-family:Montserrat, serif; font-weight: bold; color: #f1f2f4; border: 1px solid #f1f2f4; background-color: #506e2b" href="metodiPagamento.jsp">Inserisci nuovo metodo di pagamento</a>
                 <hr>
                 <div class="promo">
                     <span>CI SIAMO QUASI!</span>
@@ -105,7 +114,8 @@
     <div class="card checkout">
         <div class="footer">
             <p style="font-family: Montserrat, serif; font-weight: bold"><%=PrezzoTotaleString%>€</p>
-            <button class="checkout-btn">Conferma</button>
+            <button class="checkout-btn" <%if(pagamenti.isEmpty() || indirizzi.isEmpty()){%>style="display: none" <%}%>>Conferma</button>
+
         </div>
     </div>
 </div>

@@ -42,7 +42,7 @@
         </div>
 
         <div class="input-container">
-            <input class="input-ccv" name="ccv" type="text" placeholder="Ccv" required>
+            <input class="input-ccv" name="ccv" type="text" placeholder="CVV" required>
         </div>
 
         <div class="input-container">

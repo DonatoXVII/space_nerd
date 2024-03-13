@@ -62,12 +62,11 @@
             <label for="rangeInput">Seleziona prezzo massimo <br>
                 <span id="minValue" style="display: none">10</span> <input type="range" id="rangeInput" name="rangeInput" class="filtro-prezzo" min="10" max="500" value="500"><span id="maxValue">500</span>€
             </label><br><br><br>
-            <!--<label>
-                <input type="checkbox" name="disp" value="disp" class="filtro-disponibile"> Mostra solo disponibili
-            </label>-->
+            <label>
+                <input type="checkbox" name="disponibili" value="disponibili" class="filtro-disponibili"> Mostra solo disponibili
+            </label><br><br>
         </form>
         <button id="applicaFiltriBtn">Applica Filtri</button>
-
     </div>
 
 <div class="catalogo">
@@ -135,6 +134,7 @@
         var selectedTipi = [];
         var selectedDescrizione = [];
         var selectedPrezzo = 500;
+        var mostraSoloDisponibili = false; // Aggiunto
 
         $(".filtro-tipo").change(function() {
             var tipo = $(this).val();
@@ -166,6 +166,11 @@
             selectedPrezzo = maxPrezzo;
         });
 
+        $(".filtro-disponibili").change(function() {
+            mostraSoloDisponibili = $(this).is(":checked");
+            console.log("mostra disponili spuntato " + mostraSoloDisponibili)
+        });
+
         $("#applicaFiltriBtn").click(function() {
             $(".catalogo button.gallery").each(function() {
                 var tipoProdotto = $(this).data('tipo');
@@ -174,19 +179,42 @@
                 var prezzo = extractPrice(prezzoString); // Estraiamo il prezzo utilizzando la funzione extractPrice
                 var includeProdotto = false;
 
-                // Controlla se il tipo del prodotto è incluso negli elementi selezionati della prima form
-                if (selectedTipi.length === 0 || selectedTipi.includes(tipoProdotto)) {
-                    if(prezzo <= selectedPrezzo){
-                        if(selectedDescrizione.length === 0) {
-                            includeProdotto = true;
-                        } else {
-                        // Controlla se almeno una delle parole selezionate è presente nella descrizione
-                            for (var i = 0; i < selectedDescrizione.length; i++) {
-                                if (descrizione.includes(selectedDescrizione[i])) {
+                if (mostraSoloDisponibili) {
+                    if (!($(this).find('.description h5').text().includes("NON DISPONIBILE"))) {
+                        console.log("prodotto " + descrizione)
+                        // Controlla se il tipo del prodotto è incluso negli elementi selezionati della prima form
+                        if (selectedTipi.length === 0 || selectedTipi.includes(tipoProdotto)) {
+                            if (prezzo <= selectedPrezzo) {
+                                if (selectedDescrizione.length === 0) {
                                     includeProdotto = true;
-                                    break;
+                                } else {
+                                    // Controlla se almeno una delle parole selezionate è presente nella descrizione
+                                    for (var i = 0; i < selectedDescrizione.length; i++) {
+                                        if (descrizione.includes(selectedDescrizione[i])) {
+                                            includeProdotto = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                } else {
+                    if (selectedTipi.length === 0 || selectedTipi.includes(tipoProdotto)) {
+                        if (prezzo <= selectedPrezzo) {
+                            if (selectedDescrizione.length === 0) {
+                                includeProdotto = true;
+                            } else {
+                                // Controlla se almeno una delle parole selezionate è presente nella descrizione
+                                for (var i = 0; i < selectedDescrizione.length; i++) {
+                                    if (descrizione.includes(selectedDescrizione[i])) {
+                                        includeProdotto = true;
+                                        break;
+                                    }
                                 }
                             }
+
                         }
                     }
                 }

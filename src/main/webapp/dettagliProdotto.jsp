@@ -133,7 +133,7 @@
         %>
         <div class="comandiAdmin">
 
-            <form class="modificaQuantita" name="modifica" action="AdminControl?action=aggiungiProdotto&tipo=pop&IdPop=<%=((PopBean) prodotto).getIdPop()%>" method="post">
+            <form class="modificaQuantita" name="modifica" action="AdminControl?action=aggiungiProdotto&tipo=pop&IdPop=<%=((PopBean) prodotto).getIdPop()%>" method="post" onsubmit="return validate(this)">
                 <label style="font-family: Montserrat, serif; font-weight: bold">
                     TOT: <input type="number" name="tot" required>
                 </label>
@@ -153,7 +153,7 @@
                 </button>
             </form>
 
-            <form class="modificaQuantita" name="modifica" action="AdminControl?action=rimuoviProdotto&tipo=pop&IdPop=<%=((PopBean) prodotto).getIdPop()%>" method="post">
+            <form class="modificaQuantita" name="modifica" action="AdminControl?action=rimuoviProdotto&tipo=pop&IdPop=<%=((PopBean) prodotto).getIdPop()%>" method="post" onsubmit="return validate(this)">
                 <label style="font-family: Montserrat, serif; font-weight: bold">
                     TOT: <input type="number" name="tot" required>
                 </label>
@@ -324,6 +324,21 @@
     }
 
     showSlide(slideIndex);
+</script>
+
+<script>
+    function validate(form) {
+        console.log("ciao");
+        var tot = form.tot.value;
+
+        if(tot !== "") {
+            if(tot < 1) {
+                alert("Inserire una quantità maggiore di 0");
+                form.tot.focus();
+                return false;
+            }
+        }
+    }
 </script>
 </body>
 </html>

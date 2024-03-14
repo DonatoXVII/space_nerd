@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -104,47 +106,97 @@ public class DatiSensibiliModel {
             }
         }
     }
-     public DatiSensibiliBean recuperaDati (String email) {
-         DatiSensibiliBean bean = new DatiSensibiliBean();
-         Connection con = null;
-         PreparedStatement ps = null;
-         ResultSet rs = null;
-         try {
-             con = ds.getConnection();
-             String query = "SELECT Email, Nome, Cognome FROM " + TABLE_NAME_DATI + " WHERE Email = ?";
-             ps = con.prepareStatement(query);
-             ps.setString(1, email);
-             rs = ps.executeQuery();
-             while(rs.next()) {
+
+    public DatiSensibiliBean recuperaDati (String email) {
+        DatiSensibiliBean bean = new DatiSensibiliBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT Email, Nome, Cognome FROM " + TABLE_NAME_DATI + " WHERE Email = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while(rs.next()) {
                 bean.setEmail(email);
                 bean.setNome(rs.getString("Nome"));
                 bean.setCognome(rs.getString("Cognome"));
-             }
-         } catch (SQLException e) {
-             logger.log(Level.WARNING, e.getMessage());
-         } finally {
-             try {
-                 if (rs != null) {
-                     rs.close();
-                 }
-             } catch (SQLException e) {
-                 logger.log(Level.WARNING, msgRs, e);
-             }
-             try {
-                 if (ps != null) {
-                     ps.close();
-                 }
-             } catch (SQLException e) {
-                 logger.log(Level.WARNING, msgPs, e);
-             }
-             try {
-                 if (con != null) {
-                     con.close();
-                 }
-             } catch (SQLException e) {
-                 logger.log(Level.WARNING, msgCon, e);
-             }
-         }
-         return bean;
-     }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return bean;
+    }
+
+    public DatiSensibiliBean getDatiUtentePerEmail(String email) {
+        DatiSensibiliBean utente = new DatiSensibiliBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_DATI + " WHERE Email = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                utente.setEmail(rs.getString("Email"));
+                utente.setNome(rs.getString("Nome"));
+                utente.setCognome(rs.getString("Cognome"));
+                utente.setDataNascita(rs.getDate("DataNascita"));
+                utente.setVia(rs.getString("Via"));
+                utente.setCivico(rs.getInt("Civico"));
+                utente.setProvincia(rs.getString("Provincia"));
+                utente.setComune(rs.getString("Comune"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return utente;
+    }
 }

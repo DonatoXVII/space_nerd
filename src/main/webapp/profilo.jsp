@@ -38,7 +38,7 @@
             <span class="lable">Modifica</span>
         </button>
 
-            <button class="button" onclick="location.href='./indirizzi.jsp'">
+            <button class="button" onclick="location.href='./indirizzi.jsp'" <%if(tipoUtente){%>style="display: none"<%}%>>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20"
                      height="20" fill="none" class="svg-icon">
                     <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">
@@ -51,7 +51,7 @@
                 <span class="lable">Indirizzi</span>
             </button>
 
-            <button class="button" onclick="location.href='./metodiPagamento.jsp'">
+            <button class="button" onclick="location.href='./metodiPagamento.jsp'" <%if(tipoUtente){%>style="display: none"<%}%>>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20"
                      height="20" fill="none" class="svg-icon">
                     <g stroke-width="1.5" stroke-linecap="round" stroke="#5d41de">

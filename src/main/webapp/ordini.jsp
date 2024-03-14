@@ -9,6 +9,10 @@
         return;
     }
 %>
+
+<%
+    String email = (String) request.getAttribute("emailOrdine");
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -88,7 +92,7 @@
 </style>
 
 <div class="ordini-container">
-    <h1>I tuoi ordini</h1>
+    <%if(!tipoUtente){%><h1>I tuoi ordini</h1><%}else{%><h1>Ordini utente <%=email%></h1><%}%>
     <%
         if(ordini != null && ordini.size()!=0) {
             Iterator<?> it = ordini.iterator();

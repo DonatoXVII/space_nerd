@@ -67,7 +67,9 @@
             <%if(emailUtente == null){%>
                 <li><a href="./login.jsp"><img src="img/cart.jpg" alt="errore immagine"></a></li>
             <%}else{%>
+            <%if(tipoUtente){%><li><a href="./admin.jsp">UTENTI</a></li><%} else {%>
                 <li><a href="./carrello.jsp"><img src="img/cart.jpg" alt="errore immagine"></a></li>
+            <%}%>
                 <li><a href="UtenteControl?action=logout"><img src="img/logout.jpg" alt="errore immagine"></a></li>
             <%}%>
         </ul>
@@ -104,7 +106,7 @@
     const userIcon = document.getElementById("userIcon");
     const userIconCard = document.createElement("div");
     userIconCard.id = "userIconCard";
-    userIconCard.innerHTML = <%if(emailUtente!=null){%> `<a style="color: black; font-family: Montserrat, serif" class="cardActive" href="./ordini.jsp">Ordini</a>` <%}%>;
+    userIconCard.innerHTML = <%if(emailUtente!=null && Boolean.FALSE.equals(tipoUtente)){%> `<a style="color: black; font-family: Montserrat, serif" class="cardActive" href="./ordini.jsp">Ordini</a>` <%}%>;
 
     const userIconLi = document.getElementById("userIconLi");
     userIconLi.appendChild(userIconCard);

@@ -11,11 +11,7 @@
 <%@include file="navbar.jsp"%>
 <%
     if(emailUtente != null) {
-        if(tipoUtente){
-            response.sendRedirect("./admin.jsp");
-        } else {
-            response.sendRedirect("./profilo.jsp");
-        }
+        response.sendRedirect("./profilo.jsp");
     }
 %>
 

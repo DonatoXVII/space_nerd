@@ -100,7 +100,7 @@
                         PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
                     %>
                     <h5><%=PrezzoeString%>€</h5>
-                    <%if(((PopBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5>
+                    <%if(((PopBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5><%if(tipoUtente!=null && tipoUtente){%><h5>Quantita in stock: <%=((PopBean) prodotto).getNumArticoli()%></h5><%}%>
                     <%}else if(((PopBean) prodotto).getNumArticoli() == 1){%><h5 style="color: #c5a31d; margin-top: 20px"><%=quantDisp%></h5>
                     <%} else {%><h5 style="color: red; margin-top: 20px"><%=nonDisp%></h5><%}%>
                 </div>

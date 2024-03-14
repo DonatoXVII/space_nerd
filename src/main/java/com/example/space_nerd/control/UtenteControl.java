@@ -194,9 +194,14 @@ public class UtenteControl extends HttpServlet {
         String password = request.getParameter(PWD_PARAMETER);
 
         HttpSession session = request.getSession();
+        boolean tipo = (boolean) session.getAttribute("tipo");
         String email = (String) session.getAttribute(EMAIL_PARAMETER);
+        session.removeAttribute("nome");
+        session.removeAttribute("cognome");
+        session.setAttribute("nome", nome);
+        session.setAttribute("cognome", cognome);
 
-        UtenteBean utente = new UtenteBean(email, password, false);
+        UtenteBean utente = new UtenteBean(email, password, tipo);
         DatiSensibiliBean datiUtente = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);
         utenteModel.modificaPassword(utente);
         datiModel.modificaDati(datiUtente);

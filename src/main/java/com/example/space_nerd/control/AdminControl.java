@@ -43,6 +43,12 @@ public class AdminControl extends HttpServlet {
                     case "rimuoviprodotto" :
                         rimuoviProdotto(request, response);
                         break;
+                    case "verificatipo" :
+                        verificaTipo(request, response);
+                        break;
+                    case "aggiunginuovoprodotto" :
+                        aggiungiNuovoProdotto(request, response);
+                        break;
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
                         errorDispatcher.forward(request, response);
@@ -113,5 +119,24 @@ public class AdminControl extends HttpServlet {
             popModel.rimuoviNumeroArticoli(id, tot);
         }
         response.sendRedirect("./catalogo.jsp");
+    }
+
+    private void verificaTipo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String tipo = request.getParameter("prod");
+        if(tipo.equalsIgnoreCase("manga")){
+            request.setAttribute("tipo", "manga");
+        }
+        if(tipo.equalsIgnoreCase("pop")) {
+            request.setAttribute("tipo", "pop");
+        }
+        if(tipo.equalsIgnoreCase("figure")) {
+            request.setAttribute("tipo", "figure");
+        }
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/nuovoProdotto.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) {
+
     }
 }

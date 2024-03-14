@@ -112,6 +112,8 @@
                     if(!((PopBean) prodotto).getImmagini().isEmpty()){
                 %>
                 <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
+                <%} else {%>
+                <img src="" alt="errore immagine">
                 <%}%>
                 <div class="description">
                     <h5><%=((PopBean) prodotto).getDescrizione()%></h5>
@@ -129,7 +131,12 @@
         } else if(prodotto instanceof FigureBean) {
 %>
             <button style="cursor: pointer" class="gallery" data-tipo="figure" onclick="location.href='ProdottoControl?action=visualizzaDettagli&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'" role="button">
+                <%if(!((FigureBean) prodotto).getImmagini().isEmpty()){%>
                 <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
+                <%} else {%>
+                <img src="img/imgFigure/" alt="errore immagine">
+
+                <%}%>
                 <div class="description">
                     <h5><%=((FigureBean) prodotto).getDescrizione()%></h5>
                     <h5><%=((FigureBean) prodotto).getPersonaggio()%></h5>
@@ -137,7 +144,7 @@
                         PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
                     %>
                     <h5><%=PrezzoeString%>€</h5>
-                    <%if(((FigureBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5>
+                    <%if(((FigureBean) prodotto).getNumArticoli() > 1) {%><h5 style="color: green; margin-top: 20px"><%=disponibile%></h5><%if(tipoUtente!=null && tipoUtente){%><h5>Quantita in stock: <%=((FigureBean) prodotto).getNumArticoli()%></h5><%}%>
                     <%}else if(((FigureBean) prodotto).getNumArticoli() == 1){%><h5 style="color: #c5a31d; margin-top: 20px"><%=quantDisp%></h5>
                     <%} else {%><h5 style="color: red; margin-top: 20px"><%=nonDisp%></h5><%}%>
                 </div>

@@ -349,4 +349,129 @@ public class MangaModel {
         }
     }
 
+    public void eliminaProdotto(int id) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "DELETE FROM " + TABLE_NAME_MANGA + " WHERE IdManga = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void aggiungiNumArticoli(int id, int tot) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdManga = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, tot);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void rimuoviNumeroArticoli(int id, int tot) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdManga = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, tot);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void aggiungiProdotto(MangaBean manga) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_MANGA + "(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)" +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setFloat(1, manga.getPrezzo());
+            ps.setString(2, manga.getDescrizione());
+            ps.setInt(3, manga.getNumArticoli());
+            ps.setString(4, manga.getCasaEditrice());
+            ps.setString(5, manga.getLingua());
+            ps.setInt(6, manga.getNumPagine());
+            ps.setString(7, manga.getImg());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
 }

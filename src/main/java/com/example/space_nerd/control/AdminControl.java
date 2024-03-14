@@ -19,7 +19,9 @@ public class AdminControl extends HttpServlet {
     static DatiSensibiliModel datiModel = new DatiSensibiliModel();
     static UtenteModel utenteModel = new UtenteModel();
     static OrdineModel ordineModel = new OrdineModel();
+    static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
+    static FigureModel figureModel = new FigureModel();
     static Logger logger = Logger.getLogger(AdminControl.class.getName());
     public AdminControl() {super();}
 
@@ -94,9 +96,17 @@ public class AdminControl extends HttpServlet {
 
     private void eliminaProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String tipo = request.getParameter("tipo");
+        if(tipo.equalsIgnoreCase("manga")) {
+            int id = Integer.parseInt(request.getParameter("IdManga"));
+            mangaModel.eliminaProdotto(id);
+        }
         if(tipo.equalsIgnoreCase("pop")){
             int id = Integer.parseInt(request.getParameter("IdPop"));
             popModel.eliminaProdotto(id);
+        }
+        if(tipo.equalsIgnoreCase("figure")){
+            int id = Integer.parseInt(request.getParameter("IdFigure"));
+            figureModel.eliminaProdotto(id);
         }
         response.sendRedirect("./catalogo.jsp");
     }
@@ -104,9 +114,17 @@ public class AdminControl extends HttpServlet {
     private void aggiungiProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String tipo = request.getParameter("tipo");
         int tot = Integer.parseInt(request.getParameter("tot"));
+        if(tipo.equalsIgnoreCase("manga")) {
+            int id = Integer.parseInt(request.getParameter("IdManga"));
+            mangaModel.aggiungiNumArticoli(id, tot);
+        }
         if(tipo.equalsIgnoreCase("pop")){
             int id = Integer.parseInt(request.getParameter("IdPop"));
             popModel.aggiungiNumArticoli(id, tot);
+        }
+        if(tipo.equalsIgnoreCase("figure")) {
+            int id = Integer.parseInt(request.getParameter("IdFigure"));
+            figureModel.aggiungiNumArticoli(id, tot);
         }
         response.sendRedirect("./catalogo.jsp");
     }
@@ -114,9 +132,17 @@ public class AdminControl extends HttpServlet {
     private void rimuoviProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String tipo = request.getParameter("tipo");
         int tot = Integer.parseInt(request.getParameter("tot"));
+        if(tipo.equalsIgnoreCase("manga")) {
+            int id = Integer.parseInt(request.getParameter("IdManga"));
+            mangaModel.rimuoviNumeroArticoli(id, tot);
+        }
         if(tipo.equalsIgnoreCase("pop")){
             int id = Integer.parseInt(request.getParameter("IdPop"));
             popModel.rimuoviNumeroArticoli(id, tot);
+        }
+        if(tipo.equalsIgnoreCase("figure")){
+            int id = Integer.parseInt(request.getParameter("IdFigure"));
+            figureModel.rimuoviNumeroArticoli(id, tot);
         }
         response.sendRedirect("./catalogo.jsp");
     }
@@ -140,9 +166,28 @@ public class AdminControl extends HttpServlet {
         String descrizione = request.getParameter("descrizione");
         int nArticoli = Integer.parseInt(request.getParameter("numeroArticoli"));
         float prezzo = Float.parseFloat(request.getParameter("prezzo"));
-        String universo = request.getParameter("universo");
-        int nSerie = Integer.parseInt(request.getParameter("numeroSerie"));
-        if(universo != null) {
+
+        String tipo = request.getParameter("tipo");
+
+        if(tipo.equalsIgnoreCase("manga")) {
+            String casa = request.getParameter("casa");
+            int nPagine = Integer.parseInt(request.getParameter("pagine"));
+            String lingua = request.getParameter("lingua");
+
+            MangaBean manga = new MangaBean();
+            manga.setDescrizione(descrizione);
+            manga.setNumArticoli(nArticoli);
+            manga.setPrezzo(prezzo);
+            manga.setCasaEditrice(casa);
+            manga.setNumPagine(nPagine);
+            manga.setLingua(lingua);
+            mangaModel.aggiungiProdotto(manga);
+        }
+
+        if(tipo.equalsIgnoreCase("pop")) {
+            String universo = request.getParameter("universo");
+            int nSerie = Integer.parseInt(request.getParameter("numeroSerie"));
+
             PopBean pop = new PopBean();
             pop.setDescrizione(descrizione);
             pop.setNumArticoli(nArticoli);
@@ -151,6 +196,22 @@ public class AdminControl extends HttpServlet {
             pop.setNumSerie(nSerie);
             popModel.aggiungiProdotto(pop);
         }
+
+        if(tipo.equalsIgnoreCase("figure")) {
+            String materiale = request.getParameter("materiale");
+            int altezza = Integer.parseInt(request.getParameter("altezza"));
+            String personaggio = request.getParameter("personaggio");
+
+            FigureBean figure = new FigureBean();
+            figure.setDescrizione(descrizione);
+            figure.setNumArticoli(nArticoli);
+            figure.setPrezzo(prezzo);
+            figure.setMateriale(materiale);
+            figure.setAltezza(altezza);
+            figure.setPersonaggio(personaggio);
+            figureModel.aggiungiProdotto(figure);
+        }
+
         response.sendRedirect("./catalogo.jsp");
     }
 }

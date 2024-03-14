@@ -76,7 +76,7 @@ CREATE TABLE Manga(
     CasaEditrice varchar(16) NOT NULL,
     Lingua varchar(16) NOT NULL,
     NumeroPagine int NOT NULL,
-    Immagine varchar(50) NOT NULL,
+    Immagine varchar(50),
     PRIMARY KEY(IdManga)
 );
 

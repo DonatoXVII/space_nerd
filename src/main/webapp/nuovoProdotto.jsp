@@ -76,53 +76,70 @@
         <h1>DEVI PRIMA SCEGLIERE IL TIPO DI PRODOTTO CHE VUOI INSERIRE</h1>
     <%} else {%>
 
-    <form class="formNuovoProdotto" action="AdminControl?action=aggiungiNuovoProdotto" method="post">
+    <form id="formNuovoProdotto" class="formNuovoProdotto" action="AdminControl?action=aggiungiNuovoProdotto&tipo=<%=tipo%>" method="post">
 
             <%if(tipo.equalsIgnoreCase("manga")){%><span>HAI SELEZIONATO MANGA</span><%} else if(tipo.equalsIgnoreCase("pop")) {%><span>HAI SELEZIONATO POP</span><%} else if(tipo.equalsIgnoreCase("figure")) {%><span>HAI SELEZIONATO FIGURE</span><%}%>
         <label for="descrizione">Descrizione</label>
-        <input type="text" class="infoProdotto" id="descrizione" name="descrizione">
+        <input type="text" class="infoProdotto" id="descrizione" name="descrizione" required>
 
         <div class="mario"></div>
 
         <label for="numeroArticoli">Prodotti in stock:</label>
-        <input type="text" class="infoProdotto" id="numeroArticoli" name="numeroArticoli">
+        <input type="text" class="infoProdotto" id="numeroArticoli" name="numeroArticoli" required>
 
         <label for="prezzo">Prezzo:</label>
-        <input type="text" class="infoProdotto" id="prezzo" name="prezzo">
+        <input type="text" class="infoProdotto" id="prezzo" name="prezzo" required>
 
         <%if(tipo.equalsIgnoreCase("manga")){%>
         <label for="casa">Casa ditrice:</label>
-        <input type="text" class="infoProdotto" id="casa" name="casa">
+        <input type="text" class="infoProdotto" id="casa" name="casa" required>
 
         <label for="pagine">Numero pagine:</label>
-        <input type="text" class="infoProdotto" id="pagine" name="pagine">
+        <input type="text" class="infoProdotto" id="pagine" name="pagine" required>
 
-        <label for="lingua">Linga:</label>
-        <input type="text" class="infoProdotto" id="lingua" name="lingua">
+        <label for="lingua">Lingua:</label>
+        <input type="text" class="infoProdotto" id="lingua" name="lingua" required>
 
         <%} else if(tipo.equalsIgnoreCase("pop")){%>
         <label for="universo">Universo:</label>
-        <input type="text" class="infoProdotto" id="universo" name="universo">
+        <input type="text" class="infoProdotto" id="universo" name="universo" required>
 
         <label for="numeroSerie">Numero di serie:</label>
-        <input type="text" class="infoProdotto" id="numeroSerie" name="numeroSerie">
+        <input type="text" class="infoProdotto" id="numeroSerie" name="numeroSerie" required>
 
         <%} else if(tipo.equalsIgnoreCase("figure")){%>
         <label for="materiale">Materiale:</label>
-        <input type="text" class="infoProdotto" id="materiale" name="materiale">
+        <input type="text" class="infoProdotto" id="materiale" name="materiale" required>
 
         <label for="altezza">Altezza:</label>
-        <input type="text" class="infoProdotto" id="altezza" name="altezza">
+        <input type="text" class="infoProdotto" id="altezza" name="altezza" required>
 
         <label for="personaggio">Personaggio:</label>
-        <input type="text" class="infoProdotto" id="personaggio" name="personaggio">
+        <input type="text" class="infoProdotto" id="personaggio" name="personaggio" required>
         <%}%>
 
-        <button type="submit">Conferma</button>
+        <button type="submit" id="confermaButton">Conferma</button>
         <button type="reset" id="limpar">Ripristina</button>
     </form>
 
     <%}%>
 </div>
+
+<script>
+    document.addEventListener("keydown", function(event) {
+        var form = document.getElementById("formNuovoProdotto");
+        var confermaButton = document.getElementById("confermaButton");
+
+        // Se il tasto "Invio" viene premuto
+        if (event.key === "Enter") {
+            // Verifica se il cursore è all'interno della form
+            if (form.contains(document.activeElement)) {
+                // Imposta il pulsante "Conferma" come cliccato
+                confermaButton.click();
+            }
+        }
+    });
+</script>
+
 </body>
 </html>

@@ -30,7 +30,6 @@ public class ProdottoControl extends HttpServlet {
     static String mangaParameter = "manga";
     static String figureParameter = "figure";
     static String ricercaParameter = "ricerca";
-    static String countDispProdotto = "countProdotto";
 
     public ProdottoControl() {super();}
 

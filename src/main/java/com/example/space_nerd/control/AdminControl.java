@@ -136,7 +136,21 @@ public class AdminControl extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) {
-
+    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String descrizione = request.getParameter("descrizione");
+        int nArticoli = Integer.parseInt(request.getParameter("numeroArticoli"));
+        float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+        String universo = request.getParameter("universo");
+        int nSerie = Integer.parseInt(request.getParameter("numeroSerie"));
+        if(universo != null) {
+            PopBean pop = new PopBean();
+            pop.setDescrizione(descrizione);
+            pop.setNumArticoli(nArticoli);
+            pop.setPrezzo(prezzo);
+            pop.setSerie(universo);
+            pop.setNumSerie(nSerie);
+            popModel.aggiungiProdotto(pop);
+        }
+        response.sendRedirect("./catalogo.jsp");
     }
 }

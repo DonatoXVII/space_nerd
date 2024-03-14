@@ -38,6 +38,8 @@
                 PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
             %>
             <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
+            <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((MangaBean) prodotto).getNumArticoli()%></p><%}%>
+
             <%if(((MangaBean) prodotto).getNumArticoli() > 0 && ((MangaBean) prodotto).getQuantitaCarrello() < ((MangaBean) prodotto).getNumArticoli()){%>
             <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
                 <span>Aggiungi al carrello</span>
@@ -94,10 +96,10 @@
             PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <%if(tipoUtente){%><br><br><p>Quantità in stock : <%=((PopBean) prodotto).getNumArticoli()%></p><%}%>
+        <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((PopBean) prodotto).getNumArticoli()%></p><%}%>
 
         <%
-            if(!tipoUtente){
+            if(tipoUtente!=null && !tipoUtente){
                 if(((PopBean) prodotto).getNumArticoli() > 0 && ((PopBean) prodotto).getQuantitaCarrello() < ((PopBean) prodotto).getNumArticoli()){
         %>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">

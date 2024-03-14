@@ -476,4 +476,38 @@ public class PopModel {
             }
         }
     }
+
+    public void aggiungiProdotto(PopBean pop) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_POP + "(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)" +
+                    "VALUES(?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setFloat(1, pop.getPrezzo());
+            ps.setString(2, pop.getDescrizione());
+            ps.setInt(3, pop.getNumArticoli());
+            ps.setInt(4, pop.getNumSerie());
+            ps.setString(5, pop.getSerie());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
 }

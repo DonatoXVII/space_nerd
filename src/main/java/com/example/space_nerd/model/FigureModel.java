@@ -50,7 +50,7 @@ public class FigureModel {
             con = ds.getConnection();
             String query = "SELECT F.IdFigure, F.Descrizione, SUM(Cm.Quantita) AS Tot FROM " + TABLE_NAME_FIGURE +
                     " F JOIN " + TABLE_NAME_COMPRENDE +
-                    " Cm ON F.IdFigure = Cm.IdFigure GROUP BY F.IdFigure ORDER BY Tot DESC LIMIT 3";
+                    " Cm ON F.IdFigure = Cm.IdFigure WHERE F.FlagVisibilita = 1 GROUP BY F.IdFigure ORDER BY Tot DESC LIMIT 3";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -137,7 +137,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdFigure, Personaggio, Descrizione, Prezzo, NumeroArticoli FROM " + TABLE_NAME_FIGURE;
+            String query = "SELECT IdFigure, Personaggio, Descrizione, Prezzo, NumeroArticoli FROM " + TABLE_NAME_FIGURE + " WHERE FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -196,6 +196,7 @@ public class FigureModel {
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));
                 figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
+                figure.setVisibilita(rs.getBoolean("FlagVisibilita"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -395,7 +396,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "DELETE FROM " + TABLE_NAME_FIGURE + " WHERE IdFigure = ?";
+            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET FlagVisibilita = 0 WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -565,6 +566,35 @@ public class FigureModel {
             ps = con.prepareStatement(query);
             ps.setString(1, img);
             ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, MSG_PS, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, MSG_CON, e);
+            }
+        }
+    }
+
+    public void restock(int id) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdFigure = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

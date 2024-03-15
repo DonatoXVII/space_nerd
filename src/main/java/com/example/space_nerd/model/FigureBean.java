@@ -13,6 +13,7 @@ public class FigureBean {
     String personaggio;
     List<String> immagini;
     int quantitaCarrello;
+    boolean visibilita;
 
     public FigureBean() {
         idFigure = 0;
@@ -24,9 +25,10 @@ public class FigureBean {
         personaggio = "";
         immagini = new ArrayList<>();
         quantitaCarrello = 0;
+        visibilita = false;
     }
 
-    public FigureBean(int idFigure, float prezzo, String descrizione, int numArticoli, String materiale, int altezza, String personaggio, List<String> immagini, int quantitaCarrello) {
+    public FigureBean(int idFigure, float prezzo, String descrizione, int numArticoli, String materiale, int altezza, String personaggio, List<String> immagini, int quantitaCarrello, boolean visibilita) {
         this.idFigure = idFigure;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -36,6 +38,7 @@ public class FigureBean {
         this.personaggio = personaggio;
         this.immagini = immagini;
         this.quantitaCarrello = quantitaCarrello;
+        this.visibilita = visibilita;
     }
 
     public int getIdFigure() {
@@ -101,6 +104,10 @@ public class FigureBean {
     public void aggiungiImmagine(String immagine) {
         this.immagini.add(immagine);
     }
+
+    public boolean isVisibilita() { return visibilita; }
+
+    public void setVisibilita(boolean visibilita) { this.visibilita = visibilita; }
 
     public int getQuantitaCarrello() { return quantitaCarrello; }
 

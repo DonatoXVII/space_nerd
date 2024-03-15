@@ -46,10 +46,10 @@ public class MangaModel {
         ResultSet rs = null;
         try{
             con = ds.getConnection();
-            String query = "SELECT M.IdManga, M.Descrizione, M.Immagine, SUM(Cm.Quantita) as Tot FROM "
+            String query = "SELECT M.IdManga, M.Descrizione, M.Immagine, M.FlagVisibilita, SUM(Cm.Quantita) as Tot FROM "
                     + TABLE_NAME_MANGA
                     + " M JOIN " + TABLE_NAME_COMPRENDE
-                    + " Cm ON M.IdManga = Cm.IdManga GROUP BY M.IdManga"
+                    + " Cm ON M.IdManga = Cm.IdManga WHERE M.FlagVisibilita = 1 GROUP BY M.IdManga"
                     + " ORDER BY Tot DESC LIMIT 3";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
@@ -95,7 +95,7 @@ public class MangaModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdManga, Descrizione, Immagine, Prezzo, NumeroArticoli FROM " + TABLE_NAME_MANGA;
+            String query = "SELECT IdManga, Descrizione, Immagine, Prezzo, NumeroArticoli FROM " + TABLE_NAME_MANGA + " WHERE FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -155,6 +155,7 @@ public class MangaModel {
                 manga.setLingua(rs.getString("Lingua"));
                 manga.setNumPagine(rs.getInt("NumeroPagine"));
                 manga.setImg(rs.getString(immagineParameter));
+                manga.setVisibilita(rs.getBoolean("FlagVisibilita"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -354,7 +355,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "DELETE FROM " + TABLE_NAME_MANGA + " WHERE IdManga = ?";
+            String query = "UPDATE " + TABLE_NAME_MANGA + " SET FlagVisibilita = 0 WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -453,6 +454,35 @@ public class MangaModel {
             ps.setString(5, manga.getLingua());
             ps.setInt(6, manga.getNumPagine());
             ps.setString(7, manga.getImg());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void restock(int id) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "UPDATE " + TABLE_NAME_MANGA + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdManga = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

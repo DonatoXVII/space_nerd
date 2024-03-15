@@ -38,11 +38,12 @@
                 PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
             %>
             <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-            <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((MangaBean) prodotto).getNumArticoli()%></p><%}%>
+            <%if(tipoUtente!=null && tipoUtente && ((MangaBean) prodotto).isVisibilita()){%><br><br><p>Quantità in stock : <%=((MangaBean) prodotto).getNumArticoli()%></p><%}%>
 
             <%
                 if(tipoUtente == null || !tipoUtente){
-                    if(((MangaBean) prodotto).getNumArticoli() > 0 && ((MangaBean) prodotto).getQuantitaCarrello() < ((MangaBean) prodotto).getNumArticoli()){
+                    if(((MangaBean) prodotto).isVisibilita()){
+                        if(((MangaBean) prodotto).getNumArticoli() > 0 && ((MangaBean) prodotto).getQuantitaCarrello() < ((MangaBean) prodotto).getNumArticoli()){
             %>
             <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
                 <span>Aggiungi al carrello</span>
@@ -57,7 +58,10 @@
                     </g>
                 </svg>
             </button>
-            <%}else {%>
+            <%
+
+                    }else {
+            %>
             <button class="addToCart">
                 <span>Prodotto esaurito</span>
                 <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -73,9 +77,12 @@
             </button>
             <%
                     }
+                }
                 } else {
             %>
             <div class="comandiAdmin">
+
+                <%if(((MangaBean) prodotto).isVisibilita()) {%>
 
                 <form class="modificaQuantita" name="modifica" action="AdminControl?action=aggiungiProdotto&tipo=manga&IdManga=<%=((MangaBean) prodotto).getIdManga()%>" method="post" onsubmit="return validate(this)">
                     <label style="font-family: Montserrat, serif; font-weight: bold">
@@ -169,6 +176,21 @@
                         </defs>
                     </svg>
                 </button>
+                <%} else {%>
+
+                <p>Questo prodotto non è più disponibile</p>
+                <button class="buttonRestock" onclick="location.href='AdminControl?action=restock&tipo=manga&id=<%=((MangaBean) prodotto).getIdManga()%>'">
+                    <div class="containerRestock">
+                        <div class="folder folder_one"></div>
+                        <div class="folder folder_two"></div>
+                        <div class="folder folder_three"></div>
+                        <div class="folder folder_four"></div>
+                    </div>
+                    <div class="active_line"></div>
+                    <span class="textRestock">Esegui restock di 10 quantità</span>
+                </button>
+
+                <%}%>
             </div>
 
             <%
@@ -201,10 +223,11 @@
             PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((PopBean) prodotto).getNumArticoli()%></p><%}%>
+        <%if(tipoUtente!=null && tipoUtente && ((PopBean) prodotto).isVisibilita()){%><br><br><p>Quantità in stock : <%=((PopBean) prodotto).getNumArticoli()%></p><%}%>
 
         <%
             if(tipoUtente==null || !tipoUtente){
+                if(((PopBean) prodotto).isVisibilita()){
                 if(((PopBean) prodotto).getNumArticoli() > 0 && ((PopBean) prodotto).getQuantitaCarrello() < ((PopBean) prodotto).getNumArticoli()){
         %>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
@@ -220,7 +243,9 @@
                 </g>
             </svg>
         </button>
-        <%} else { %>
+        <%
+                } else {
+        %>
         <button class="addToCart">
             <span>Prodotto esaurito</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -236,10 +261,12 @@
         </button>
         <%
                 }
+            }
             } else {
         %>
         <div class="comandiAdmin">
 
+            <%if(((PopBean) prodotto).isVisibilita()){%>
             <form class="modificaQuantita" name="modifica" action="AdminControl?action=aggiungiProdotto&tipo=pop&IdPop=<%=((PopBean) prodotto).getIdPop()%>" method="post" onsubmit="return validate(this)">
                 <label style="font-family: Montserrat, serif; font-weight: bold">
                     TOT: <input type="number" name="tot" required>
@@ -332,6 +359,19 @@
                     </defs>
                 </svg>
             </button>
+            <%}else{%>
+            <p>Questo prodotto non è più disponibile</p>
+            <button class="buttonRestock" onclick="location.href='AdminControl?action=restock&tipo=pop&id=<%=((PopBean) prodotto).getIdPop()%>'">
+                <div class="containerRestock">
+                    <div class="folder folder_one"></div>
+                    <div class="folder folder_two"></div>
+                    <div class="folder folder_three"></div>
+                    <div class="folder folder_four"></div>
+                </div>
+                <div class="active_line"></div>
+                <span class="textRestock">Esegui restock di 10 quantità</span>
+            </button>
+            <%}%>
 
         </div>
         <%
@@ -365,10 +405,11 @@
             PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
         %>
         <p><img src="img/prezzo.jpg" alt="errore immagine">  Prezzo : <%=PrezzoeString%>€</p>
-        <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((FigureBean) prodotto).getNumArticoli()%></p><%}%>
+        <%if(tipoUtente!=null && tipoUtente && ((FigureBean) prodotto).isVisibilita()){%><br><br><p>Quantità in stock : <%=((FigureBean) prodotto).getNumArticoli()%></p><%}%>
 
         <%
             if(tipoUtente==null || !tipoUtente){
+                if(((FigureBean) prodotto).isVisibilita()) {
                 if(((FigureBean) prodotto).getNumArticoli() > 0 && ((FigureBean) prodotto).getQuantitaCarrello() < ((FigureBean) prodotto).getNumArticoli()){
         %>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
@@ -384,7 +425,10 @@
                 </g>
             </svg>
         </button>
-        <%}else{%>
+        <%
+
+                }else{
+        %>
         <button class="addToCart">
             <span>Prodotto esaurito</span>
             <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -400,10 +444,12 @@
         </button>
         <%
                 }
+            }
             } else {
         %>
         <div class="comandiAdmin">
 
+            <%if(((FigureBean) prodotto).isVisibilita()) {%>
             <form class="modificaQuantita" name="modifica" action="AdminControl?action=aggiungiProdotto&tipo=figure&IdFigure=<%=((FigureBean) prodotto).getIdFigure()%>" method="post" onsubmit="return validate(this)">
                 <label style="font-family: Montserrat, serif; font-weight: bold">
                     TOT: <input type="number" name="tot" required>
@@ -496,6 +542,19 @@
                     </defs>
                 </svg>
             </button>
+            <%}else{%>
+            <p>Questo prodotto non è più disponibile</p>
+            <button class="buttonRestock" onclick="location.href='AdminControl?action=restock&tipo=figure&id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+                <div class="containerRestock">
+                    <div class="folder folder_one"></div>
+                    <div class="folder folder_two"></div>
+                    <div class="folder folder_three"></div>
+                    <div class="folder folder_four"></div>
+                </div>
+                <div class="active_line"></div>
+                <span class="textRestock">Esegui restock di 10 quantità</span>
+            </button>
+            <%}%>
 
         </div>
         <%

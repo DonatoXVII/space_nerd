@@ -12,6 +12,7 @@ public class PopBean {
     String serie;
     List<String> immagini;
     int quantitaCarrello;
+    boolean visibilita;
 
     public PopBean() {
         idPop = 0;
@@ -22,9 +23,10 @@ public class PopBean {
         serie = "";
         immagini = new ArrayList<>();
         quantitaCarrello = 0;
+        visibilita = false;
     }
 
-    public PopBean(int idPop, float prezzo, String descrizione, int numArticoli, int numSerie, String serie, List<String> immagini, int quantitaCarrello) {
+    public PopBean(int idPop, float prezzo, String descrizione, int numArticoli, int numSerie, String serie, List<String> immagini, int quantitaCarrello, boolean visibilita) {
         this.idPop = idPop;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -33,6 +35,7 @@ public class PopBean {
         this.serie = serie;
         this.immagini = immagini;
         this.quantitaCarrello = quantitaCarrello;
+        this.visibilita = visibilita;
     }
 
     public int getIdPop() {
@@ -91,6 +94,10 @@ public class PopBean {
         this.immagini.add(immagine);
     }
 
+    public boolean isVisibilita() { return visibilita; }
+
+    public void setVisibilita(boolean visibilita) { this.visibilita = visibilita; }
+
     public int getQuantitaCarrello() { return quantitaCarrello; }
 
     public void setQuantitaCarrello(int quantitaCarrello) { this.quantitaCarrello = quantitaCarrello; }
@@ -110,6 +117,7 @@ public class PopBean {
                 ", serie='" + serie + '\'' +
                 ", immagini=" + immagini +
                 ", quantitaCarrello=" + quantitaCarrello +
+                ", visibilita=" + visibilita +
                 '}';
     }
 }

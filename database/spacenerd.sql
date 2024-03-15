@@ -27,7 +27,7 @@ CREATE TABLE IndirizzoSpedizione(
     Nome varchar(16) NOT NULL,
     Cognome varchar(16) NOT NULL,
     Via varchar(16) NOT NULL,
-    Civico int NOT NULL,
+    ivico int NOT NULL,
     Provincia varchar(50) NOT NULL,
     Comune varchar(50) NOT NULL,
     Cap int NOT NULL,
@@ -77,6 +77,7 @@ CREATE TABLE Manga(
     Lingua varchar(16) NOT NULL,
     NumeroPagine int NOT NULL,
     Immagine varchar(50),
+    FlagVisibilita bit NOT NULL, -- 0 non visibile, 1 si
     PRIMARY KEY(IdManga)
 );
 
@@ -87,6 +88,7 @@ CREATE TABLE Pop(
     NumeroArticoli int NOT NULL,
     NumeroSerie int NOT NULL,
     Serie varchar(16) NOT NULL,
+    FlagVisibilita bit NOT NULL, -- 0 non visibile, 1 si
     PRIMARY KEY(IdPop)
 );
 
@@ -98,6 +100,7 @@ CREATE TABLE Figure(
     Materiale varchar(16) NOT NULL,
     Altezza int NOT NULL,
     Personaggio varchar(50) NOT NULL,
+    FlagVisibilita bit NOT NULL, -- 0 non visibile, 1 si
     PRIMARY KEY(IdFigure)
 );
 
@@ -199,68 +202,68 @@ VALUES('120', '2022-12-12', 'Fattura3.pdf', 'a.digiorgio@studenti.unisa.it');
 INSERT INTO Ordine(PrezzoTotale, DataOrdine, Fattura, Email)
 VALUES('85', '2022-12-12', 'Fattura4.pdf', 'a.digiorgio@studenti.unisa.it');
 
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 1', '10', 'StarComics', 'Italiano', '200', 'imgOP1.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 2', '10', 'StarComics', 'Italiano', '200', 'imgOP2.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 3', '10', 'StarComics', 'Italiano', '200', 'imgOP3.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 4', '10', 'StarComics', 'Italiano', '200', 'imgOP4.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'One Piece New Edition vol 5', '1', 'StarComics', 'Italiano', '200', 'imgOP5.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'DragonBall Evergreen Edition vol 38', '25', 'StarComics', 'Italiano', '200', 'imgDB38.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'DragonBall Evergreen Edition vol 39', '25', 'StarComics', 'Italiano', '200', 'imgDB39.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'DragonBall Evergreen Edition vol 40', '25', 'StarComics', 'Italiano', '200', 'imgDB40.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'DragonBall Evergreen Edition vol 41', '25', 'StarComics', 'Italiano', '200', 'imgDB41.jpg');
-INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)
-VALUES('5.20', 'DragonBall Evergreen Edition vol 42', '0', 'StarComics', 'Italiano', '200', 'imgDB42.jpg');
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'One Piece New Edition vol 1', '10', 'StarComics', 'Italiano', '200', 'imgOP1.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'One Piece New Edition vol 2', '10', 'StarComics', 'Italiano', '200', 'imgOP2.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'One Piece New Edition vol 3', '10', 'StarComics', 'Italiano', '200', 'imgOP3.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'One Piece New Edition vol 4', '10', 'StarComics', 'Italiano', '200', 'imgOP4.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'One Piece New Edition vol 5', '1', 'StarComics', 'Italiano', '200', 'imgOP5.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'DragonBall Evergreen Edition vol 38', '25', 'StarComics', 'Italiano', '200', 'imgDB38.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'DragonBall Evergreen Edition vol 39', '25', 'StarComics', 'Italiano', '200', 'imgDB39.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'DragonBall Evergreen Edition vol 40', '25', 'StarComics', 'Italiano', '200', 'imgDB40.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'DragonBall Evergreen Edition vol 41', '25', 'StarComics', 'Italiano', '200', 'imgDB41.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('5.20', 'DragonBall Evergreen Edition vol 42', '0', 'StarComics', 'Italiano', '200', 'imgDB42.jpg', 1);
 
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Zoro', '10', '923', 'One Piece');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Luffy', '10', '1273', 'One Piece');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Goku', '10', '948', 'DragonBall');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Naruto', '10', '932', 'Naruto');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Tony Stark', '1', '580', 'Marvel');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Zoro Limited Edition', '0', '1288', 'One Piece');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Eren', '10', '1321', 'Attacck On Titan');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Scarlet Witch', '10', '823', 'Marvel');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Captain America', '10', '1200', 'Marvel');
-INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)
-VALUES('16.90', 'FunkoPop Vegeta Limited Edition', '10', '614', 'DragonBall');
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Zoro', '10', '923', 'One Piece', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Luffy', '10', '1273', 'One Piece', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Goku', '10', '948', 'DragonBall', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Naruto', '10', '932', 'Naruto', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Tony Stark', '1', '580', 'Marvel', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Zoro Limited Edition', '0', '1288', 'One Piece', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Eren', '10', '1321', 'Attacck On Titan', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Scarlet Witch', '10', '823', 'Marvel', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Captain America', '10', '1200', 'Marvel', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('16.90', 'FunkoPop Vegeta Limited Edition', '10', '614', 'DragonBall', 1);
 
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('100', 'Action Figure One Piece', '10', 'PVC', '28', 'Luffy Gear 5');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('120', 'Action Figure One Piece', '10', 'PVC', '40', 'Zoro');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('80', 'Action Figure DragonBall', '10', 'PVC', '30', 'Goku Super Sayan 4');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('120', 'Action Figure Naruto', '0', 'PVC', '32', 'Itachi');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('100', 'Action Figure DragonBall', '1', 'PVC', '40', 'Goku Super Sayan');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Goku Banpresto');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Freezer Banpresto');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('40', 'Action Figure One Piece', '10', 'PVC', '26', 'TrafalgarLaw Banpresto');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('55', 'Action Figure Death Note', '10', 'PVC', '40', 'Ruyk');
-INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)
-VALUES('30', 'Action Figure DragonBall', '10', 'PVC', '25', 'Jiren');
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('100', 'Action Figure One Piece', '10', 'PVC', '28', 'Luffy Gear 5', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('120', 'Action Figure One Piece', '10', 'PVC', '40', 'Zoro', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('80', 'Action Figure DragonBall', '10', 'PVC', '30', 'Goku Super Sayan 4', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('120', 'Action Figure Naruto', '0', 'PVC', '32', 'Itachi', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('100', 'Action Figure DragonBall', '1', 'PVC', '40', 'Goku Super Sayan', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Goku Banpresto', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Freezer Banpresto', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('40', 'Action Figure One Piece', '10', 'PVC', '26', 'TrafalgarLaw Banpresto', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('55', 'Action Figure Death Note', '10', 'PVC', '40', 'Ruyk', 1);
+INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
+VALUES('30', 'Action Figure DragonBall', '10', 'PVC', '25', 'Jiren', 1);
 
 INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
 VALUES('1', '1', '1', '5.20');

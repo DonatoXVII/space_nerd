@@ -10,6 +10,7 @@ public class MangaBean {
     int numPagine;
     String img;
     int quantitaCarrello;
+    boolean visibilita;
 
     public MangaBean() {
         idManga = 0;
@@ -21,9 +22,10 @@ public class MangaBean {
         numPagine = 0;
         img = "";
         quantitaCarrello = 0;
+        visibilita = false;
     }
 
-    public MangaBean(int idManga, float prezzo, String descrizione, int numArticoli, String casaEditrice, String lingua, int numPagine, String img, int quantitaCarrello) {
+    public MangaBean(int idManga, float prezzo, String descrizione, int numArticoli, String casaEditrice, String lingua, int numPagine, String img, int quantitaCarrello, boolean visibilita) {
         this.idManga = idManga;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
@@ -33,6 +35,7 @@ public class MangaBean {
         this.numPagine = numPagine;
         this.img = img;
         this.quantitaCarrello = quantitaCarrello;
+        this.visibilita = visibilita;
     }
 
     public int getIdManga() {
@@ -95,6 +98,10 @@ public class MangaBean {
 
     public void setImg(String img) { this.img = img; }
 
+    public boolean isVisibilita() { return visibilita; }
+
+    public void setVisibilita(boolean visibilita) { this.visibilita = visibilita; }
+
     public int getQuantitaCarrello() { return quantitaCarrello; }
 
     public void setQuantitaCarrello(int quantitaCarrello) { this.quantitaCarrello = quantitaCarrello; }
@@ -115,6 +122,7 @@ public class MangaBean {
                 ", numPagine=" + numPagine +
                 ", img='" + img + '\'' +
                 ", quantitaCarrello=" + quantitaCarrello +
+                ", visibilita=" + visibilita +
                 '}';
     }
 }

@@ -50,7 +50,7 @@ public class PopModel {
             con = ds.getConnection();
             String query = "SELECT P.IdPop, P.Descrizione, SUM(Cm.Quantita) AS Tot FROM " + TABLE_NAME_POP +
                     " P JOIN " + TABLE_NAME_COMPRENDE +
-                    " Cm ON P.IdPop = Cm.IdPop GROUP BY P.IdPop ORDER BY Tot DESC LIMIT 3";
+                    " Cm ON P.IdPop = Cm.IdPop WHERE P.FlagVisibilita = 1 GROUP BY P.IdPop ORDER BY Tot DESC LIMIT 3";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -137,7 +137,7 @@ public class PopModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdPop, Descrizione, Serie, Prezzo, NumeroArticoli FROM " + TABLE_NAME_POP;
+            String query = "SELECT IdPop, Descrizione, Serie, Prezzo, NumeroArticoli FROM " + TABLE_NAME_POP + " WHERE FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -195,6 +195,7 @@ public class PopModel {
                 pop.setNumArticoli(rs.getInt(ARTICOLI_PARAMETER));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
                 pop.setSerie(rs.getString(SERIE_PARAMETER));
+                pop.setVisibilita(rs.getBoolean("FlagVisibilita"));
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -393,7 +394,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "DELETE FROM " + TABLE_NAME_POP + " WHERE IdPop = ?";
+            String query = "UPDATE " + TABLE_NAME_POP + " SET FlagVisibilita = 0 WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -562,6 +563,35 @@ public class PopModel {
             ps = con.prepareStatement(query);
             ps.setString(1, img);
             ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
+    public void restock(int id) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "UPDATE " + TABLE_NAME_POP + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdPop = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

@@ -55,6 +55,9 @@ public class AdminControl extends HttpServlet {
                     case "aggiunginuovoprodotto" :
                         aggiungiNuovoProdotto(request, response);
                         break;
+                    case "restock" :
+                        restock(request, response);
+                        break;
                     default:
                         RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
                         errorDispatcher.forward(request, response);
@@ -367,6 +370,29 @@ public class AdminControl extends HttpServlet {
 
             response.sendRedirect("./catalogo.jsp");
         } catch (IOException | ServletException | NullPointerException | NumberFormatException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
+        }
+    }
+
+    private void restock (HttpServletRequest request, HttpServletResponse response) throws IOException{
+        try {
+            String tipo = request.getParameter("tipo");
+            int id = Integer.parseInt(request.getParameter("id"));
+            if(tipo.equalsIgnoreCase("manga")) {
+                mangaModel.restock(id);
+            } else if(tipo.equalsIgnoreCase("pop")){
+                popModel.restock(id);
+            } else if(tipo.equalsIgnoreCase("figure")){
+                figureModel.restock(id);
+            }
+            response.sendRedirect("./catalogo.jsp");
+        } catch (IOException e) {
             request.setAttribute("error", "Si è verificato un errore: " + e);
             RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
             try {

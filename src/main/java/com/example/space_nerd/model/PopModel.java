@@ -510,4 +510,76 @@ public class PopModel {
             }
         }
     }
+
+    public int getLastPop() {
+        int id = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT MAX(IdPop) AS Max FROM " + TABLE_NAME_POP;
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("Max");
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return id;
+    }
+
+    public void aggiungiImmaginiPop(int id, String img) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_IMMAGINE + "(Nome, IdPop)" +
+                    "VALUES(?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setString(1, img);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
 }

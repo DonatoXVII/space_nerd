@@ -170,6 +170,17 @@
                     </svg>
                 </button>
 
+                <!--<button class="aggiungiImmagine">
+                    <div class="containerImmagine">
+                        <div class="folder folder_one"></div>
+                        <div class="folder folder_two"></div>
+                        <div class="folder folder_three"></div>
+                        <div class="folder folder_four"></div>
+                    </div>
+                    <div class="active_line"></div>
+                    <span class="textAggiungiImmagine">Aggiungi immagini</span>
+                </button>-->
+
             </div>
 
             <%
@@ -517,6 +528,7 @@
     const slides = document.querySelectorAll('.slider img');
 
     function showSlide(n) {
+        console.log("Slider index : " + slideIndex)
         if (n >= slides.length) {
             slideIndex = 0;
         } else if (n < 0) {

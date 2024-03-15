@@ -63,7 +63,7 @@
     background-color: #b54141;
 }
 
-#limpar {
+#limpar{
     background-color: #fcb13e;
     color: white;
     font-size: 18px;
@@ -71,6 +71,18 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.formNuovoProdotto input[type="file"] {
+    background-color: #fcb13e;
+    color: white;
+    font-size: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+    font-family: Montserrat, serif;
 }
 
 #limpar:hover {
@@ -82,7 +94,7 @@
     height: 5px;
     position: relative;
     left: 190px;
-    top: 47%;
+    top: 0;
     box-shadow: 0px 0px 0px transparent, 130px 5px #ffa500, 135px 5px #ffa500,
     140px 5px #ffa500, 95px 10px #de4513, 100px 10px #de4513, 105px 10px #de4513,
     110px 10px #de4513, 115px 10px #de4513, 130px 10px #ffa500,

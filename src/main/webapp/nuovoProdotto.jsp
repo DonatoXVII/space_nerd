@@ -76,7 +76,7 @@
         <h1>DEVI PRIMA SCEGLIERE IL TIPO DI PRODOTTO CHE VUOI INSERIRE</h1>
     <%} else {%>
 
-    <form id="formNuovoProdotto" class="formNuovoProdotto" action="AdminControl?action=aggiungiNuovoProdotto&tipo=<%=tipo%>" method="post">
+    <form id="formNuovoProdotto" class="formNuovoProdotto" action="AdminControl?action=aggiungiNuovoProdotto&tipo=<%=tipo%>" method="post" enctype="multipart/form-data">
 
             <%if(tipo.equalsIgnoreCase("manga")){%><span>HAI SELEZIONATO MANGA</span><%} else if(tipo.equalsIgnoreCase("pop")) {%><span>HAI SELEZIONATO POP</span><%} else if(tipo.equalsIgnoreCase("figure")) {%><span>HAI SELEZIONATO FIGURE</span><%}%>
         <label for="descrizione">Descrizione</label>
@@ -100,12 +100,21 @@
         <label for="lingua">Lingua:</label>
         <input type="text" class="infoProdotto" id="lingua" name="lingua" required>
 
+        <label for="immagine">Carica immagine</label>
+        <input type="file" class="infoProdotto" id="immagine" name="immagine">
+
         <%} else if(tipo.equalsIgnoreCase("pop")){%>
         <label for="universo">Universo:</label>
         <input type="text" class="infoProdotto" id="universo" name="universo" required>
 
         <label for="numeroSerie">Numero di serie:</label>
         <input type="text" class="infoProdotto" id="numeroSerie" name="numeroSerie" required>
+
+        <label for="image1">Carica immagine</label>
+        <div id="imageInputs">
+            <input type="file" name="image1" id="image1">
+        </div><br>
+        <button type="button" onclick="addImageInput()">Aggiungi Immagine</button>
 
         <%} else if(tipo.equalsIgnoreCase("figure")){%>
         <label for="materiale">Materiale:</label>
@@ -116,9 +125,16 @@
 
         <label for="personaggio">Personaggio:</label>
         <input type="text" class="infoProdotto" id="personaggio" name="personaggio" required>
+
+        <label for="imageFigure">Carica immagine</label>
+        <div id="imageInputs">
+            <input type="file" name="image1" id="imageFigure">
+        </div><br>
+        <button type="button" onclick="addImageInput()">Aggiungi Immagine</button>
+
         <%}%>
 
-        <button type="submit" id="confermaButton">Conferma</button>
+        <br><br><br><button type="submit" id="confermaButton">Conferma</button>
         <button type="reset" id="limpar">Ripristina</button>
     </form>
 
@@ -139,6 +155,50 @@
             }
         }
     });
+</script>
+
+<script>
+    let imageCount = 1;
+
+    function addImageInput() {
+        let previousInput = document.getElementById("image" + imageCount);
+        if (!previousInput.files.length) {
+            alert("Seleziona un'immagine prima di aggiungere un'altra!");
+            return;
+        }
+
+        imageCount++;
+
+        // Creazione della nuova label
+        let newLabel = document.createElement("label");
+        newLabel.setAttribute("for", "image" + imageCount);
+        newLabel.textContent = "Carica immagine " + imageCount;
+
+        // Creazione del nuovo input
+        let newInput = document.createElement("input");
+        newInput.setAttribute("type", "file");
+        newInput.setAttribute("name", "image" + imageCount);
+        newInput.setAttribute("id", "image" + imageCount);
+
+        // Aggiunta della nuova label e del nuovo input al DOM
+        let imageInputsDiv = document.getElementById("imageInputs");
+        imageInputsDiv.appendChild(newLabel);
+        imageInputsDiv.appendChild(newInput);
+
+        updateImageCount();
+
+        function updateImageCount() {
+            let countInput = document.getElementById("imageCount");
+            if (!countInput) {
+                countInput = document.createElement("input");
+                countInput.setAttribute("type", "hidden");
+                countInput.setAttribute("name", "imageCount");
+                countInput.setAttribute("id", "imageCount");
+                document.getElementById("imageInputs").appendChild(countInput);
+            }
+            countInput.setAttribute("value", imageCount);
+        }
+    }
 </script>
 
 </body>

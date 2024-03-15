@@ -3,17 +3,23 @@ package com.example.space_nerd.control;
 import com.example.space_nerd.model.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @WebServlet("/AdminControl")
+@MultipartConfig
 public class AdminControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static DatiSensibiliModel datiModel = new DatiSensibiliModel();
@@ -162,7 +168,7 @@ public class AdminControl extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String descrizione = request.getParameter("descrizione");
         int nArticoli = Integer.parseInt(request.getParameter("numeroArticoli"));
         float prezzo = Float.parseFloat(request.getParameter("prezzo"));
@@ -174,6 +180,22 @@ public class AdminControl extends HttpServlet {
             int nPagine = Integer.parseInt(request.getParameter("pagine"));
             String lingua = request.getParameter("lingua");
 
+            Part imgFile = request.getPart("immagine");
+            String immagine = String.valueOf(UUID.randomUUID());
+            String directory = "img/imgManga/";
+            String path = request.getServletContext().getRealPath("/") +directory;
+            String path2 = path + immagine;
+            try(FileOutputStream fos = new FileOutputStream(path2);
+                InputStream is = imgFile.getInputStream()){
+                byte[] data = new byte[is.available()];
+                if(is.read(data) > 0)
+                {
+                    fos.write(data);
+                }
+            }catch(IOException e){
+                response.sendRedirect("./error.jsp");
+            }
+
             MangaBean manga = new MangaBean();
             manga.setDescrizione(descrizione);
             manga.setNumArticoli(nArticoli);
@@ -181,6 +203,7 @@ public class AdminControl extends HttpServlet {
             manga.setCasaEditrice(casa);
             manga.setNumPagine(nPagine);
             manga.setLingua(lingua);
+            manga.setImg(immagine);
             mangaModel.aggiungiProdotto(manga);
         }
 
@@ -195,6 +218,34 @@ public class AdminControl extends HttpServlet {
             pop.setSerie(universo);
             pop.setNumSerie(nSerie);
             popModel.aggiungiProdotto(pop);
+            int id = popModel.getLastPop();
+
+            int countImmagini;
+            String count = request.getParameter("imageCount");
+            if(count == null) {
+                countImmagini = 1;
+            } else {
+                countImmagini = Integer.parseInt(count);
+            }
+
+            for(int i = 1 ; i < countImmagini+1 ; i++) {
+                Part imgFile = request.getPart("image" + i);
+                String immagine = String.valueOf(UUID.randomUUID());
+                String directory = "img/imgPop/";
+                String path = request.getServletContext().getRealPath("/") + directory;
+                String path2 = path + immagine;
+                try(FileOutputStream fos = new FileOutputStream(path2);
+                    InputStream is = imgFile.getInputStream()){
+                    byte[] data = new byte[is.available()];
+                    if(is.read(data) > 0)
+                    {
+                        fos.write(data);
+                    }
+                }catch(IOException e){
+                    response.sendRedirect("./error.jsp");
+                }
+                popModel.aggiungiImmaginiPop(id, immagine);
+            }
         }
 
         if(tipo.equalsIgnoreCase("figure")) {
@@ -210,6 +261,35 @@ public class AdminControl extends HttpServlet {
             figure.setAltezza(altezza);
             figure.setPersonaggio(personaggio);
             figureModel.aggiungiProdotto(figure);
+
+            int id = figureModel.getLastFigure();
+
+            int countImmagini;
+            String count = request.getParameter("imageCount");
+            if(count == null) {
+                countImmagini = 1;
+            } else {
+                countImmagini = Integer.parseInt(count);
+            }
+
+            for(int i = 1 ; i < countImmagini+1 ; i++) {
+                Part imgFile = request.getPart("image" + i);
+                String immagine = String.valueOf(UUID.randomUUID());
+                String directory = "img/imgFigure/";
+                String path = request.getServletContext().getRealPath("/") + directory;
+                String path2 = path + immagine;
+                try(FileOutputStream fos = new FileOutputStream(path2);
+                    InputStream is = imgFile.getInputStream()){
+                    byte[] data = new byte[is.available()];
+                    if(is.read(data) > 0)
+                    {
+                        fos.write(data);
+                    }
+                }catch(IOException e){
+                    response.sendRedirect("./error.jsp");
+                }
+                figureModel.aggiungiImmaginiFigure(id, immagine);
+            }
         }
 
         response.sendRedirect("./catalogo.jsp");

@@ -101,7 +101,7 @@
         <input type="text" class="infoProdotto" id="lingua" name="lingua" required>
 
         <label for="immagine">Carica immagine</label>
-        <input type="file" class="infoProdotto" id="immagine" name="immagine">
+        <input type="file" class="infoProdotto" id="immagine" name="immagine" required>
 
         <%} else if(tipo.equalsIgnoreCase("pop")){%>
         <label for="universo">Universo:</label>
@@ -112,9 +112,9 @@
 
         <label for="image1">Carica immagine</label>
         <div id="imageInputs">
-            <input type="file" name="image1" id="image1">
+            <input type="file" name="image1" id="image1" required>
         </div><br>
-        <button type="button" onclick="addImageInput()">Aggiungi Immagine</button>
+        <button type="button" onclick="addImageInput('image')">Aggiungi Immagine</button>
 
         <%} else if(tipo.equalsIgnoreCase("figure")){%>
         <label for="materiale">Materiale:</label>
@@ -126,11 +126,11 @@
         <label for="personaggio">Personaggio:</label>
         <input type="text" class="infoProdotto" id="personaggio" name="personaggio" required>
 
-        <label for="imageFigure">Carica immagine</label>
+        <label for="imageFigure1">Carica immagine</label>
         <div id="imageInputs">
-            <input type="file" name="image1" id="imageFigure">
+            <input type="file" name="image1" id="imageFigure1" required>
         </div><br>
-        <button type="button" onclick="addImageInput()">Aggiungi Immagine</button>
+        <button type="button" onclick="addImageInput('imageFigure')">Aggiungi Immagine</button>
 
         <%}%>
 
@@ -160,8 +160,8 @@
 <script>
     let imageCount = 1;
 
-    function addImageInput() {
-        let previousInput = document.getElementById("image" + imageCount);
+    function addImageInput(inputId) {
+        let previousInput = document.getElementById(inputId + imageCount);
         if (!previousInput.files.length) {
             alert("Seleziona un'immagine prima di aggiungere un'altra!");
             return;
@@ -171,19 +171,33 @@
 
         // Creazione della nuova label
         let newLabel = document.createElement("label");
-        newLabel.setAttribute("for", "image" + imageCount);
+        newLabel.setAttribute("for", inputId + imageCount);
         newLabel.textContent = "Carica immagine " + imageCount;
 
         // Creazione del nuovo input
         let newInput = document.createElement("input");
         newInput.setAttribute("type", "file");
         newInput.setAttribute("name", "image" + imageCount);
-        newInput.setAttribute("id", "image" + imageCount);
+        newInput.setAttribute("id", inputId + imageCount);
+        newInput.setAttribute("required", "true");
+
+        // Creazione del bottone per rimuovere l'input
+        let removeButton = document.createElement("button");
+        removeButton.textContent = "Rimuovi";
+        removeButton.setAttribute("type", "button");
+        removeButton.addEventListener("click", function() {
+            newLabel.remove();
+            newInput.remove();
+            removeButton.remove();
+            imageCount--;
+            updateImageCount();
+        });
 
         // Aggiunta della nuova label e del nuovo input al DOM
         let imageInputsDiv = document.getElementById("imageInputs");
         imageInputsDiv.appendChild(newLabel);
         imageInputsDiv.appendChild(newInput);
+        imageInputsDiv.appendChild(removeButton);
 
         updateImageCount();
 

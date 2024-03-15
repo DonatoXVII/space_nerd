@@ -41,7 +41,7 @@
             <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((MangaBean) prodotto).getNumArticoli()%></p><%}%>
 
             <%
-                if(tipoUtente!=null && !tipoUtente){
+                if(tipoUtente == null || !tipoUtente){
                     if(((MangaBean) prodotto).getNumArticoli() > 0 && ((MangaBean) prodotto).getQuantitaCarrello() < ((MangaBean) prodotto).getNumArticoli()){
             %>
             <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
@@ -169,18 +169,6 @@
                         </defs>
                     </svg>
                 </button>
-
-                <!--<button class="aggiungiImmagine">
-                    <div class="containerImmagine">
-                        <div class="folder folder_one"></div>
-                        <div class="folder folder_two"></div>
-                        <div class="folder folder_three"></div>
-                        <div class="folder folder_four"></div>
-                    </div>
-                    <div class="active_line"></div>
-                    <span class="textAggiungiImmagine">Aggiungi immagini</span>
-                </button>-->
-
             </div>
 
             <%
@@ -216,7 +204,7 @@
         <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((PopBean) prodotto).getNumArticoli()%></p><%}%>
 
         <%
-            if(tipoUtente!=null && !tipoUtente){
+            if(tipoUtente==null || !tipoUtente){
                 if(((PopBean) prodotto).getNumArticoli() > 0 && ((PopBean) prodotto).getQuantitaCarrello() < ((PopBean) prodotto).getNumArticoli()){
         %>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'">
@@ -380,7 +368,7 @@
         <%if(tipoUtente!=null && tipoUtente){%><br><br><p>Quantità in stock : <%=((FigureBean) prodotto).getNumArticoli()%></p><%}%>
 
         <%
-            if(tipoUtente!=null && !tipoUtente){
+            if(tipoUtente==null || !tipoUtente){
                 if(((FigureBean) prodotto).getNumArticoli() > 0 && ((FigureBean) prodotto).getQuantitaCarrello() < ((FigureBean) prodotto).getNumArticoli()){
         %>
         <button class="addToCart" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">

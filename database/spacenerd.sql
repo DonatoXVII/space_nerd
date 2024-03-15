@@ -28,7 +28,7 @@ CREATE TABLE IndirizzoSpedizione(
     Cognome varchar(16) NOT NULL,
     Via varchar(16) NOT NULL,
     Civico int NOT NULL,
-    Provincia varchar(16) NOT NULL,
+    Provincia varchar(50) NOT NULL,
     Comune varchar(50) NOT NULL,
     Cap int NOT NULL,
     PRIMARY KEY(IdIndirizzo)

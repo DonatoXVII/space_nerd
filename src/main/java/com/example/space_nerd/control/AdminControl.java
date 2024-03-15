@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @WebServlet("/AdminControl")
 @MultipartConfig
@@ -28,10 +27,9 @@ public class AdminControl extends HttpServlet {
     static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
-    static Logger logger = Logger.getLogger(AdminControl.class.getName());
     public AdminControl() {super();}
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, NumberFormatException, NullPointerException {
         String action = request.getParameter("action");
         try {
             if (action != null) {
@@ -64,7 +62,13 @@ public class AdminControl extends HttpServlet {
                 }
             }
         } catch (ServletException | IOException e) {
-            logger.info("Si è verificata un'eccezione:" + e);
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
     }
 
@@ -73,166 +77,186 @@ public class AdminControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            logger.info("Si è verificata un'eccezione:" + e);
+            req.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(req, resp);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
     }
 
     private void visualizzaUtenti(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<String> utentiPerEmail = new ArrayList<>(utenteModel.getAllUtenti());
-        List<DatiSensibiliBean> utenti = new ArrayList<>();
+        try {
+            List<String> utentiPerEmail = new ArrayList<>(utenteModel.getAllUtenti());
+            List<DatiSensibiliBean> utenti = new ArrayList<>();
 
-        for(String email : utentiPerEmail) {
-            utenti.add(datiModel.getDatiUtentePerEmail(email));
+            for(String email : utentiPerEmail) {
+                utenti.add(datiModel.getDatiUtentePerEmail(email));
+            }
+
+            request.setAttribute("utenti", utenti);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin.jsp");
+            dispatcher.forward(request, response);
+        } catch (IOException | ServletException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-
-        request.setAttribute("utenti", utenti);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin.jsp");
-        dispatcher.forward(request, response);
     }
 
     private void visualizzaOrdini(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("Email");
-        List<OrdineBean> ordini = new ArrayList<>(ordineModel.getOrdiniPerUtente(email));
-        request.removeAttribute("ordini");
-        request.setAttribute("ordini", ordini);
-        request.setAttribute("emailOrdine", email);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ordini.jsp");
-        dispatcher.forward(request, response);
+        try {
+            String email = request.getParameter("Email");
+            List<OrdineBean> ordini = new ArrayList<>(ordineModel.getOrdiniPerUtente(email));
+            request.removeAttribute("ordini");
+            request.setAttribute("ordini", ordini);
+            request.setAttribute("emailOrdine", email);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ordini.jsp");
+            dispatcher.forward(request, response);
+        } catch (IOException | ServletException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
+        }
+
     }
 
     private void eliminaProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String tipo = request.getParameter("tipo");
-        if(tipo.equalsIgnoreCase("manga")) {
-            int id = Integer.parseInt(request.getParameter("IdManga"));
-            mangaModel.eliminaProdotto(id);
+        try {
+            String tipo = request.getParameter("tipo");
+            if(tipo.equalsIgnoreCase("manga")) {
+                int id = Integer.parseInt(request.getParameter("IdManga"));
+                mangaModel.eliminaProdotto(id);
+            }
+            if(tipo.equalsIgnoreCase("pop")){
+                int id = Integer.parseInt(request.getParameter("IdPop"));
+                popModel.eliminaProdotto(id);
+            }
+            if(tipo.equalsIgnoreCase("figure")){
+                int id = Integer.parseInt(request.getParameter("IdFigure"));
+                figureModel.eliminaProdotto(id);
+            }
+            response.sendRedirect("./catalogo.jsp");
+        } catch (IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-        if(tipo.equalsIgnoreCase("pop")){
-            int id = Integer.parseInt(request.getParameter("IdPop"));
-            popModel.eliminaProdotto(id);
-        }
-        if(tipo.equalsIgnoreCase("figure")){
-            int id = Integer.parseInt(request.getParameter("IdFigure"));
-            figureModel.eliminaProdotto(id);
-        }
-        response.sendRedirect("./catalogo.jsp");
+
     }
 
     private void aggiungiProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String tipo = request.getParameter("tipo");
-        int tot = Integer.parseInt(request.getParameter("tot"));
-        if(tipo.equalsIgnoreCase("manga")) {
-            int id = Integer.parseInt(request.getParameter("IdManga"));
-            mangaModel.aggiungiNumArticoli(id, tot);
+        try {
+            String tipo = request.getParameter("tipo");
+            int tot = Integer.parseInt(request.getParameter("tot"));
+            if(tipo.equalsIgnoreCase("manga")) {
+                int id = Integer.parseInt(request.getParameter("IdManga"));
+                mangaModel.aggiungiNumArticoli(id, tot);
+            }
+            if(tipo.equalsIgnoreCase("pop")){
+                int id = Integer.parseInt(request.getParameter("IdPop"));
+                popModel.aggiungiNumArticoli(id, tot);
+            }
+            if(tipo.equalsIgnoreCase("figure")) {
+                int id = Integer.parseInt(request.getParameter("IdFigure"));
+                figureModel.aggiungiNumArticoli(id, tot);
+            }
+            response.sendRedirect("./catalogo.jsp");
+        } catch (IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-        if(tipo.equalsIgnoreCase("pop")){
-            int id = Integer.parseInt(request.getParameter("IdPop"));
-            popModel.aggiungiNumArticoli(id, tot);
-        }
-        if(tipo.equalsIgnoreCase("figure")) {
-            int id = Integer.parseInt(request.getParameter("IdFigure"));
-            figureModel.aggiungiNumArticoli(id, tot);
-        }
-        response.sendRedirect("./catalogo.jsp");
     }
 
     private void rimuoviProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String tipo = request.getParameter("tipo");
-        int tot = Integer.parseInt(request.getParameter("tot"));
-        if(tipo.equalsIgnoreCase("manga")) {
-            int id = Integer.parseInt(request.getParameter("IdManga"));
-            mangaModel.rimuoviNumeroArticoli(id, tot);
+        try {
+            String tipo = request.getParameter("tipo");
+            int tot = Integer.parseInt(request.getParameter("tot"));
+            if(tipo.equalsIgnoreCase("manga")) {
+                int id = Integer.parseInt(request.getParameter("IdManga"));
+                mangaModel.rimuoviNumeroArticoli(id, tot);
+            }
+            if(tipo.equalsIgnoreCase("pop")){
+                int id = Integer.parseInt(request.getParameter("IdPop"));
+                popModel.rimuoviNumeroArticoli(id, tot);
+            }
+            if(tipo.equalsIgnoreCase("figure")){
+                int id = Integer.parseInt(request.getParameter("IdFigure"));
+                figureModel.rimuoviNumeroArticoli(id, tot);
+            }
+            response.sendRedirect("./catalogo.jsp");
+        } catch (IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-        if(tipo.equalsIgnoreCase("pop")){
-            int id = Integer.parseInt(request.getParameter("IdPop"));
-            popModel.rimuoviNumeroArticoli(id, tot);
-        }
-        if(tipo.equalsIgnoreCase("figure")){
-            int id = Integer.parseInt(request.getParameter("IdFigure"));
-            figureModel.rimuoviNumeroArticoli(id, tot);
-        }
-        response.sendRedirect("./catalogo.jsp");
     }
 
     private void verificaTipo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String tipo = request.getParameter("prod");
-        if(tipo.equalsIgnoreCase("manga")){
-            request.setAttribute("tipo", "manga");
+        try {
+            String tipo = request.getParameter("prod");
+            if(tipo.equalsIgnoreCase("manga")){
+                request.setAttribute("tipo", "manga");
+            }
+            if(tipo.equalsIgnoreCase("pop")) {
+                request.setAttribute("tipo", "pop");
+            }
+            if(tipo.equalsIgnoreCase("figure")) {
+                request.setAttribute("tipo", "figure");
+            }
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/nuovoProdotto.jsp");
+            dispatcher.forward(request, response);
+        } catch (IOException | ServletException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-        if(tipo.equalsIgnoreCase("pop")) {
-            request.setAttribute("tipo", "pop");
-        }
-        if(tipo.equalsIgnoreCase("figure")) {
-            request.setAttribute("tipo", "figure");
-        }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/nuovoProdotto.jsp");
-        dispatcher.forward(request, response);
     }
 
-    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String descrizione = request.getParameter("descrizione");
-        int nArticoli = Integer.parseInt(request.getParameter("numeroArticoli"));
-        float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+    private void aggiungiNuovoProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, NullPointerException {
+        try {
+            String descrizione = request.getParameter("descrizione");
+            int nArticoli = Integer.parseInt(request.getParameter("numeroArticoli"));
+            float prezzo = Float.parseFloat(request.getParameter("prezzo"));
 
-        String tipo = request.getParameter("tipo");
+            String tipo = request.getParameter("tipo");
 
-        if(tipo.equalsIgnoreCase("manga")) {
-            String casa = request.getParameter("casa");
-            int nPagine = Integer.parseInt(request.getParameter("pagine"));
-            String lingua = request.getParameter("lingua");
+            if(tipo.equalsIgnoreCase("manga")) {
+                String casa = request.getParameter("casa");
+                int nPagine = Integer.parseInt(request.getParameter("pagine"));
+                String lingua = request.getParameter("lingua");
 
-            Part imgFile = request.getPart("immagine");
-            String immagine = String.valueOf(UUID.randomUUID());
-            String directory = "img/imgManga/";
-            String path = request.getServletContext().getRealPath("/") +directory;
-            String path2 = path + immagine;
-            try(FileOutputStream fos = new FileOutputStream(path2);
-                InputStream is = imgFile.getInputStream()){
-                byte[] data = new byte[is.available()];
-                if(is.read(data) > 0)
-                {
-                    fos.write(data);
-                }
-            }catch(IOException e){
-                response.sendRedirect("./error.jsp");
-            }
-
-            MangaBean manga = new MangaBean();
-            manga.setDescrizione(descrizione);
-            manga.setNumArticoli(nArticoli);
-            manga.setPrezzo(prezzo);
-            manga.setCasaEditrice(casa);
-            manga.setNumPagine(nPagine);
-            manga.setLingua(lingua);
-            manga.setImg(immagine);
-            mangaModel.aggiungiProdotto(manga);
-        }
-
-        if(tipo.equalsIgnoreCase("pop")) {
-            String universo = request.getParameter("universo");
-            int nSerie = Integer.parseInt(request.getParameter("numeroSerie"));
-
-            PopBean pop = new PopBean();
-            pop.setDescrizione(descrizione);
-            pop.setNumArticoli(nArticoli);
-            pop.setPrezzo(prezzo);
-            pop.setSerie(universo);
-            pop.setNumSerie(nSerie);
-            popModel.aggiungiProdotto(pop);
-            int id = popModel.getLastPop();
-
-            int countImmagini;
-            String count = request.getParameter("imageCount");
-            if(count == null) {
-                countImmagini = 1;
-            } else {
-                countImmagini = Integer.parseInt(count);
-            }
-
-            for(int i = 1 ; i < countImmagini+1 ; i++) {
-                Part imgFile = request.getPart("image" + i);
+                Part imgFile = request.getPart("immagine");
                 String immagine = String.valueOf(UUID.randomUUID());
-                String directory = "img/imgPop/";
-                String path = request.getServletContext().getRealPath("/") + directory;
+                String directory = "img/imgManga/";
+                String path = request.getServletContext().getRealPath("/") +directory;
                 String path2 = path + immagine;
                 try(FileOutputStream fos = new FileOutputStream(path2);
                     InputStream is = imgFile.getInputStream()){
@@ -244,54 +268,112 @@ public class AdminControl extends HttpServlet {
                 }catch(IOException e){
                     response.sendRedirect("./error.jsp");
                 }
-                popModel.aggiungiImmaginiPop(id, immagine);
-            }
-        }
 
-        if(tipo.equalsIgnoreCase("figure")) {
-            String materiale = request.getParameter("materiale");
-            int altezza = Integer.parseInt(request.getParameter("altezza"));
-            String personaggio = request.getParameter("personaggio");
-
-            FigureBean figure = new FigureBean();
-            figure.setDescrizione(descrizione);
-            figure.setNumArticoli(nArticoli);
-            figure.setPrezzo(prezzo);
-            figure.setMateriale(materiale);
-            figure.setAltezza(altezza);
-            figure.setPersonaggio(personaggio);
-            figureModel.aggiungiProdotto(figure);
-
-            int id = figureModel.getLastFigure();
-
-            int countImmagini;
-            String count = request.getParameter("imageCount");
-            if(count == null) {
-                countImmagini = 1;
-            } else {
-                countImmagini = Integer.parseInt(count);
+                MangaBean manga = new MangaBean();
+                manga.setDescrizione(descrizione);
+                manga.setNumArticoli(nArticoli);
+                manga.setPrezzo(prezzo);
+                manga.setCasaEditrice(casa);
+                manga.setNumPagine(nPagine);
+                manga.setLingua(lingua);
+                manga.setImg(immagine);
+                mangaModel.aggiungiProdotto(manga);
             }
 
-            for(int i = 1 ; i < countImmagini+1 ; i++) {
-                Part imgFile = request.getPart("image" + i);
-                String immagine = String.valueOf(UUID.randomUUID());
-                String directory = "img/imgFigure/";
-                String path = request.getServletContext().getRealPath("/") + directory;
-                String path2 = path + immagine;
-                try(FileOutputStream fos = new FileOutputStream(path2);
-                    InputStream is = imgFile.getInputStream()){
-                    byte[] data = new byte[is.available()];
-                    if(is.read(data) > 0)
-                    {
-                        fos.write(data);
-                    }
-                }catch(IOException e){
-                    response.sendRedirect("./error.jsp");
+            if(tipo.equalsIgnoreCase("pop")) {
+                String universo = request.getParameter("universo");
+                int nSerie = Integer.parseInt(request.getParameter("numeroSerie"));
+
+                PopBean pop = new PopBean();
+                pop.setDescrizione(descrizione);
+                pop.setNumArticoli(nArticoli);
+                pop.setPrezzo(prezzo);
+                pop.setSerie(universo);
+                pop.setNumSerie(nSerie);
+                popModel.aggiungiProdotto(pop);
+                int id = popModel.getLastPop();
+
+                int countImmagini;
+                String count = request.getParameter("imageCount");
+                if(count == null) {
+                    countImmagini = 1;
+                } else {
+                    countImmagini = Integer.parseInt(count);
                 }
-                figureModel.aggiungiImmaginiFigure(id, immagine);
+
+                for(int i = 1 ; i < countImmagini+1 ; i++) {
+                    Part imgFile = request.getPart("image" + i);
+                    String immagine = String.valueOf(UUID.randomUUID());
+                    String directory = "img/imgPop/";
+                    String path = request.getServletContext().getRealPath("/") + directory;
+                    String path2 = path + immagine;
+                    try(FileOutputStream fos = new FileOutputStream(path2);
+                        InputStream is = imgFile.getInputStream()){
+                        byte[] data = new byte[is.available()];
+                        if(is.read(data) > 0)
+                        {
+                            fos.write(data);
+                        }
+                    }catch(IOException e){
+                        response.sendRedirect("./error.jsp");
+                    }
+                    popModel.aggiungiImmaginiPop(id, immagine);
+                }
+            }
+
+            if(tipo.equalsIgnoreCase("figure")) {
+                String materiale = request.getParameter("materiale");
+                int altezza = Integer.parseInt(request.getParameter("altezza"));
+                String personaggio = request.getParameter("personaggio");
+
+                FigureBean figure = new FigureBean();
+                figure.setDescrizione(descrizione);
+                figure.setNumArticoli(nArticoli);
+                figure.setPrezzo(prezzo);
+                figure.setMateriale(materiale);
+                figure.setAltezza(altezza);
+                figure.setPersonaggio(personaggio);
+                figureModel.aggiungiProdotto(figure);
+
+                int id = figureModel.getLastFigure();
+
+                int countImmagini;
+                String count = request.getParameter("imageCount");
+                if(count == null) {
+                    countImmagini = 1;
+                } else {
+                    countImmagini = Integer.parseInt(count);
+                }
+
+                for(int i = 1 ; i < countImmagini+1 ; i++) {
+                    Part imgFile = request.getPart("image" + i);
+                    String immagine = String.valueOf(UUID.randomUUID());
+                    String directory = "img/imgFigure/";
+                    String path = request.getServletContext().getRealPath("/") + directory;
+                    String path2 = path + immagine;
+                    try(FileOutputStream fos = new FileOutputStream(path2);
+                        InputStream is = imgFile.getInputStream()){
+                        byte[] data = new byte[is.available()];
+                        if(is.read(data) > 0)
+                        {
+                            fos.write(data);
+                        }
+                    }catch(IOException e){
+                        response.sendRedirect("./error.jsp");
+                    }
+                    figureModel.aggiungiImmaginiFigure(id, immagine);
+                }
+            }
+
+            response.sendRedirect("./catalogo.jsp");
+        } catch (IOException | ServletException | NullPointerException | NumberFormatException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
             }
         }
-
-        response.sendRedirect("./catalogo.jsp");
     }
 }

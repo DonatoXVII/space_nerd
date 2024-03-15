@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @WebServlet("/OrdiniControl")
 public class OrdiniControl extends HttpServlet {
@@ -27,14 +27,13 @@ public class OrdiniControl extends HttpServlet {
     static IndirizzoModel indirizzoModel = new IndirizzoModel();
     static PagamentoModel pagamentoModel = new PagamentoModel();
     static String emailParameter = "email";
-    static Logger logger = Logger.getLogger(OrdiniControl.class.getName());
 
     public OrdiniControl() {
         super();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, NullPointerException {
         String action = req.getParameter("action");
         try {
             if(action != null) {
@@ -58,7 +57,13 @@ public class OrdiniControl extends HttpServlet {
                 }
             }
         } catch (ServletException | IOException e) {
-            logger.info("Si è verificata un'eccezione:" + e);
+            req.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(req, resp);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
     }
 
@@ -67,92 +72,138 @@ public class OrdiniControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            logger.info("Si è verificata un'eccezione:" + e);
+            req.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(req, resp);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
     }
 
     private void visualizzaOrdini(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<OrdineBean> ordini;
-        HttpSession session = request.getSession();
-        ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute(emailParameter));
-        request.setAttribute("ordini", ordini);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
-        dispatcher.forward(request, response);
+        try {
+            List<OrdineBean> ordini;
+            HttpSession session = request.getSession();
+            ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute(emailParameter));
+            request.setAttribute("ordini", ordini);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
+        }
     }
 
     private void visualizzaDettagliOrdini(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("IdOrdine"));
-        List<Object> prodottiOrdine = new ArrayList<>(ordineModel.getProdottiOrdine(id));
-        for(Object prod : prodottiOrdine) {
-            if(prod instanceof PopBean) {
-                List<String> immaginiPop = popModel.getAllImgPop((PopBean) prod);
-                for(String immagine : immaginiPop) {
-                    ((PopBean) prod).aggiungiImmagine(immagine);
-                }
-            } else if(prod instanceof FigureBean) {
-                List<String> immaginiFigure = figureModel.getAllImgFigure((FigureBean) prod);
-                for(String immagine : immaginiFigure) {
-                    ((FigureBean) prod).aggiungiImmagine(immagine);
+        try {
+            int id = Integer.parseInt(request.getParameter("IdOrdine"));
+            List<Object> prodottiOrdine = new ArrayList<>(ordineModel.getProdottiOrdine(id));
+            for(Object prod : prodottiOrdine) {
+                if(prod instanceof PopBean) {
+                    List<String> immaginiPop = popModel.getAllImgPop((PopBean) prod);
+                    for(String immagine : immaginiPop) {
+                        ((PopBean) prod).aggiungiImmagine(immagine);
+                    }
+                } else if(prod instanceof FigureBean) {
+                    List<String> immaginiFigure = figureModel.getAllImgFigure((FigureBean) prod);
+                    for(String immagine : immaginiFigure) {
+                        ((FigureBean) prod).aggiungiImmagine(immagine);
+                    }
                 }
             }
+            request.setAttribute("prodottiOrdine", prodottiOrdine);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/dettagliOrdine.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-        request.setAttribute("prodottiOrdine", prodottiOrdine);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/dettagliOrdine.jsp");
-        dispatcher.forward(request, response);
 
     }
 
     private void visulizzaIndirizziEMetodi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
+        try {
+            HttpSession session = request.getSession();
+            String email = (String) session.getAttribute(emailParameter);
 
-        List<Integer> indirizziPerEmail = indirizzoModel.getIndiririzziUtente(email);
-        List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
-        for (int i : indirizziPerEmail) {
-            indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
+            List<Integer> indirizziPerEmail = indirizzoModel.getIndiririzziUtente(email);
+            List<IndirizzoBean> indirizziUtilizzati = new ArrayList<>();
+            for (int i : indirizziPerEmail) {
+                indirizziUtilizzati.add(indirizzoModel.getIndirizzo(i));
+            }
+
+            List<Integer> metodiPerEmail = pagamentoModel.getMetodiUtente(email);
+            List<PagamentoBean> metodiUtilizzati = new ArrayList<>();
+            for (Integer i : metodiPerEmail) {
+                metodiUtilizzati.add(pagamentoModel.getMetodo(i));
+            }
+
+            request.setAttribute("indirizzi", indirizziUtilizzati);
+            request.setAttribute("pagamenti", metodiUtilizzati);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/elaborazioneOrdine.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
         }
-
-        List<Integer> metodiPerEmail = pagamentoModel.getMetodiUtente(email);
-        List<PagamentoBean> metodiUtilizzati = new ArrayList<>();
-        for (Integer i : metodiPerEmail) {
-            metodiUtilizzati.add(pagamentoModel.getMetodo(i));
-        }
-
-        request.setAttribute("indirizzi", indirizziUtilizzati);
-        request.setAttribute("pagamenti", metodiUtilizzati);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/elaborazioneOrdine.jsp");
-        dispatcher.forward(request, response);
     }
 
     private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute(emailParameter);
-        CarrelloBean carrelloBean = (CarrelloBean) session.getAttribute("carrello");
+        try {
+            HttpSession session = request.getSession();
+            String email = (String) session.getAttribute(emailParameter);
+            CarrelloBean carrelloBean = (CarrelloBean) session.getAttribute("carrello");
 
-        int last = ordineModel.getLastIdOrdine() + 1;
-        LocalDate oggi = LocalDate.now();
-        Date dataSQL = Date.valueOf(oggi);
-        ordineModel.regitraNuovoOrdine(carrelloBean.getPrezzoTotale()+5, dataSQL, "Fattura." +last+".pdf", email);
+            int last = ordineModel.getLastIdOrdine() + 1;
+            LocalDate oggi = LocalDate.now();
+            Date dataSQL = Date.valueOf(oggi);
+            ordineModel.regitraNuovoOrdine(carrelloBean.getPrezzoTotale()+5, dataSQL, "Fattura." +last+".pdf", email);
 
-        int nuovoLast = ordineModel.getLastIdOrdine();
-        List<Object> prodotti = carrelloBean.getListaCarrello();
-        for(Object prodotto : prodotti) {
-            if(prodotto instanceof MangaBean) {
-                ordineModel.aggiornaComprendeManga(nuovoLast, ((MangaBean) prodotto).getIdManga(), ((MangaBean) prodotto).getQuantitaCarrello(), ((MangaBean) prodotto).getPrezzo());
-                mangaModel.decrementaDisponibilita((MangaBean) prodotto, ((MangaBean) prodotto).getQuantitaCarrello());
-            } else if(prodotto instanceof PopBean) {
-                ordineModel.aggiornaComprendePop(nuovoLast, ((PopBean) prodotto).getIdPop(), ((PopBean) prodotto).getQuantitaCarrello(), ((PopBean) prodotto).getPrezzo());
-                popModel.decrementaDisponibilita((PopBean) prodotto, ((PopBean) prodotto).getQuantitaCarrello());
-            } else if(prodotto instanceof FigureBean) {
-                ordineModel.aggiornaComprendeFigure(nuovoLast, ((FigureBean) prodotto).getIdFigure(), ((FigureBean) prodotto).getQuantitaCarrello(), ((FigureBean) prodotto).getPrezzo());
-                figureModel.decrementaDisponibilita((FigureBean) prodotto, ((FigureBean) prodotto).getQuantitaCarrello());
+            int nuovoLast = ordineModel.getLastIdOrdine();
+            List<Object> prodotti = carrelloBean.getListaCarrello();
+            for(Object prodotto : prodotti) {
+                if(prodotto instanceof MangaBean) {
+                    ordineModel.aggiornaComprendeManga(nuovoLast, ((MangaBean) prodotto).getIdManga(), ((MangaBean) prodotto).getQuantitaCarrello(), ((MangaBean) prodotto).getPrezzo());
+                    mangaModel.decrementaDisponibilita((MangaBean) prodotto, ((MangaBean) prodotto).getQuantitaCarrello());
+                } else if(prodotto instanceof PopBean) {
+                    ordineModel.aggiornaComprendePop(nuovoLast, ((PopBean) prodotto).getIdPop(), ((PopBean) prodotto).getQuantitaCarrello(), ((PopBean) prodotto).getPrezzo());
+                    popModel.decrementaDisponibilita((PopBean) prodotto, ((PopBean) prodotto).getQuantitaCarrello());
+                } else if(prodotto instanceof FigureBean) {
+                    ordineModel.aggiornaComprendeFigure(nuovoLast, ((FigureBean) prodotto).getIdFigure(), ((FigureBean) prodotto).getQuantitaCarrello(), ((FigureBean) prodotto).getPrezzo());
+                    figureModel.decrementaDisponibilita((FigureBean) prodotto, ((FigureBean) prodotto).getQuantitaCarrello());
+                }
+            }
+
+            carrelloBean.svuotaCarrello();
+
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
             }
         }
-
-        carrelloBean.svuotaCarrello();
-
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-        dispatcher.forward(request, response);
     }
 }
 

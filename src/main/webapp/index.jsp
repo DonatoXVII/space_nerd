@@ -20,20 +20,6 @@
 <body>
 <%@include file="navbar.jsp"%>
 
-<section id="homePage">
-    <div class="slider-wrapper">
-        <div class="slider">
-            <img src="img/index1.jpg" alt="errore immagine">
-            <img src="img/index2.jpg" alt="errore immagine">
-            <img src="img/index3.jpg" alt="errore immagine">
-        </div>
-        <div class="slider-nav">
-            <button class="slider-nav-btn" onclick="prevSlide()">&#10094;</button>
-            <button class="slider-nav-btn" onclick="nextSlide()">&#10095;</button>
-        </div>
-    </div>
-</section>
-
 <section id="hero">
     <div class="welcome">
     <h4>Un mondo di offerte</h4>
@@ -58,6 +44,20 @@
     </div>
     <div class="welcome-img">
     <img src="img/index4.jpg" alt="errore immagine">
+    </div>
+</section>
+
+<section id="homePage">
+    <div class="slider-wrapper">
+        <div class="slider">
+            <img src="img/index1.jpg" alt="errore immagine">
+            <img src="img/index2.jpg" alt="errore immagine">
+            <img src="img/index3.jpg" alt="errore immagine">
+        </div>
+        <div class="slider-nav">
+            <button class="slider-nav-btn" onclick="prevSlide()">&#10094;</button>
+            <button class="slider-nav-btn" onclick="nextSlide()">&#10095;</button>
+        </div>
     </div>
 </section>
 

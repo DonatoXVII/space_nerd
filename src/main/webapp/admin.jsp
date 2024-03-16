@@ -17,6 +17,46 @@
 <body>
 <%@include file="navbar.jsp"%>
 
+<div class="utentiEFiltri">
+
+<div class="filtriUtenti">
+    <h1>CERCA</h1>
+    <form name="filtriPerOrdini">
+        <fieldset>
+            <legend>CLIENTE</legend>
+            <label for="cliente"></label>
+            <select id="cliente" name="cliente">
+                <option value="">Seleziona un cliente</option>
+                <%for(DatiSensibiliBean utente : utenti){%>
+                <option value="<%=utente.getEmail()%>"><%=utente.getEmail()%></option>
+                <%}%>
+                <!-- Aggiungi altre opzioni secondo necessità -->
+            </select>
+        </fieldset>
+        <br><br><br>
+        <button type="submit" id="applicaFiltriOrdine" class="applicaFiltriBtn">
+            Applica filtri
+            <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                <path
+                        clip-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                        fill-rule="evenodd"
+                ></path>
+            </svg>
+        </button><br>
+        <button type="reset" class="applicaFiltriBtn">
+            Ripristina
+            <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                <path
+                        clip-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                        fill-rule="evenodd"
+                ></path>
+            </svg>
+        </button>
+    </form>
+</div>
+
 <div class="utenti">
     <h1>Utenti registrati sulla piattaforma</h1>
 <%
@@ -129,6 +169,32 @@
     }
 %>
 </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#applicaFiltriOrdine").click(function(event) {
+            event.preventDefault(); // Previeni il comportamento di default del form
+
+            var clienteInput = $("#cliente").val().toLowerCase(); // Ottieni il valore selezionato dal menu a tendina
+            console.log("nome " + clienteInput);
+
+            $(".flip-card").each(function() {
+                var nomeCognome = $(this).find('.flip-card-front').text().toLowerCase().trim(); // Ottieni il nome e cognome dell'utente e trasformalo in minuscolo, rimuovendo gli spazi vuoti
+
+                // Controlla se il nome e cognome dell'utente corrispondono alla ricerca
+                if (clienteInput === "" || nomeCognome.includes(clienteInput)) {
+                    $(this).show(); // Mostra la flip-card se c'è corrispondenza o se non è selezionato alcun cliente
+                } else {
+                    $(this).hide(); // Nascondi altrimenti
+                }
+            });
+        });
+    });
+</script>
+
+
+
 
 </body>
 </html>

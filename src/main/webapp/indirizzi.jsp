@@ -71,9 +71,11 @@
     </form>
 
     <div class="indirizzi-container">
-        <h2>I tuoi indirizzi</h2>
         <%
             if(indirizzi != null && indirizzi.size()!=0) {
+        %>
+                <h2>I tuoi indirizzi</h2>
+        <%
                 Iterator<?> it = indirizzi.iterator();
                 while (it.hasNext()) {
                     IndirizzoBean indirizzo = (IndirizzoBean) it.next();
@@ -113,8 +115,10 @@
         %>
         <%
                 }
-            }
+            } else {
         %>
+        <h2>Non hai indirizzi registrati</h2>
+        <%}%>
     </div>
 </div>
 <script src="js/caricaCitta.js"></script>

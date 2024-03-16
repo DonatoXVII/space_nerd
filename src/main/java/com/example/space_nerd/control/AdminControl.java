@@ -117,9 +117,11 @@ public class AdminControl extends HttpServlet {
         try {
             String email = request.getParameter("Email");
             List<OrdineBean> ordini = new ArrayList<>(ordineModel.getOrdiniPerUtente(email));
-            request.removeAttribute("ordini");
             request.setAttribute("ordini", ordini);
-            request.setAttribute("emailOrdine", email);
+            request.setAttribute("email", email);
+            request.setAttribute("nome", datiModel.getDatiUtentePerEmail(email).getNome());
+            request.setAttribute("cognome", datiModel.getDatiUtentePerEmail(email).getCognome());
+            System.out.println(datiModel.getDatiUtentePerEmail(email).getNome());
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ordini.jsp");
             dispatcher.forward(request, response);
         } catch (IOException | ServletException e) {

@@ -89,6 +89,106 @@ public class OrdineModel {
         return ordini;
     }
 
+    public List<OrdineBean> getOrdiniPerUtentePerData(String email, Date dataInizio, Date dataFine) {
+        List<OrdineBean> ordini = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ? AND DataOrdine >= ? AND DataOrdine <= ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setDate(2, dataInizio);
+            ps.setDate(3, dataFine);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                OrdineBean bean = new OrdineBean();
+                bean.setId(rs.getInt("IdOrdine"));
+                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
+                bean.setData(rs.getDate("DataOrdine"));
+                bean.setFattura(rs.getString("Fattura"));
+                bean.setEmail(email);
+                ordini.add(bean);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return ordini;
+    }
+
+    public List<OrdineBean> getOrdiniPerUtentePerPrezzo(String email, float prezzoMinimo, float prezzoMassimo) {
+        List<OrdineBean> ordini = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ? AND PrezzoTotale >= ? AND PrezzoTotale <= ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setFloat(2, prezzoMinimo);
+            ps.setFloat(3, prezzoMassimo);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                OrdineBean bean = new OrdineBean();
+                bean.setId(rs.getInt("IdOrdine"));
+                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
+                bean.setData(rs.getDate("DataOrdine"));
+                bean.setFattura(rs.getString("Fattura"));
+                bean.setEmail(email);
+                ordini.add(bean);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return ordini;
+    }
+
     public List<Object> getProdottiOrdine(int id) {
         List<Object> prodottiOrdine = new ArrayList<>();
         Connection con = null;

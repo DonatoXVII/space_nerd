@@ -55,9 +55,11 @@
     </form>
 
     <div class="pagamenti-container">
-        <h2>I tuoi metodi di pagamento</h2>
         <%
             if(metodi != null && metodi.size()!=0) {
+        %>
+                <h2>I tuoi metodi di pagamento</h2>
+        <%
                 Iterator<?> it = metodi.iterator();
                 while (it.hasNext()) {
                     PagamentoBean metodo = (PagamentoBean) it.next();
@@ -152,8 +154,10 @@
         %>
         <%
                 }
-            }
+            } else{
         %>
+        <h2>Non hai metodi di pagamento registrati</h2>
+        <%}%>
     </div>
 </div>
 

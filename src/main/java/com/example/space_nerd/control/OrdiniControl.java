@@ -21,6 +21,7 @@ import java.util.List;
 public class OrdiniControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
     static OrdineModel ordineModel = new OrdineModel();
+    static DatiSensibiliModel datiModel = new DatiSensibiliModel();
     static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
@@ -40,6 +41,9 @@ public class OrdiniControl extends HttpServlet {
                 switch (action.toLowerCase()) {
                     case "visualizzaordini" :
                         visualizzaOrdini(req, resp);
+                        break;
+                    case "visualizzaordinifiltrati" :
+                        visualizzaOrdiniFiltrati(req, resp);
                         break;
                     case "visualizzadettagliordine" :
                         visualizzaDettagliOrdini(req, resp);
@@ -87,7 +91,46 @@ public class OrdiniControl extends HttpServlet {
             List<OrdineBean> ordini;
             HttpSession session = request.getSession();
             ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute(emailParameter));
+            request.setAttribute("email", session.getAttribute(emailParameter));
             request.setAttribute("ordini", ordini);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Si è verificato un errore: " + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+            }
+        }
+    }
+
+    private void visualizzaOrdiniFiltrati(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String email = request.getParameter("email");
+            List<OrdineBean> ordini = ordineModel.getOrdiniPerUtente(email);
+            String dataInizio = request.getParameter("dataInizio");
+            String dataFine = request.getParameter("dataFine");
+            String prezzoMinimo = request.getParameter("prezzoMinimo");
+            String prezzoMassimo = request.getParameter("prezzoMassimo");
+
+            if(!dataInizio.isEmpty() && !dataFine.isEmpty()) {
+                Date sqlDataInizio = Date.valueOf(dataInizio);
+                Date sqlDataFine = Date.valueOf(dataFine);
+                ordini = ordineModel.getOrdiniPerUtentePerData(email, sqlDataInizio, sqlDataFine);
+            }
+
+            if(!prezzoMinimo.isEmpty() && !prezzoMassimo.isEmpty()) {
+                float sqlPrezzoMinimo = Float.parseFloat(prezzoMinimo);
+                float sqlPrezzoMassimo = Float.parseFloat(prezzoMassimo);
+
+                ordini = ordineModel.getOrdiniPerUtentePerPrezzo(email, sqlPrezzoMinimo, sqlPrezzoMassimo);
+            }
+            request.setAttribute("email", email);
+            request.setAttribute("ordini", ordini);
+            request.setAttribute("nome", datiModel.getDatiUtentePerEmail(email).getNome());
+            request.setAttribute("cognome", datiModel.getDatiUtentePerEmail(email).getCognome());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {

@@ -483,14 +483,15 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_POP + "(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie)" +
-                    "VALUES(?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_POP + "(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)" +
+                    "VALUES(?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setFloat(1, pop.getPrezzo());
             ps.setString(2, pop.getDescrizione());
             ps.setInt(3, pop.getNumArticoli());
             ps.setInt(4, pop.getNumSerie());
             ps.setString(5, pop.getSerie());
+            ps.setBoolean(6, true);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

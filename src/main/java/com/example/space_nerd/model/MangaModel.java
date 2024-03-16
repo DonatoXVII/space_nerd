@@ -444,8 +444,8 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_MANGA + "(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine)" +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_MANGA + "(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)" +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setFloat(1, manga.getPrezzo());
             ps.setString(2, manga.getDescrizione());
@@ -454,6 +454,7 @@ public class MangaModel {
             ps.setString(5, manga.getLingua());
             ps.setInt(6, manga.getNumPagine());
             ps.setString(7, manga.getImg());
+            ps.setBoolean(8, true);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

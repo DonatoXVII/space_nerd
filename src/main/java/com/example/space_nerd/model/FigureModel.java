@@ -485,8 +485,8 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_FIGURE + "(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio)" +
-                    "VALUES(?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_FIGURE + "(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)" +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setFloat(1, figure.getPrezzo());
             ps.setString(2, figure.getDescrizione());
@@ -494,6 +494,7 @@ public class FigureModel {
             ps.setString(4, figure.getMateriale());
             ps.setInt(5, figure.getAltezza());
             ps.setString(6, figure.getPersonaggio());
+            ps.setBoolean(7, true);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());

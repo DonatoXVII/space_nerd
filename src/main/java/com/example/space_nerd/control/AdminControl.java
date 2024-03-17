@@ -27,8 +27,20 @@ public class AdminControl extends HttpServlet {
     static MangaModel mangaModel = new MangaModel();
     static PopModel popModel = new PopModel();
     static FigureModel figureModel = new FigureModel();
+    private static final String ERROR_PAGE = "/errore.jsp";
+    private static final String ERROR_PAGE_TWO = "./errore.jsp";
+    private static final String ERROR_PARAMETER = "error";
+    private static final String ERROR_MESSAGE = "Si è verificato un errore: ";
+    private static final String ERROR_MESSAGE_TWO = "Errore durante il reindirizzamento alla pagina di errore";
+    private static final String MANGA = "manga";
+    private static final String ID_MANGA = "IdManga";
+    private static final String ID_POP = "IdPop";
+    private static final String FIGURE = "figure";
+    private static final String ID_FIGURE = "IdFigure";
+    private static final String CATALOGO_PAGE = "./catalogo.jsp";
     public AdminControl() {super();}
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, NumberFormatException, NullPointerException {
         String action = request.getParameter("action");
         try {
@@ -59,18 +71,18 @@ public class AdminControl extends HttpServlet {
                         restock(request, response);
                         break;
                     default:
-                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
                         errorDispatcher.forward(request, response);
                         break;
                 }
             }
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -80,12 +92,12 @@ public class AdminControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -103,12 +115,12 @@ public class AdminControl extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin.jsp");
             dispatcher.forward(request, response);
         } catch (IOException | ServletException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -121,16 +133,15 @@ public class AdminControl extends HttpServlet {
             request.setAttribute("email", email);
             request.setAttribute("nome", datiModel.getDatiUtentePerEmail(email).getNome());
             request.setAttribute("cognome", datiModel.getDatiUtentePerEmail(email).getCognome());
-            System.out.println(datiModel.getDatiUtentePerEmail(email).getNome());
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ordini.jsp");
             dispatcher.forward(request, response);
         } catch (IOException | ServletException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
 
@@ -139,26 +150,26 @@ public class AdminControl extends HttpServlet {
     private void eliminaProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String tipo = request.getParameter("tipo");
-            if(tipo.equalsIgnoreCase("manga")) {
-                int id = Integer.parseInt(request.getParameter("IdManga"));
+            if(tipo.equalsIgnoreCase(MANGA)) {
+                int id = Integer.parseInt(request.getParameter(ID_MANGA));
                 mangaModel.eliminaProdotto(id);
             }
             if(tipo.equalsIgnoreCase("pop")){
-                int id = Integer.parseInt(request.getParameter("IdPop"));
+                int id = Integer.parseInt(request.getParameter(ID_POP));
                 popModel.eliminaProdotto(id);
             }
-            if(tipo.equalsIgnoreCase("figure")){
-                int id = Integer.parseInt(request.getParameter("IdFigure"));
+            if(tipo.equalsIgnoreCase(FIGURE)){
+                int id = Integer.parseInt(request.getParameter(ID_FIGURE));
                 figureModel.eliminaProdotto(id);
             }
-            response.sendRedirect("./catalogo.jsp");
+            response.sendRedirect(CATALOGO_PAGE);
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
 
@@ -168,26 +179,26 @@ public class AdminControl extends HttpServlet {
         try {
             String tipo = request.getParameter("tipo");
             int tot = Integer.parseInt(request.getParameter("tot"));
-            if(tipo.equalsIgnoreCase("manga")) {
-                int id = Integer.parseInt(request.getParameter("IdManga"));
+            if(tipo.equalsIgnoreCase(MANGA)) {
+                int id = Integer.parseInt(request.getParameter(ID_MANGA));
                 mangaModel.aggiungiNumArticoli(id, tot);
             }
             if(tipo.equalsIgnoreCase("pop")){
-                int id = Integer.parseInt(request.getParameter("IdPop"));
+                int id = Integer.parseInt(request.getParameter(ID_POP));
                 popModel.aggiungiNumArticoli(id, tot);
             }
-            if(tipo.equalsIgnoreCase("figure")) {
-                int id = Integer.parseInt(request.getParameter("IdFigure"));
+            if(tipo.equalsIgnoreCase(FIGURE)) {
+                int id = Integer.parseInt(request.getParameter(ID_FIGURE));
                 figureModel.aggiungiNumArticoli(id, tot);
             }
-            response.sendRedirect("./catalogo.jsp");
+            response.sendRedirect(CATALOGO_PAGE);
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -196,26 +207,26 @@ public class AdminControl extends HttpServlet {
         try {
             String tipo = request.getParameter("tipo");
             int tot = Integer.parseInt(request.getParameter("tot"));
-            if(tipo.equalsIgnoreCase("manga")) {
-                int id = Integer.parseInt(request.getParameter("IdManga"));
+            if(tipo.equalsIgnoreCase(MANGA)) {
+                int id = Integer.parseInt(request.getParameter(ID_MANGA));
                 mangaModel.rimuoviNumeroArticoli(id, tot);
             }
             if(tipo.equalsIgnoreCase("pop")){
-                int id = Integer.parseInt(request.getParameter("IdPop"));
+                int id = Integer.parseInt(request.getParameter(ID_POP));
                 popModel.rimuoviNumeroArticoli(id, tot);
             }
-            if(tipo.equalsIgnoreCase("figure")){
-                int id = Integer.parseInt(request.getParameter("IdFigure"));
+            if(tipo.equalsIgnoreCase(FIGURE)){
+                int id = Integer.parseInt(request.getParameter(ID_FIGURE));
                 figureModel.rimuoviNumeroArticoli(id, tot);
             }
-            response.sendRedirect("./catalogo.jsp");
+            response.sendRedirect(CATALOGO_PAGE);
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -223,24 +234,24 @@ public class AdminControl extends HttpServlet {
     private void verificaTipo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
             String tipo = request.getParameter("prod");
-            if(tipo.equalsIgnoreCase("manga")){
-                request.setAttribute("tipo", "manga");
+            if(tipo.equalsIgnoreCase(MANGA)){
+                request.setAttribute("tipo", MANGA);
             }
             if(tipo.equalsIgnoreCase("pop")) {
                 request.setAttribute("tipo", "pop");
             }
-            if(tipo.equalsIgnoreCase("figure")) {
-                request.setAttribute("tipo", "figure");
+            if(tipo.equalsIgnoreCase(FIGURE)) {
+                request.setAttribute("tipo", FIGURE);
             }
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/nuovoProdotto.jsp");
             dispatcher.forward(request, response);
         } catch (IOException | ServletException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -253,7 +264,7 @@ public class AdminControl extends HttpServlet {
 
             String tipo = request.getParameter("tipo");
 
-            if(tipo.equalsIgnoreCase("manga")) {
+            if(tipo.equalsIgnoreCase(MANGA)) {
                 String casa = request.getParameter("casa");
                 int nPagine = Integer.parseInt(request.getParameter("pagine"));
                 String lingua = request.getParameter("lingua");
@@ -271,7 +282,7 @@ public class AdminControl extends HttpServlet {
                         fos.write(data);
                     }
                 }catch(IOException e){
-                    response.sendRedirect("./error.jsp");
+                    response.sendRedirect(ERROR_PAGE_TWO);
                 }
 
                 MangaBean manga = new MangaBean();
@@ -320,13 +331,13 @@ public class AdminControl extends HttpServlet {
                             fos.write(data);
                         }
                     }catch(IOException e){
-                        response.sendRedirect("./error.jsp");
+                        response.sendRedirect(ERROR_PAGE_TWO);
                     }
                     popModel.aggiungiImmaginiPop(id, immagine);
                 }
             }
 
-            if(tipo.equalsIgnoreCase("figure")) {
+            if(tipo.equalsIgnoreCase(FIGURE)) {
                 String materiale = request.getParameter("materiale");
                 int altezza = Integer.parseInt(request.getParameter("altezza"));
                 String personaggio = request.getParameter("personaggio");
@@ -364,20 +375,20 @@ public class AdminControl extends HttpServlet {
                             fos.write(data);
                         }
                     }catch(IOException e){
-                        response.sendRedirect("./error.jsp");
+                        response.sendRedirect(ERROR_PAGE_TWO);
                     }
                     figureModel.aggiungiImmaginiFigure(id, immagine);
                 }
             }
 
-            response.sendRedirect("./catalogo.jsp");
+            response.sendRedirect(CATALOGO_PAGE);
         } catch (IOException | ServletException | NullPointerException | NumberFormatException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -386,21 +397,21 @@ public class AdminControl extends HttpServlet {
         try {
             String tipo = request.getParameter("tipo");
             int id = Integer.parseInt(request.getParameter("id"));
-            if(tipo.equalsIgnoreCase("manga")) {
+            if(tipo.equalsIgnoreCase(MANGA)) {
                 mangaModel.restock(id);
             } else if(tipo.equalsIgnoreCase("pop")){
                 popModel.restock(id);
-            } else if(tipo.equalsIgnoreCase("figure")){
+            } else if(tipo.equalsIgnoreCase(FIGURE)){
                 figureModel.restock(id);
             }
-            response.sendRedirect("./catalogo.jsp");
+            response.sendRedirect(CATALOGO_PAGE);
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }

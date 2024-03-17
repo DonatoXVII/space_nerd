@@ -28,6 +28,10 @@ public class OrdiniControl extends HttpServlet {
     static IndirizzoModel indirizzoModel = new IndirizzoModel();
     static PagamentoModel pagamentoModel = new PagamentoModel();
     static String emailParameter = "email";
+    private static final String ERROR_PAGE = "/errore.jsp";
+    private static final String ERROR_PARAMETER = "error";
+    private static final String ERROR_MESSAGE = "Si è verificato un errore: ";
+    private static final String ERROR_MESSAGE_TWO = "Errore durante il reindirizzamento alla pagina di errore";
 
     public OrdiniControl() {
         super();
@@ -55,18 +59,18 @@ public class OrdiniControl extends HttpServlet {
                         checkout(req, resp);
                         break;
                     default:
-                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
                         errorDispatcher.forward(req, resp);
                         break;
                 }
             }
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -76,12 +80,12 @@ public class OrdiniControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -91,24 +95,24 @@ public class OrdiniControl extends HttpServlet {
             List<OrdineBean> ordini;
             HttpSession session = request.getSession();
             ordini = ordineModel.getOrdiniPerUtente((String) session.getAttribute(emailParameter));
-            request.setAttribute("email", session.getAttribute(emailParameter));
+            request.setAttribute(emailParameter, session.getAttribute(emailParameter));
             request.setAttribute("ordini", ordini);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
 
     private void visualizzaOrdiniFiltrati(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String email = request.getParameter("email");
+            String email = request.getParameter(emailParameter);
             List<OrdineBean> ordini = ordineModel.getOrdiniPerUtente(email);
             String dataInizio = request.getParameter("dataInizio");
             String dataFine = request.getParameter("dataFine");
@@ -135,19 +139,19 @@ public class OrdiniControl extends HttpServlet {
                 ordini = ordineModel.getOrdiniPerUtentePerPrezzoEPerData(email, sqlPrezzoMinimo, sqlPrezzoMassimo, sqlDataInizio, sqlDataFine);
             }
 
-            request.setAttribute("email", email);
+            request.setAttribute(emailParameter, email);
             request.setAttribute("ordini", ordini);
             request.setAttribute("nome", datiModel.getDatiUtentePerEmail(email).getNome());
             request.setAttribute("cognome", datiModel.getDatiUtentePerEmail(email).getCognome());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/ordini.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -173,12 +177,12 @@ public class OrdiniControl extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/dettagliOrdine.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
 
@@ -206,12 +210,12 @@ public class OrdiniControl extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/elaborazioneOrdine.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -247,12 +251,12 @@ public class OrdiniControl extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }

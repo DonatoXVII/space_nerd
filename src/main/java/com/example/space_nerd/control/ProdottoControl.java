@@ -28,6 +28,10 @@ public class ProdottoControl extends HttpServlet {
     static String mangaParameter = "manga";
     static String figureParameter = "figure";
     static String ricercaParameter = "ricerca";
+    private static final String ERROR_PAGE = "/errore.jsp";
+    private static final String ERROR_PARAMETER = "error";
+    private static final String ERROR_MESSAGE = "Si è verificato un errore: ";
+    private static final String ERROR_MESSAGE_TWO = "Errore durante il reindirizzamento alla pagina di errore";
 
     public ProdottoControl() {super();}
 
@@ -59,7 +63,7 @@ public class ProdottoControl extends HttpServlet {
                         ricercaSuggerimenti(req, resp);
                         break;
                     default:
-                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
                         errorDispatcher.forward(req, resp);
                         break;
                 }
@@ -67,12 +71,12 @@ public class ProdottoControl extends HttpServlet {
                 showHomePage(req, resp);
             }
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -82,12 +86,12 @@ public class ProdottoControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -125,12 +129,12 @@ public class ProdottoControl extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/catalogo.jsp");
             dispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -174,12 +178,12 @@ public class ProdottoControl extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher(dettagliJSP);
             dispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -203,12 +207,12 @@ public class ProdottoControl extends HttpServlet {
             req.getSession().setAttribute(carrelloParameter, carrelloBean);
             resp.sendRedirect(carrelloJSP);
         } catch (IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -221,12 +225,12 @@ public class ProdottoControl extends HttpServlet {
             req.getSession().setAttribute(carrelloParameter, carrelloBean);
             resp.sendRedirect(carrelloJSP);
         } catch (IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -239,12 +243,12 @@ public class ProdottoControl extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/carrello.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -278,12 +282,12 @@ public class ProdottoControl extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(dettagliJSP);
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -301,12 +305,12 @@ public class ProdottoControl extends HttpServlet {
             out.print("{\"suggerimenti\": " + new Gson().toJson(suggerimenti) + "}");
             out.flush();
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -334,12 +338,12 @@ public class ProdottoControl extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
             dispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }

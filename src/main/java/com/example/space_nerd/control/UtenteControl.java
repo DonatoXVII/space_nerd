@@ -249,9 +249,9 @@ public class UtenteControl extends HttpServlet {
             boolean tipo = (boolean) session.getAttribute("tipo");
             String email = (String) session.getAttribute(EMAIL_PARAMETER);
             session.removeAttribute("nome");
-            session.removeAttribute("cognome");
+            session.removeAttribute(COGNOME_PARAMETER);
             session.setAttribute("nome", nome);
-            session.setAttribute("cognome", cognome);
+            session.setAttribute(COGNOME_PARAMETER, cognome);
 
             UtenteBean utente = new UtenteBean(email, password, tipo);
             DatiSensibiliBean datiUtente = new DatiSensibiliBean(email, nome, cognome, data, via, civico, provincia, comune);

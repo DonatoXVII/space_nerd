@@ -124,9 +124,17 @@ public class OrdiniControl extends HttpServlet {
             if(!prezzoMinimo.isEmpty() && !prezzoMassimo.isEmpty()) {
                 float sqlPrezzoMinimo = Float.parseFloat(prezzoMinimo);
                 float sqlPrezzoMassimo = Float.parseFloat(prezzoMassimo);
-
                 ordini = ordineModel.getOrdiniPerUtentePerPrezzo(email, sqlPrezzoMinimo, sqlPrezzoMassimo);
             }
+
+            if(!dataInizio.isEmpty() && !dataFine.isEmpty() && !prezzoMinimo.isEmpty() && !prezzoMassimo.isEmpty()) {
+                Date sqlDataInizio = Date.valueOf(dataInizio);
+                Date sqlDataFine = Date.valueOf(dataFine);
+                float sqlPrezzoMinimo = Float.parseFloat(prezzoMinimo);
+                float sqlPrezzoMassimo = Float.parseFloat(prezzoMassimo);
+                ordini = ordineModel.getOrdiniPerUtentePerPrezzoEPerData(email, sqlPrezzoMinimo, sqlPrezzoMassimo, sqlDataInizio, sqlDataFine);
+            }
+
             request.setAttribute("email", email);
             request.setAttribute("ordini", ordini);
             request.setAttribute("nome", datiModel.getDatiUtentePerEmail(email).getNome());

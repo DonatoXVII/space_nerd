@@ -189,6 +189,58 @@ public class OrdineModel {
         return ordini;
     }
 
+    public List<OrdineBean> getOrdiniPerUtentePerPrezzoEPerData(String email, float prezzoMinimo, float prezzoMassimo, Date dataInizio, Date dataFine) {
+        List<OrdineBean> ordini = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ? AND PrezzoTotale >= ? AND PrezzoTotale <= ? AND DataOrdine >= ? AND DataOrdine <= ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setFloat(2, prezzoMinimo);
+            ps.setFloat(3, prezzoMassimo);
+            ps.setDate(4, dataInizio);
+            ps.setDate(5, dataFine);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                OrdineBean bean = new OrdineBean();
+                bean.setId(rs.getInt("IdOrdine"));
+                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
+                bean.setData(rs.getDate("DataOrdine"));
+                bean.setFattura(rs.getString("Fattura"));
+                bean.setEmail(email);
+                ordini.add(bean);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return ordini;
+    }
+
     public List<Object> getProdottiOrdine(int id) {
         List<Object> prodottiOrdine = new ArrayList<>();
         Connection con = null;

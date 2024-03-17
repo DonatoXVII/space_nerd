@@ -591,7 +591,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = UPDATE + TABLE_NAME_POP + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdPop = ?";
+            String query = UPDATE + TABLE_NAME_POP + " SET FlagVisibilita = 1, NumeroArticoli = 10 WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();

@@ -482,7 +482,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = UPDATE + TABLE_NAME_MANGA + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdManga = ?";
+            String query = UPDATE + TABLE_NAME_MANGA + " SET FlagVisibilita = 1, NumeroArticoli = 10 WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();

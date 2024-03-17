@@ -594,7 +594,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = UPDATE + TABLE_NAME_FIGURE + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdFigure = ?";
+            String query = UPDATE + TABLE_NAME_FIGURE + " SET FlagVisibilita = 1, NumeroArticoli = 10 WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();

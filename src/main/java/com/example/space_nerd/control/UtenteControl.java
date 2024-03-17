@@ -31,6 +31,10 @@ public class UtenteControl extends HttpServlet {
     private static final String CIVICO_PARAMETER = "civico";
     private static final String PROVINCIA_PARAMETER = "provincia";
     private static final String COMUNE_PARAMETER = "comune";
+    private static final String ERROR_PAGE = "/errore.jsp";
+    private static final String ERROR_MESSAGE = "Si è verificato un errore: ";
+    private static final String ERROR_PARAMETER = "error";
+    private static final String ERROR_MESSAGE_TWO = "Errore durante il reindirizzamento alla pagina di errore";
 
     public UtenteControl() {
         super();
@@ -79,18 +83,18 @@ public class UtenteControl extends HttpServlet {
                         inserisciMetodo(request, response);
                         break;
                     default:
-                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+                        RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
                         errorDispatcher.forward(request, response);
                         break;
                 }
             }
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -100,12 +104,12 @@ public class UtenteControl extends HttpServlet {
         try {
             doGet(req, resp);
         } catch (ServletException | IOException e) {
-            req.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            req.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(req, resp);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -132,12 +136,12 @@ public class UtenteControl extends HttpServlet {
                 }
             }
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -159,12 +163,12 @@ public class UtenteControl extends HttpServlet {
                 out.flush();
             }
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -185,12 +189,12 @@ public class UtenteControl extends HttpServlet {
                 out.flush();
             }
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -224,12 +228,12 @@ public class UtenteControl extends HttpServlet {
                 response.sendRedirect(INDEX_PAGE);
             }
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -259,12 +263,12 @@ public class UtenteControl extends HttpServlet {
             datiModel.modificaDati(datiUtente);
             response.sendRedirect("./profilo.jsp");
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -282,12 +286,12 @@ public class UtenteControl extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/indirizzi.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -298,12 +302,12 @@ public class UtenteControl extends HttpServlet {
             indirizzoModel.rimuoviIndirizzo(i);
             response.sendRedirect("./indirizzi.jsp");
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -325,12 +329,12 @@ public class UtenteControl extends HttpServlet {
             indirizzoModel.aggiornaUtilizza(email);
             response.sendRedirect("./indirizzi.jsp");
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -348,12 +352,12 @@ public class UtenteControl extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/metodiPagamento.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -364,12 +368,12 @@ public class UtenteControl extends HttpServlet {
             pagamentoModel.rimuoviMetodo(i);
             response.sendRedirect("./metodiPagamento.jsp");
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -388,12 +392,12 @@ public class UtenteControl extends HttpServlet {
             pagamentoModel.aggiornaRegistra(email);
             response.sendRedirect("./metodiPagamento.jsp");
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }
@@ -403,12 +407,12 @@ public class UtenteControl extends HttpServlet {
             request.getSession().invalidate();
             response.sendRedirect(INDEX_PAGE);
         } catch (IOException e) {
-            request.setAttribute("error", "Si è verificato un errore: " + e);
-            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher("/errore.jsp");
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
                 errorDispatcher.forward(request, response);
             } catch (ServletException | IOException ex) {
-                log("Errore durante il reindirizzamento alla pagina di errore", ex);
+                log(ERROR_MESSAGE_TWO, ex);
             }
         }
     }

@@ -77,8 +77,11 @@
             </button>
             <%
                     }
-                }
                 } else {
+                        %>
+            <p>Questo prodotto non è più disponibile</p>
+            <%
+                    } } else {
             %>
             <div class="comandiAdmin">
 
@@ -261,8 +264,11 @@
         </button>
         <%
                 }
-            }
             } else {
+                    %>
+        <p>Questo prodotto non è più disponibile</p>
+        <%
+                } } else {
         %>
         <div class="comandiAdmin">
 
@@ -444,7 +450,11 @@
         </button>
         <%
                 }
-            }
+            } else{
+        %>
+        <p>Questo prodotto non è più disponibile</p>
+        <%
+                }
             } else {
         %>
         <div class="comandiAdmin">

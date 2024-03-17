@@ -22,6 +22,11 @@ public class OrdineModel {
     private static final String WHERE_IDORDINE = "WHERE IdOrdine = ?";
     private static final String INSERT_INTO = "INSERT INTO";
     private static final String VALUES = "VALUES(?, ?, ?, ?)";
+    private static final String SELECT_ALL = "SELECT * FROM ";
+    private static final String ID_ORDINE = "IdOrdine";
+    private static final String PREZZO_TOTALE = "PrezzoTotale";
+    private static final String DATA_ORDINE = "DataOrdine";
+    private static final String FATTURA = "Fattura";
     private static final String QUANTITA_PARAMETER = "Quantita";
     private static final String PREZZO_UNITARIO_PARAMETER = "PrezzoUnitario";
     private static DataSource ds;
@@ -48,16 +53,16 @@ public class OrdineModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ?";
+            String query = SELECT_ALL + TABLE_NAME_ORDINE + " WHERE Email = ?";
             ps = con.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
             while (rs.next()) {
                 OrdineBean bean = new OrdineBean();
-                bean.setId(rs.getInt("IdOrdine"));
-                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
-                bean.setData(rs.getDate("DataOrdine"));
-                bean.setFattura(rs.getString("Fattura"));
+                bean.setId(rs.getInt(ID_ORDINE));
+                bean.setPrezzo(rs.getFloat(PREZZO_TOTALE));
+                bean.setData(rs.getDate(DATA_ORDINE));
+                bean.setFattura(rs.getString(FATTURA));
                 bean.setEmail(email);
                 ordini.add(bean);
             }
@@ -96,7 +101,7 @@ public class OrdineModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ? AND DataOrdine >= ? AND DataOrdine <= ?";
+            String query = SELECT_ALL + TABLE_NAME_ORDINE + " WHERE Email = ? AND DataOrdine >= ? AND DataOrdine <= ?";
             ps = con.prepareStatement(query);
             ps.setString(1, email);
             ps.setDate(2, dataInizio);
@@ -104,10 +109,10 @@ public class OrdineModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 OrdineBean bean = new OrdineBean();
-                bean.setId(rs.getInt("IdOrdine"));
-                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
-                bean.setData(rs.getDate("DataOrdine"));
-                bean.setFattura(rs.getString("Fattura"));
+                bean.setId(rs.getInt(ID_ORDINE));
+                bean.setPrezzo(rs.getFloat(PREZZO_TOTALE));
+                bean.setData(rs.getDate(DATA_ORDINE));
+                bean.setFattura(rs.getString(FATTURA));
                 bean.setEmail(email);
                 ordini.add(bean);
             }
@@ -146,7 +151,7 @@ public class OrdineModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ? AND PrezzoTotale >= ? AND PrezzoTotale <= ?";
+            String query = SELECT_ALL + TABLE_NAME_ORDINE + " WHERE Email = ? AND PrezzoTotale >= ? AND PrezzoTotale <= ?";
             ps = con.prepareStatement(query);
             ps.setString(1, email);
             ps.setFloat(2, prezzoMinimo);
@@ -154,10 +159,10 @@ public class OrdineModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 OrdineBean bean = new OrdineBean();
-                bean.setId(rs.getInt("IdOrdine"));
-                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
-                bean.setData(rs.getDate("DataOrdine"));
-                bean.setFattura(rs.getString("Fattura"));
+                bean.setId(rs.getInt(ID_ORDINE));
+                bean.setPrezzo(rs.getFloat(PREZZO_TOTALE));
+                bean.setData(rs.getDate(DATA_ORDINE));
+                bean.setFattura(rs.getString(FATTURA));
                 bean.setEmail(email);
                 ordini.add(bean);
             }
@@ -196,7 +201,7 @@ public class OrdineModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE Email = ? AND PrezzoTotale >= ? AND PrezzoTotale <= ? AND DataOrdine >= ? AND DataOrdine <= ?";
+            String query = SELECT_ALL + TABLE_NAME_ORDINE + " WHERE Email = ? AND PrezzoTotale >= ? AND PrezzoTotale <= ? AND DataOrdine >= ? AND DataOrdine <= ?";
             ps = con.prepareStatement(query);
             ps.setString(1, email);
             ps.setFloat(2, prezzoMinimo);
@@ -206,10 +211,10 @@ public class OrdineModel {
             rs = ps.executeQuery();
             while (rs.next()) {
                 OrdineBean bean = new OrdineBean();
-                bean.setId(rs.getInt("IdOrdine"));
-                bean.setPrezzo(rs.getFloat("PrezzoTotale"));
-                bean.setData(rs.getDate("DataOrdine"));
-                bean.setFattura(rs.getString("Fattura"));
+                bean.setId(rs.getInt(ID_ORDINE));
+                bean.setPrezzo(rs.getFloat(PREZZO_TOTALE));
+                bean.setData(rs.getDate(DATA_ORDINE));
+                bean.setFattura(rs.getString(FATTURA));
                 bean.setEmail(email);
                 ordini.add(bean);
             }

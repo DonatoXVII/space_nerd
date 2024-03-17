@@ -27,6 +27,7 @@ public class PopModel {
     private static String msgPs = "Errore durante la chiusura del PreparedStatement";
     private static String msgRs = "Errore durante la chiusura del ResultSet";
     private static String descrizioneParameter = "Descrizione";
+    private static final String UPDATE = "UPDATE ";
     private static DataSource ds;
 
     static {
@@ -364,7 +365,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdPop = ?";
+            String query = UPDATE + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, quantita);
             ps.setInt(2, pop.getIdPop());
@@ -394,7 +395,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_POP + " SET FlagVisibilita = 0 WHERE IdPop = ?";
+            String query = UPDATE + TABLE_NAME_POP + " SET FlagVisibilita = 0 WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -423,7 +424,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdPop = ?";
+            String query = UPDATE + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, tot);
             ps.setInt(2, id);
@@ -453,7 +454,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdPop = ?";
+            String query = UPDATE + TABLE_NAME_POP + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, tot);
             ps.setInt(2, id);
@@ -590,7 +591,7 @@ public class PopModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_POP + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdPop = ?";
+            String query = UPDATE + TABLE_NAME_POP + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdPop = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();

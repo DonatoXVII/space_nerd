@@ -27,6 +27,7 @@ public class FigureModel {
     private static final String MSG_CON = "Errore durante la chiusura della Connection";
     private static final String MSG_PS = "Errore durante la chiusura del PreparedStatement";
     private static final String MSG_RS = "Errore durante la chiusura del ResultSet";
+    private static final String UPDATE = "UPDATE ";
     private static DataSource ds;
 
     static {
@@ -366,7 +367,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdFigure = ?";
+            String query = UPDATE + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, quantita);
             ps.setInt(2, figure.getIdFigure());
@@ -396,7 +397,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET FlagVisibilita = 0 WHERE IdFigure = ?";
+            String query = UPDATE + TABLE_NAME_FIGURE + " SET FlagVisibilita = 0 WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -425,7 +426,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdFigure = ?";
+            String query = UPDATE + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, tot);
             ps.setInt(2, id);
@@ -455,7 +456,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdFigure = ?";
+            String query = UPDATE + TABLE_NAME_FIGURE + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, tot);
             ps.setInt(2, id);
@@ -593,7 +594,7 @@ public class FigureModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_FIGURE + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdFigure = ?";
+            String query = UPDATE + TABLE_NAME_FIGURE + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdFigure = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();

@@ -687,7 +687,6 @@
 .folder {
     content: "";
     position: absolute;
-    /* box-shadow: 0 0 5px rgba(0, 0, 0, .3); */
 }
 
 .folder_one {
@@ -696,7 +695,6 @@
     height: 88%;
     border-radius: 3px;
     border-top: 2px solid rgb(206, 167, 39);
-    /* background-color: rgb(252, 212, 80); */
     background: linear-gradient(-35deg, rgb(238, 194, 47) 5%, rgb(255, 223, 118));
 }
 
@@ -721,7 +719,6 @@
     border-left: 7px solid rgb(206, 167, 39);
     border-top: 0.3em solid transparent;
     border-bottom: 0.3em solid transparent;
-    /* background-color: rgb(206, 167, 39); */
 }
 
 .folder_three {

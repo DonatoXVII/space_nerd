@@ -25,6 +25,7 @@ public class MangaModel {
     private static String msgRs = "Errore durante la chiusura del ResultSet";
     private static String immagineParameter = "Immagine";
     private static String descrizioneParameter = "Descrizione";
+    private static final String UPDATE = "UPDATE ";
     private static DataSource ds;
 
     static {
@@ -325,7 +326,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdManga = ?";
+            String query = UPDATE + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, quantita);
             ps.setInt(2, manga.getIdManga());
@@ -355,7 +356,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_MANGA + " SET FlagVisibilita = 0 WHERE IdManga = ?";
+            String query = UPDATE + TABLE_NAME_MANGA + " SET FlagVisibilita = 0 WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -384,7 +385,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdManga = ?";
+            String query = UPDATE + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli + ? WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, tot);
             ps.setInt(2, id);
@@ -414,7 +415,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdManga = ?";
+            String query = UPDATE + TABLE_NAME_MANGA + " SET NumeroArticoli = NumeroArticoli - ? WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, tot);
             ps.setInt(2, id);
@@ -481,7 +482,7 @@ public class MangaModel {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "UPDATE " + TABLE_NAME_MANGA + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdManga = ?";
+            String query = UPDATE + TABLE_NAME_MANGA + " SET FlagVisibilita = 1 AND NumeroArticoli = 10 WHERE IdManga = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();

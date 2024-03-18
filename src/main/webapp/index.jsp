@@ -3,6 +3,7 @@
 <%@ page import="com.example.space_nerd.model.PopBean" %>
 <%@ page import="com.example.space_nerd.model.FigureBean" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page errorPage="errore.jsp"%>
 <%
     List<Object> bestProdotti = (List<Object>) request.getAttribute("bestProdotti");
     if(bestProdotti == null) {

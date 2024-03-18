@@ -481,6 +481,36 @@ public class FigureModel {
         }
     }
 
+    public void cambiaPrezzo(int id, float prezzo) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = UPDATE + TABLE_NAME_FIGURE +  " SET Prezzo = ? WHERE IdFigure = ?";
+            ps = con.prepareStatement(query);
+            ps.setFloat(1, prezzo);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, MSG_PS, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, MSG_CON, e);
+            }
+        }
+    }
+
     public void aggiungiProdotto(FigureBean figure) {
         Connection con = null;
         PreparedStatement ps = null;

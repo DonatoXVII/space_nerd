@@ -440,6 +440,36 @@ public class MangaModel {
         }
     }
 
+    public void cambiaPrezzo(int id, float prezzo) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = UPDATE + TABLE_NAME_MANGA +  " SET Prezzo = ? WHERE IdManga = ?";
+            ps = con.prepareStatement(query);
+            ps.setFloat(1, prezzo);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
     public void aggiungiProdotto(MangaBean manga) {
         Connection con = null;
         PreparedStatement ps = null;

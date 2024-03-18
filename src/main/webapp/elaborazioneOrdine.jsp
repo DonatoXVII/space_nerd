@@ -1,8 +1,9 @@
-        <%@ page import="com.example.space_nerd.model.IndirizzoBean" %>
+<%@ page import="com.example.space_nerd.model.IndirizzoBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.space_nerd.model.PagamentoBean" %>
-        <%@ page import="java.util.Locale" %>
-        <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Locale" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page errorPage="errore.jsp"%>
 <%
     List<IndirizzoBean> indirizzi = (List<IndirizzoBean>) request.getAttribute("indirizzi");
     List<PagamentoBean> pagamenti = (List<PagamentoBean>) request.getAttribute("pagamenti");

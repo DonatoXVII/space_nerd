@@ -61,6 +61,9 @@ public class AdminControl extends HttpServlet {
                     case "rimuoviprodotto" :
                         rimuoviProdotto(request, response);
                         break;
+                    case "modificaprezzo" :
+                        modificaPrezzo(request, response);
+                        break;
                     case "verificatipo" :
                         verificaTipo(request, response);
                         break;
@@ -203,20 +206,57 @@ public class AdminControl extends HttpServlet {
         }
     }
 
+    private void modificaPrezzo(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String tipo = request.getParameter("tipo");
+            float prezzo = Float.parseFloat(request.getParameter("prezzo"));
+            if(tipo.equalsIgnoreCase(MANGA)) {
+                int id = Integer.parseInt(request.getParameter(ID_MANGA));
+                mangaModel.cambiaPrezzo(id, prezzo);
+            }
+            if(tipo.equalsIgnoreCase("pop")){
+                int id = Integer.parseInt(request.getParameter(ID_POP));
+                popModel.cambiaPrezzo(id, prezzo);
+            }
+            if(tipo.equalsIgnoreCase(FIGURE)) {
+                int id = Integer.parseInt(request.getParameter(ID_FIGURE));
+                figureModel.cambiaPrezzo(id, prezzo);
+            }
+            response.sendRedirect(CATALOGO_PAGE);
+        } catch (IOException e) {
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log(ERROR_MESSAGE_TWO, ex);
+            }
+        }
+    }
+
     private void rimuoviProdotto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String tipo = request.getParameter("tipo");
             int tot = Integer.parseInt(request.getParameter("tot"));
             if(tipo.equalsIgnoreCase(MANGA)) {
                 int id = Integer.parseInt(request.getParameter(ID_MANGA));
+                if(tot > mangaModel.getById(id).getNumArticoli()) {
+                    tot = mangaModel.getById(id).getNumArticoli();
+                }
                 mangaModel.rimuoviNumeroArticoli(id, tot);
             }
             if(tipo.equalsIgnoreCase("pop")){
                 int id = Integer.parseInt(request.getParameter(ID_POP));
+                if(tot > popModel.getById(id).getNumArticoli()) {
+                    tot = popModel.getById(id).getNumArticoli();
+                }
                 popModel.rimuoviNumeroArticoli(id, tot);
             }
             if(tipo.equalsIgnoreCase(FIGURE)){
                 int id = Integer.parseInt(request.getParameter(ID_FIGURE));
+                if(tot > figureModel.getById(id).getNumArticoli()) {
+                    tot = figureModel.getById(id).getNumArticoli();
+                }
                 figureModel.rimuoviNumeroArticoli(id, tot);
             }
             response.sendRedirect(CATALOGO_PAGE);

@@ -2,6 +2,7 @@
 <%@ page import="com.example.space_nerd.model.OrdineBean" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page errorPage="errore.jsp"%>
 <%
     List<OrdineBean> ordini = (List<OrdineBean>) request.getAttribute("ordini");
     if(ordini == null) {

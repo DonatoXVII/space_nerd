@@ -1,5 +1,6 @@
 <%@ page import="com.example.space_nerd.utility.CarrelloBean" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page errorPage="errore.jsp"%>
 <%!
     String emailUtente = "";
     Boolean tipoUtente = false;

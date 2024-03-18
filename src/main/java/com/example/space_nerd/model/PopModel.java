@@ -479,6 +479,36 @@ public class PopModel {
         }
     }
 
+    public void cambiaPrezzo(int id, float prezzo) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = UPDATE + TABLE_NAME_POP +  " SET Prezzo = ? WHERE IdPop = ?";
+            ps = con.prepareStatement(query);
+            ps.setFloat(1, prezzo);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+    }
+
     public void aggiungiProdotto(PopBean pop) {
         Connection con = null;
         PreparedStatement ps = null;

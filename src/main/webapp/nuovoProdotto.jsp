@@ -1,3 +1,4 @@
+<%@ page errorPage="errore.jsp"%>
 <%
     String tipo = (String) request.getAttribute("tipo");
 %>

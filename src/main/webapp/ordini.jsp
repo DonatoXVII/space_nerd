@@ -16,6 +16,7 @@
     String nomeOrdine = (String) request.getAttribute("nome");
     String cognomeOrdine = (String) request.getAttribute("cognome");
 %>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -201,13 +202,19 @@
     <%
             }
         }else{
-            if(!ordini.isEmpty()){
+            if(email != null) {
+                if(!ordini.isEmpty()){
     %>
-        <h1>Ordini <%=nomeOrdine%> <%=cognomeOrdine%></h1>
+                    <h1>Ordini <%=nomeOrdine%> <%=cognomeOrdine%></h1>
     <%
-            }else {
+                }else {
     %>
-        <h1 style="margin-left: 20px">Nessun ordine trovato per <%=nomeOrdine%> <%=cognomeOrdine%></h1>
+                    <h1 style="margin-left: 20px">Nessun ordine trovato per <%=nomeOrdine%> <%=cognomeOrdine%></h1>
+    <%
+                    }
+            } else {
+    %>
+                    <h1>Non è selezionata alcuna email</h1>
     <%
             }
         }
@@ -232,7 +239,7 @@
         </p>
             <div style="display: flex; flex-direction: row">
             <button class="btnOrdine" onclick="location.href='OrdiniControl?action=visualizzaDettagliOrdine&IdOrdine=<%=ordine.getId()%>'">Dettagli ordine</button>
-            <button class="botao" style="margin-left: 40px" onclick="location.href='OrdiniControl?action=generaFattura'">
+            <%if(!tipoUtente){%><button class="botao" style="margin-left: 40px" onclick="location.href='OrdiniControl?action=generaFattura&IdOrdine=<%=ordine.getId()%>'">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mysvg"><g id="SVGRepo_bgCarrier" stroke-width="0">
                 </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
                     <g id="Interface / Download">
@@ -242,6 +249,7 @@
                 </svg>
                 <span class="texto">Scarica fattura</span>
             </button>
+                <%}%>
             </div>
         </div>
     </div>

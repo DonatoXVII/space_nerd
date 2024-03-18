@@ -510,4 +510,50 @@ public class OrdineModel {
             }
         }
     }
+
+    public OrdineBean getById(int id) {
+        OrdineBean bean = new OrdineBean();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE IdOrdine = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                bean.setId(id);
+                bean.setPrezzo(rs.getFloat(PREZZO_TOTALE));
+                bean.setData(rs.getDate(DATA_ORDINE));
+                bean.setFattura(rs.getString(FATTURA));
+                bean.setEmail(rs.getString("Email"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgRs, e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgPs, e);
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, msgCon, e);
+            }
+        }
+        return bean;
+    }
 }

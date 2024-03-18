@@ -431,7 +431,7 @@
     <div class="descrizioneProdotto">
         <h1><%=((FigureBean) prodotto).getDescrizione()%></h1>
         <p><img src="img/personaggio.jpg" alt="errore immagine">  Personaggio : <%=((FigureBean) prodotto).getPersonaggio()%></p>
-        <p><img src="img/altezza.jpg" alt="errore immagine">  Altezza : <%=((FigureBean) prodotto).getAltezza()%></p>
+        <p><img src="img/altezza.jpg" alt="errore immagine">  Altezza : <%=((FigureBean) prodotto).getAltezza()%> cm</p>
         <p><img src="img/materiale.jpg" alt="errore immagine">  Materiale : <%=((FigureBean) prodotto).getMateriale()%></p>
         <%
             PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());

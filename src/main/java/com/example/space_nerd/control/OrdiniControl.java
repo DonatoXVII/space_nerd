@@ -470,6 +470,8 @@ public class OrdiniControl extends HttpServlet {
             float prezzoTotale = 0;
             String descrizione = "";
 
+            float prezzoSpesa = 0;
+
             for(Object prod : prodotti) {
                 numProd++;
                 if(numProd > limit ) {
@@ -491,18 +493,21 @@ public class OrdiniControl extends HttpServlet {
                     prezzo = mangaModel.getPrezzoUnitarioInThatOrdine(((MangaBean) prod).getIdManga(), id);
                     prezzoTotale = prezzo * ((MangaBean) prod).getQuantitaCarrello();
                     descrizione = ((MangaBean) prod).getDescrizione();
+                    prezzoSpesa += prezzoTotale;
                 }
                 if(prod instanceof PopBean) {
                     quantita = ((PopBean) prod).getQuantitaCarrello();
                     prezzo = popModel.getPrezzoUnitarioInThatOrdine(((PopBean) prod).getIdPop(), id);
                     prezzoTotale = prezzo * ((PopBean) prod).getQuantitaCarrello();
                     descrizione = ((PopBean) prod).getDescrizione();
+                    prezzoSpesa += prezzoTotale;
                 }
                 if(prod instanceof FigureBean) {
                     quantita = ((FigureBean) prod).getQuantitaCarrello();
                     prezzo = figureModel.getPrezzoUnitarioInThatOrdine(((FigureBean) prod).getIdFigure(), id);
                     prezzoTotale = prezzo * ((FigureBean) prod).getQuantitaCarrello();
                     descrizione = ((FigureBean) prod).getDescrizione();
+                    prezzoSpesa += prezzoTotale;
                 }
 
                 contentStream.beginText();
@@ -536,6 +541,23 @@ public class OrdiniControl extends HttpServlet {
                 coordinataProdottoY = coordinataProdottoY - 24.9f;
 
             }
+
+            coordinataProdottoX = 360;
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setNonStrokingColor(new Color(255, 0, 0));
+            contentStream.newLineAtOffset(coordinataProdottoX, coordinataProdottoY);
+            contentStream.showText(String.valueOf("TOTALE"));
+            contentStream.endText();
+
+            coordinataProdottoX = 455.5f;
+            prezzoSpesa = prezzoSpesa + 5.0f; //spedizione
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setNonStrokingColor(new Color(255, 0, 0));
+            contentStream.newLineAtOffset(coordinataProdottoX, coordinataProdottoY);
+            contentStream.showText(String.valueOf(prezzoSpesa + " €"));
+            contentStream.endText();
 
             contentStream.close();
             fattura.save(totalPath);

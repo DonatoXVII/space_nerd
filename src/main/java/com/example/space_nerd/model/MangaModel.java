@@ -237,7 +237,7 @@ public class MangaModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_MANGA + " WHERE Descrizione LIKE ?";
+            String query = "SELECT * FROM " + TABLE_NAME_MANGA + " WHERE Descrizione LIKE ? AND FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
@@ -250,6 +250,7 @@ public class MangaModel {
                 manga.setLingua(rs.getString("Lingua"));
                 manga.setNumPagine(rs.getInt("NumeroPagine"));
                 manga.setImg(rs.getString(immagineParameter));
+                manga.setVisibilita(true);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -287,7 +288,7 @@ public class MangaModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT Descrizione FROM " + TABLE_NAME_MANGA + " WHERE Descrizione LIKE ?";
+            String query = "SELECT Descrizione FROM " + TABLE_NAME_MANGA + " WHERE Descrizione LIKE ? AND FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             ps.setString(1, ricerca);
             rs = ps.executeQuery();

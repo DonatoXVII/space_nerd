@@ -277,7 +277,7 @@ public class PopModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_POP + " WHERE Descrizione LIKE ?";
+            String query = "SELECT * FROM " + TABLE_NAME_POP + " WHERE Descrizione LIKE ? AND FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
@@ -288,6 +288,7 @@ public class PopModel {
                 pop.setNumArticoli(rs.getInt(ARTICOLI_PARAMETER));
                 pop.setNumSerie(rs.getInt("NumeroSerie"));
                 pop.setSerie(rs.getString(SERIE_PARAMETER));
+                pop.setVisibilita(true);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -325,7 +326,7 @@ public class PopModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT Descrizione FROM " + TABLE_NAME_POP + " WHERE Descrizione LIKE ?";
+            String query = "SELECT Descrizione FROM " + TABLE_NAME_POP + " WHERE Descrizione LIKE ? AND FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             ps.setString(1, ricerca);
             rs = ps.executeQuery();

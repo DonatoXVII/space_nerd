@@ -47,7 +47,10 @@ public class DatiSensibiliModel {
             ps.setInt(6, dati.getCivico());
             ps.setString(7, dati.getProvincia());
             ps.setString(8, dati.getComune());
-            ps.executeUpdate();
+            int rows = ps.executeUpdate();
+            if(rows > 0) {
+                System.out.println("ciao");
+            }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {

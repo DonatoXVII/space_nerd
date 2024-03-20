@@ -278,7 +278,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE CONCAT(Descrizione, ' ', Personaggio) LIKE ?";
+            String query = "SELECT * FROM " + TABLE_NAME_FIGURE + " WHERE CONCAT(Descrizione, ' ', Personaggio) LIKE ? AND FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             ps.setString(1, descrizione);
             rs = ps.executeQuery();
@@ -290,6 +290,7 @@ public class FigureModel {
                 figure.setMateriale(rs.getString("Materiale"));
                 figure.setAltezza(rs.getInt("Altezza"));
                 figure.setPersonaggio(rs.getString(PERSONAGGIO_PARAMETER));
+                figure.setVisibilita(true);
             }
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -327,7 +328,7 @@ public class FigureModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT CONCAT(Descrizione, ' ', Personaggio) AS Action FROM " + TABLE_NAME_FIGURE + " WHERE CONCAT(Descrizione, ' ', Personaggio) LIKE ?";
+            String query = "SELECT CONCAT(Descrizione, ' ', Personaggio) AS Action FROM " + TABLE_NAME_FIGURE + " WHERE CONCAT(Descrizione, ' ', Personaggio) LIKE ? AND FlagVisibilita = 1";
             ps = con.prepareStatement(query);
             ps.setString(1, ricerca);
             rs = ps.executeQuery();

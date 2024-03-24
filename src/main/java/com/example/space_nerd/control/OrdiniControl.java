@@ -35,6 +35,7 @@ public class OrdiniControl extends HttpServlet {
     static IndirizzoModel indirizzoModel = new IndirizzoModel();
     static PagamentoModel pagamentoModel = new PagamentoModel();
     static String emailParameter = "email";
+    static String fattureString = "fatture";
     private static final String ORDINI_PAGE = "/ordini.jsp";
     private static final String ERROR_PAGE = "/errore.jsp";
     private static final String ERROR_PARAMETER = "error";
@@ -285,9 +286,9 @@ public class OrdiniControl extends HttpServlet {
 
         try {
             String servletPath = request.getServletContext().getRealPath("");
-            String totalPath = servletPath + File.separator  + "fatture" + File.separator  + "Fattura" + id + ".pdf";
+            String totalPath = servletPath + File.separator  + fattureString + File.separator  + "Fattura" + id + ".pdf";
 
-            File file = new File(servletPath + "fatture" + File.separator  + "spaceNerdFattura.pdf");
+            File file = new File(servletPath + fattureString + File.separator  + "spaceNerdFattura.pdf");
             PDDocument fattura = PDDocument.load(file);
             PDPage page = fattura.getDocumentCatalog().getPages().get(0);
             PDPageContentStream contentStream = new PDPageContentStream(fattura, page, PDPageContentStream.AppendMode.APPEND, true, true);
@@ -339,7 +340,7 @@ public class OrdiniControl extends HttpServlet {
             for(Object prod : prodotti) {
                 numProd++;
                 if(numProd > limit ) {
-                    file = new File(servletPath + "fatture" +  File.separator  + "spaceNerd2.pdf");
+                    file = new File(servletPath + fattureString +  File.separator  + "spaceNerd2.pdf");
                     page = PDDocument.load(file).getDocumentCatalog().getPages().get(0);
 
                     fattura.addPage(page);
@@ -356,7 +357,7 @@ public class OrdiniControl extends HttpServlet {
                 quantita = quantitaForTipo(prod);
                 prezzo = prezzoForTipo(prod, id);
                 prezzoTotale = prezzoTotaleForTipo(prod, id);
-                descrizione = descrizioneForTipo(prod, id);
+                descrizione = descrizioneForTipo(prod);
                 prezzoSpesa += prezzoTotale;
 
                 contentStream.beginText();
@@ -430,7 +431,7 @@ public class OrdiniControl extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(ORDINI_PAGE);
             dispatcher.forward(request, response);
 
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
             request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
             RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
             try {
@@ -438,8 +439,6 @@ public class OrdiniControl extends HttpServlet {
             } catch (ServletException | IOException ex) {
                 log(ERROR_MESSAGE_TWO, ex);
             }
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
         }
 
     }
@@ -490,7 +489,7 @@ public class OrdiniControl extends HttpServlet {
         return prezzoTotale;
     }
 
-    private String descrizioneForTipo(Object prod, int id) {
+    private String descrizioneForTipo(Object prod) {
         String descrizione = "";
         if (prod instanceof MangaBean) {
             descrizione = ((MangaBean) prod).getDescrizione();

@@ -352,27 +352,12 @@ public class OrdiniControl extends HttpServlet {
                     limit = 26;
                 }
 
-                if (prod instanceof MangaBean) {
-                    quantita = ((MangaBean) prod).getQuantitaCarrello();
-                    prezzo = mangaModel.getPrezzoUnitarioInThatOrdine(((MangaBean) prod).getIdManga(), id);
-                    prezzoTotale = prezzo * ((MangaBean) prod).getQuantitaCarrello();
-                    descrizione = ((MangaBean) prod).getDescrizione();
-                    prezzoSpesa += prezzoTotale;
-                }
-                if(prod instanceof PopBean) {
-                    quantita = ((PopBean) prod).getQuantitaCarrello();
-                    prezzo = popModel.getPrezzoUnitarioInThatOrdine(((PopBean) prod).getIdPop(), id);
-                    prezzoTotale = prezzo * ((PopBean) prod).getQuantitaCarrello();
-                    descrizione = ((PopBean) prod).getDescrizione();
-                    prezzoSpesa += prezzoTotale;
-                }
-                if(prod instanceof FigureBean) {
-                    quantita = ((FigureBean) prod).getQuantitaCarrello();
-                    prezzo = figureModel.getPrezzoUnitarioInThatOrdine(((FigureBean) prod).getIdFigure(), id);
-                    prezzoTotale = prezzo * ((FigureBean) prod).getQuantitaCarrello();
-                    descrizione = ((FigureBean) prod).getDescrizione();
-                    prezzoSpesa += prezzoTotale;
-                }
+                //Definisci il prodotto da scrivere
+                quantita = quantitaForTipo(prod);
+                prezzo = prezzoForTipo(prod, id);
+                prezzoTotale = prezzoTotaleForTipo(prod, id);
+                descrizione = descrizioneForTipo(prod, id);
+                prezzoSpesa += prezzoTotale;
 
                 contentStream.beginText();
                 contentStream.setFont(font, 12);
@@ -457,6 +442,67 @@ public class OrdiniControl extends HttpServlet {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private int quantitaForTipo(Object prod) {
+        int quantita = 0;
+        if (prod instanceof MangaBean) {
+            quantita = ((MangaBean) prod).getQuantitaCarrello();
+        }
+        if(prod instanceof PopBean) {
+            quantita = ((PopBean) prod).getQuantitaCarrello();
+        }
+        if(prod instanceof FigureBean) {
+            quantita = ((FigureBean) prod).getQuantitaCarrello();
+        }
+        return quantita;
+    }
+
+    private float prezzoForTipo(Object prod, int id) {
+        float prezzo = 0;
+        if (prod instanceof MangaBean) {
+            prezzo = mangaModel.getPrezzoUnitarioInThatOrdine(((MangaBean) prod).getIdManga(), id);
+        }
+        if(prod instanceof PopBean) {
+            prezzo = popModel.getPrezzoUnitarioInThatOrdine(((PopBean) prod).getIdPop(), id);
+        }
+        if(prod instanceof FigureBean) {
+            prezzo = figureModel.getPrezzoUnitarioInThatOrdine(((FigureBean) prod).getIdFigure(), id);
+        }
+        return prezzo;
+    }
+
+    private float prezzoTotaleForTipo(Object prod, int id) {
+        float prezzo;
+        float prezzoTotale = 0;
+        if (prod instanceof MangaBean) {
+            prezzo = mangaModel.getPrezzoUnitarioInThatOrdine(((MangaBean) prod).getIdManga(), id);
+            prezzoTotale = prezzo * ((MangaBean) prod).getQuantitaCarrello();
+        }
+        if(prod instanceof PopBean) {
+            prezzo = popModel.getPrezzoUnitarioInThatOrdine(((PopBean) prod).getIdPop(), id);
+            prezzoTotale = prezzo * ((PopBean) prod).getQuantitaCarrello();
+        }
+        if(prod instanceof FigureBean) {
+            prezzo = figureModel.getPrezzoUnitarioInThatOrdine(((FigureBean) prod).getIdFigure(), id);
+            prezzoTotale = prezzo * ((FigureBean) prod).getQuantitaCarrello();
+        }
+        return prezzoTotale;
+    }
+
+    private String descrizioneForTipo(Object prod, int id) {
+        String descrizione = "";
+        if (prod instanceof MangaBean) {
+            descrizione = ((MangaBean) prod).getDescrizione();
+        }
+        if(prod instanceof PopBean) {
+            descrizione = ((PopBean) prod).getDescrizione();
+            
+        }
+        if(prod instanceof FigureBean) {
+            descrizione = ((FigureBean) prod).getDescrizione();
+        }
+        return descrizione;
     }
 }
 

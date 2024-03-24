@@ -518,7 +518,7 @@ public class OrdineModel {
         ResultSet rs = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_ORDINE + " WHERE IdOrdine = ?";
+            String query = SELECT_ALL + TABLE_NAME_ORDINE + " WHERE IdOrdine = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();

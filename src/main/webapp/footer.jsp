@@ -10,13 +10,13 @@
 
 <section id="sectionFooter">
         <div class="infoFooter">
-            <li class="foot">CHI SIAMO<p>Donato Folgieri<br>SpaceNerd</p></li>
-            <li class="foot">CONTATTI<p>spacenerd@gmail.com</p></li>
-            <li class="foot">PAGAMENTI SICURI
+            <div class="foot">CHI SIAMO<p>Donato Folgieri<br>SpaceNerd</p></div>
+            <div class="foot">CONTATTI<p>spacenerd@gmail.com</p></div>
+            <div class="foot">PAGAMENTI SICURI
                 <div style="display:flex; flex-wrap:wrap; justify-content: space-evenly; margin-top: 10px">
                     <img src="img/visa.jpg" alt="errore immagine"><img src="img/mastercard.jpg" alt="errore immagine"><img src="img/paypal.jpg" alt="errore immagine">
                 </div>
-            </li>
+            </div>
         </div>
     <div>
         <h1 style="font-size: 25px; line-height: 34px; font-family: Montserrat, serif; color: #f1f2f4">NON PERDERTI</h1>

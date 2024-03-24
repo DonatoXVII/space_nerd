@@ -289,7 +289,7 @@ public class OrdiniControl extends HttpServlet {
 
             File file = new File(servletPath + "fatture" + File.separator  + "spaceNerdFattura.pdf");
             PDDocument fattura = PDDocument.load(file);
-            PDPage page = (PDPage)fattura.getDocumentCatalog().getPages().get(0);
+            PDPage page = fattura.getDocumentCatalog().getPages().get(0);
             PDPageContentStream contentStream = new PDPageContentStream(fattura, page, PDPageContentStream.AppendMode.APPEND, true, true);
             PDType1Font font = PDType1Font.TIMES_ROMAN;
 
@@ -340,7 +340,7 @@ public class OrdiniControl extends HttpServlet {
                 numProd++;
                 if(numProd > limit ) {
                     file = new File(servletPath + "fatture" +  File.separator  + "spaceNerd2.pdf");
-                    page = (PDPage)PDDocument.load(file).getDocumentCatalog().getPages().get(0);
+                    page = PDDocument.load(file).getDocumentCatalog().getPages().get(0);
 
                     fattura.addPage(page);
 
@@ -417,18 +417,18 @@ public class OrdiniControl extends HttpServlet {
             coordinataProdottoX = 455.5f;
 
             Locale.setDefault(Locale.US);
-            String PrezzoeString;
+            String prezzoArrotondato;
             Locale.setDefault(Locale.ITALY);
 
             prezzoSpesa = prezzoSpesa + 5.0f; //spedizione
 
-            PrezzoeString = String.format("%.2f", prezzoSpesa);
+            prezzoArrotondato = String.format("%.2f", prezzoSpesa);
 
             contentStream.beginText();
             contentStream.setFont(font, 12);
             contentStream.setNonStrokingColor(new Color(255, 0, 0));
             contentStream.newLineAtOffset(coordinataProdottoX, coordinataProdottoY);
-            contentStream.showText(String.valueOf(PrezzoeString + " €"));
+            contentStream.showText(String.valueOf(prezzoArrotondato + " €"));
             contentStream.endText();
 
             contentStream.close();

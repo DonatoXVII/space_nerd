@@ -3,7 +3,7 @@ CREATE SCHEMA spacenerd;
 USE spacenerd;
 
 CREATE TABLE Utente(
-    Email varchar(100) NOT NULL COLLATE utf8_bin,
+    Email varchar(50) NOT NULL COLLATE utf8_bin,
     Pass varchar(50) NOT NULL COLLATE utf8_bin,
     Tipo bit NOT NULL, -- 0 utente registrato, 1 admin
     PRIMARY KEY(Email)
@@ -62,7 +62,7 @@ CREATE TABLE Ordine(
     IdOrdine int NOT NULL auto_increment,
     PrezzoTotale float NOT NULL,
     DataOrdine date NOT NULL,
-    Fattura varchar(16) NOT NULL UNIQUE,
+    Fattura varchar(50) NOT NULL UNIQUE,
     Email varchar(50) NOT NULL COLLATE utf8_bin,
     PRIMARY KEY(IdOrdine),
     FOREIGN KEY(Email) REFERENCES Utente(Email) ON UPDATE CASCADE ON DELETE CASCADE
@@ -71,9 +71,9 @@ CREATE TABLE Ordine(
 CREATE TABLE Manga(
     IdManga int NOT NULL auto_increment,
     Prezzo float NOT NULL,
-    Descrizione varchar(50) NOT NULL,
+    Descrizione varchar(100) NOT NULL,
     NumeroArticoli int NOT NULL,
-    CasaEditrice varchar(16) NOT NULL,
+    CasaEditrice varchar(50) NOT NULL,
     Lingua varchar(16) NOT NULL,
     NumeroPagine int NOT NULL,
     Immagine varchar(50),
@@ -84,7 +84,7 @@ CREATE TABLE Manga(
 CREATE TABLE Pop(
     IdPop int NOT NULL auto_increment,
     Prezzo float NOT NULL,
-    Descrizione varchar(50) NOT NULL,
+    Descrizione varchar(100) NOT NULL,
     NumeroArticoli int NOT NULL,
     NumeroSerie int NOT NULL,
     Serie varchar(16) NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE Pop(
 CREATE TABLE Figure(
     IdFigure int NOT NULL auto_increment,
     Prezzo float NOT NULL,
-    Descrizione varchar(50) NOT NULL,
+    Descrizione varchar(100) NOT NULL,
     NumeroArticoli int NOT NULL,
     Materiale varchar(16) NOT NULL,
     Altezza int NOT NULL,
@@ -222,6 +222,12 @@ INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, Num
 VALUES('5.20', 'DragonBall Evergreen Edition vol 41', '25', 'StarComics', 'Italiano', '200', 'imgDB41.jpg', 1);
 INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
 VALUES('5.20', 'DragonBall Evergreen Edition vol 42', '0', 'StarComics', 'Italiano', '200', 'imgDB42.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('4.90', 'Attack on Titan vol 32', '10', 'Panini', 'Italiano', '200', 'aot32.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('4.90', 'Attack on Titan vol 33', '10', 'Panini', 'Italiano', '200', 'aot33.jpg', 1);
+INSERT INTO Manga(Prezzo, Descrizione, NumeroArticoli, CasaEditrice, Lingua, NumeroPagine, Immagine, FlagVisibilita)
+VALUES('4.90', 'Attack on Titan vol 34', '10', 'Panini', 'Italiano', '200', 'aot34.jpg', 1);
 
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
 VALUES('16.90', 'FunkoPop Zoro', '10', '923', 'One Piece', 1);
@@ -234,15 +240,19 @@ VALUES('16.90', 'FunkoPop Naruto', '10', '932', 'Naruto', 1);
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
 VALUES('16.90', 'FunkoPop Tony Stark', '1', '580', 'Marvel', 1);
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
-VALUES('16.90', 'FunkoPop Zoro Limited Edition', '0', '1288', 'One Piece', 1);
+VALUES('34.90', 'FunkoPop Zoro Limited Edition', '0', '1288', 'One Piece', 1);
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
-VALUES('16.90', 'FunkoPop Eren', '10', '1321', 'Attacck On Titan', 1);
+VALUES('11.90', 'FunkoPop Eren', '10', '1321', 'Attack on Titan', 1);
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
 VALUES('16.90', 'FunkoPop Scarlet Witch', '10', '823', 'Marvel', 1);
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
 VALUES('16.90', 'FunkoPop Captain America', '10', '1200', 'Marvel', 1);
 INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
 VALUES('16.90', 'FunkoPop Vegeta Limited Edition', '10', '614', 'DragonBall', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('44.90', 'FunkoPop Levi', '10', '1169', 'Attack on Titan', 1);
+INSERT INTO Pop(Prezzo, Descrizione, NumeroArticoli, NumeroSerie, Serie, FlagVisibilita)
+VALUES('11.90', 'FunkoPop Misaka', '10', '1446', 'Attack on Titan', 1);
 
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
 VALUES('100', 'Action Figure One Piece', '10', 'PVC', '28', 'Luffy Gear 5', 1);
@@ -253,7 +263,7 @@ VALUES('80', 'Action Figure DragonBall', '10', 'PVC', '30', 'Goku Super Sayan 4'
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
 VALUES('120', 'Action Figure Naruto', '0', 'PVC', '32', 'Itachi', 1);
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
-VALUES('100', 'Action Figure DragonBall', '1', 'PVC', '40', 'Goku Super Sayan', 1);
+VALUES('89.90', 'Action Figure DragonBall', '1', 'PVC', '40', 'Goku Super Sayan', 1);
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
 VALUES('25', 'Action Figure DragonBall', '10', 'PVC', '15', 'Goku Banpresto', 1);
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
@@ -263,7 +273,7 @@ VALUES('40', 'Action Figure One Piece', '10', 'PVC', '26', 'TrafalgarLaw Banpres
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
 VALUES('55', 'Action Figure Death Note', '10', 'PVC', '40', 'Ruyk', 1);
 INSERT INTO Figure(Prezzo, Descrizione, NumeroArticoli, Materiale, Altezza, Personaggio, FlagVisibilita)
-VALUES('30', 'Action Figure DragonBall', '10', 'PVC', '25', 'Jiren', 1);
+VALUES('79.90', 'Action Figure DragonBall', '10', 'PVC', '25', 'Gohan', 1);
 
 INSERT INTO ComprendeManga(IdOrdine, IdManga, Quantita, PrezzoUnitario)
 VALUES('1', '1', '1', '5.20');
@@ -362,6 +372,14 @@ INSERT INTO ImmaginePop(Nome, IdPop)
 VALUES('img_popvegeta1.jpg', '10');
 INSERT INTO ImmaginePop(Nome, IdPop)
 VALUES('img_popvegeta2.jpg', '10');
+INSERT INTO ImmaginePop(Nome, IdPop)
+VALUES('aotLevi1.jpg', '11');
+INSERT INTO ImmaginePop(Nome, IdPop)
+VALUES('aotLevi2.jpg', '11');
+INSERT INTO ImmaginePop(Nome, IdPop)
+VALUES('aotMisaka1.jpg', '12');
+INSERT INTO ImmaginePop(Nome, IdPop)
+VALUES('aotMisaka2.jpg', '12');
 
 INSERT INTO ImmagineFigure(Nome, IdFigure)
 VALUES('luffyG5_1.jpg', '1');
@@ -418,8 +436,8 @@ VALUES('ryuk2.jpg', '9');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
 VALUES('ryuk3.jpg', '9');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('jiren1.jpg', '10');
+VALUES('gohan1.jpg', '10');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('jiren2.jpg', '10');
+VALUES('gohan2.jpg', '10');
 INSERT INTO ImmagineFigure(Nome, IdFigure)
-VALUES('jiren3.jpg', '10');
+VALUES('gohan3.jpg', '10');

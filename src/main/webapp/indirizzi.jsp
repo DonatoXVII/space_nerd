@@ -21,6 +21,8 @@
 <body>
 <%@include file="navbar.jsp"%>
 
+<%if(emailUtente != null){%>
+
 <div class="form-container-accesso">
     <form action="UtenteControl?action=inserisciIndirizzo" method="post" class="form-registrazione">
         <div class="form-title"><span>nuovo indirizzo dello</span></div>
@@ -122,6 +124,8 @@
         <%}%>
     </div>
 </div>
+
+<%}%>
 <script src="js/caricaCitta.js"></script>
 </body>
 </html>

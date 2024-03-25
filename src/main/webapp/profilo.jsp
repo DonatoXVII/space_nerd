@@ -10,6 +10,8 @@
 <body>
 <%@include file="navbar.jsp"%>
 
+<%if(emailUtente != null){%>
+
 <div class="view-profilo">
     <div class="form-title"><span>il tuo</span></div>
     <div class="title-2"><span>SPACE</span></div>
@@ -67,7 +69,7 @@
 
     </div>
 </div>
-
+<%}%>
 
 </body>
 </html>

@@ -10,6 +10,7 @@
 </head>
 <body>
 <%@include file="navbar.jsp"%>
+<%if(emailUtente != null){%>
 <div class="form-container-accesso">
 <form action="UtenteControl?action=modificaProfilo" method="post" class="form-registrazione" name="registrazione" onsubmit="return validate()">
     <div class="form-title"><span>aggiorna il tuo</span></div>
@@ -64,6 +65,8 @@
     </button>
 </form>
 </div>
+
+<%}%>
 
 <script src="js/caricaCitta.js"></script>
 <script>

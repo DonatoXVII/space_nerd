@@ -21,6 +21,8 @@
 <body>
 <%@include file="navbar.jsp"%>
 
+<%if(emailUtente != null){%>
+
 <div class="form-container-accesso">
     <form action="UtenteControl?action=inserisciMetodo" method="post" class="form-registrazione" name="registrazione" onsubmit="return validate()">
         <div class="form-title"><span>aggiungi un nuovo metodo di pagamento al tuo</span></div>
@@ -161,6 +163,8 @@
         <%}%>
     </div>
 </div>
+
+<%}%>
 
 <script>
     function validate() {

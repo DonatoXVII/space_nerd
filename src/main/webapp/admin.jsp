@@ -18,6 +18,8 @@
 <body>
 <%@include file="navbar.jsp"%>
 
+<%if(emailUtente != null){%>
+
 <div class="utentiEFiltri">
 
 <div class="filtriUtenti">
@@ -171,6 +173,8 @@
 %>
 </div>
 </div>
+
+<%}%>
 
 <script>
     $(document).ready(function() {

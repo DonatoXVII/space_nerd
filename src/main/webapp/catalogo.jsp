@@ -58,6 +58,9 @@
                 <input type="checkbox" name="naruto" value="naruto" class="filtro-descrizione"> Naruto
             </label><br>
             <label>
+                <input type="checkbox" name="titan" value="titan" class="filtro-descrizione"> Attack on titan
+            </label><br>
+            <label>
                 <input type="checkbox" name="marvel" value="marvel" class="filtro-descrizione"> Marvel
             </label><br><br><br>
             <label for="rangeInput">Seleziona prezzo massimo <br>

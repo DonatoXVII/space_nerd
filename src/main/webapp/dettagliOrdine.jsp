@@ -25,6 +25,7 @@
 
 <div class="catalogoOrdini">
 <%
+    if(emailUtente != null) {
     if(prodottiOrdine != null && !prodottiOrdine.isEmpty()) {
         for(Object prodotto : prodottiOrdine) {
 
@@ -86,6 +87,7 @@
         }
 %>
 <%
+    }
     }
 %>
 </div>

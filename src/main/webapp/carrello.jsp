@@ -13,6 +13,7 @@
     <meta charset="charset=UTF-8">
     <title>Space Nerd</title>
     <link rel="stylesheet" type="text/css" href="css/carrello.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS" crossorigin="anonymous"></script>
 </head>
 <body>
 <%@include file="navbar.jsp"%>
@@ -25,68 +26,78 @@
         for(Object prodotto : carrelloBean.getListaCarrello()) {
             if(prodotto instanceof MangaBean){
 %>
-            <div class="prodottoCarrello">
+            <div id="manga_<%=((MangaBean) prodotto).getIdManga()%>" class="prodottoCarrello">
                 <img src="img/imgManga/<%=((MangaBean) prodotto).getImg()%>" alt="errore immagine">
                 <div class="descrizioneCarrello">
                     <h1><%=((MangaBean) prodotto).getDescrizione()%></h1>
-                    <p>Quantità: <%=((MangaBean) prodotto).getQuantitaCarrello()%></p>
+                    <p id="quantita_manga_<%=((MangaBean) prodotto).getIdManga()%>">Quantità: <%=((MangaBean) prodotto).getQuantitaCarrello()%></p>
                     <%
                         Locale.setDefault(Locale.US);
-                        String PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo() * ((MangaBean) prodotto).getQuantitaCarrello());
+                        String PrezzoeString = String.format("%.2f", ((MangaBean) prodotto).getPrezzo());
                         Locale.setDefault(Locale.ITALY);
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=manga&Id=<%=((MangaBean) prodotto).getIdManga()%>'" <%if(((MangaBean) prodotto).getQuantitaCarrello() == ((MangaBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
-                        <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'"></button>
+                        <button class="buttonAdd" id="aggiungi_manga_<%=((MangaBean) prodotto).getIdManga()%>" onclick="aggiungi('manga', '<%=((MangaBean) prodotto).getIdManga()%>')" <%if(((MangaBean) prodotto).getQuantitaCarrello() == ((MangaBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
+                        <button class="buttonRemove" id="remove_manga_<%=((MangaBean) prodotto).getIdManga()%>" onclick="rimuovi('manga', '<%=((MangaBean) prodotto).getIdManga()%>')"></button>
+                        <div class="button-borders" onclick="location.href='ProdottoControl?action=eliminaDalCarrello&Id=<%=((MangaBean) prodotto).getIdManga()%>'">
+                            <button class="primary-button"> RIMUOVI
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 <%
-                prezzoTotale += Float.parseFloat(PrezzoeString);
             } else if(prodotto instanceof PopBean){
 %>
-            <div class="prodottoCarrello">
+            <div id="pop_<%=((PopBean) prodotto).getIdPop()%>" class="prodottoCarrello">
                 <img src="img/imgPop/<%=((PopBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                 <div class="descrizioneCarrello">
                     <h1><%=((PopBean) prodotto).getDescrizione()%></h1>
-                    <p>Quantità: <%=((PopBean) prodotto).getQuantitaCarrello()%></p>
+                    <p id="quantita_pop_<%=((PopBean) prodotto).getIdPop()%>">Quantità: <%=((PopBean) prodotto).getQuantitaCarrello()%></p>
                     <%
                         Locale.setDefault(Locale.US);
-                        String PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo() * ((PopBean) prodotto).getQuantitaCarrello());
+                        String PrezzoeString = String.format("%.2f", ((PopBean) prodotto).getPrezzo());
                         Locale.setDefault(Locale.ITALY);
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=pop&Id=<%=((PopBean) prodotto).getIdPop()%>'" <%if(((PopBean) prodotto).getQuantitaCarrello() == ((PopBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
-                        <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>'"></button>
+                        <button class="buttonAdd" id="aggiungi_pop_<%=((PopBean) prodotto).getIdPop()%>" onclick="aggiungi('pop', '<%=((PopBean) prodotto).getIdPop()%>')" <%if(((PopBean) prodotto).getQuantitaCarrello() == ((PopBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
+                        <button class="buttonRemove" id="remove_pop_<%=((PopBean) prodotto).getIdPop()%>" onclick="rimuovi('pop', '<%=((PopBean) prodotto).getIdPop()%>')"></button>
+                        <div class="button-borders" onclick="location.href='ProdottoControl?action=eliminaDalCarrello&Id=<%=((PopBean) prodotto).getIdPop()%>'">
+                            <button class="primary-button"> RIMUOVI
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 <%
-                prezzoTotale += Float.parseFloat(PrezzoeString);
             } else if (prodotto instanceof FigureBean) {
 %>
-            <div class="prodottoCarrello">
+            <div id="figure<%=((FigureBean) prodotto).getIdFigure()%>" class="prodottoCarrello">
                 <img src="img/imgFigure/<%=((FigureBean) prodotto).getImmagini().get(0)%>" alt="errore immagine">
                 <div class="descrizioneCarrello">
                     <h1><%=((FigureBean) prodotto).getDescrizione()%></h1>
-                    <p>Quantità: <%=((FigureBean) prodotto).getQuantitaCarrello()%></p>
+                    <p id="quantita_figure_<%=((FigureBean) prodotto).getIdFigure()%>">Quantità: <%=((FigureBean) prodotto).getQuantitaCarrello()%></p>
                     <%
                         Locale.setDefault(Locale.US);
-                        String PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo() * ((FigureBean) prodotto).getQuantitaCarrello());
+                        String PrezzoeString = String.format("%.2f", ((FigureBean) prodotto).getPrezzo());
                         Locale.setDefault(Locale.ITALY);
                     %>
                     <p>Prezzo: <%=PrezzoeString%>€</p>
                     <div class="comandiProdotto">
-                        <button class="buttonAdd" onclick="location.href='ProdottoControl?action=aggiungiAlCarrello&Tipo=figure&Id=<%=((FigureBean) prodotto).getIdFigure()%>'" <%if(((FigureBean) prodotto).getQuantitaCarrello() == ((FigureBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
-                        <button class="buttonRemove" onclick="location.href='ProdottoControl?action=rimuoviDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>'"></button>
+                        <button class="buttonAdd" id="aggiungi_figure_<%=((FigureBean) prodotto).getIdFigure()%>" onclick="aggiungi('figure', '<%=((FigureBean) prodotto).getIdFigure()%>')" <%if(((FigureBean) prodotto).getQuantitaCarrello() == ((FigureBean) prodotto).getNumArticoli()){%>style="display: none"<%}%>></button>
+                        <button class="buttonRemove" id="remove_figure_<%=((FigureBean) prodotto).getIdFigure()%>" onclick="rimuovi('figure', '<%=((FigureBean) prodotto).getIdFigure()%>')"></button>
+                        <div class="button-borders" onclick="location.href='ProdottoControl?action=eliminaDalCarrello&Id=<%=((FigureBean) prodotto).getIdFigure()%>'">
+                            <button class="primary-button"> RIMUOVI
+                            </button>
+                        </div>
                     </div>
                     </div>
             </div>
 <%
-            prezzoTotale += Float.parseFloat(PrezzoeString);
             }
+        prezzoTotale = carrelloBean.getPrezzoTotale();
         }
 %>
     </div>
@@ -98,7 +109,7 @@
             String PrezzoeString = String.format("%.2f", prezzoTotale);
             Locale.setDefault(Locale.ITALY);
         %>
-        <p>Prezzo totale : <%=PrezzoeString%>€</p>
+        <p id="prezzoTotaleCarrello">Prezzo totale : <%=PrezzoeString%>€</p>
         <%
             session.setAttribute("PrezzoTotale", PrezzoeString);
         %>
@@ -188,5 +199,93 @@
 <%
     }
 %>
+
+<script>
+    var quantitaPerTipo = {}; // Oggetto per memorizzare le quantità per tipo di prodotto
+
+    function aggiornaQuantita(tipo, quantita) {
+        quantitaPerTipo[tipo] = quantita;
+    }
+
+    function aggiungi(tipo, id) {
+        // URL del servlet a cui fare la richiesta
+        var url = "ProdottoControl?action=addToCart&Tipo=" + tipo + "&Id=" + id;
+
+        // Dati da inviare al servlet
+        var data = {
+            Tipo: tipo,
+            Id: id
+        };
+
+        // Esegui la richiesta AJAX
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                // Otteniamo gli oggetti dalla risposta
+                var nuovaQuantita = response.nuovaQuantita;
+                var formattedPrezzoTotale = response.formattedPrezzoTotale;
+
+                // Aggiorna le quantità per il tipo di prodotto
+                aggiornaQuantita(tipo, nuovaQuantita);
+
+                // Ora puoi fare ciò che vuoi con i valori
+                var idQuantita = "quantita_" + tipo + "_" + id;
+                $("#" + idQuantita).text("Quantità: " + nuovaQuantita);
+                $("#prezzoTotaleCarrello").text("Prezzo totale: " + formattedPrezzoTotale + "€");
+            },
+            error: function(xhr, status, error) {
+                console.error("Errore durante la richiesta:", status, error);
+            }
+        });
+    }
+
+    function rimuovi(tipo, id) {
+        // URL del servlet a cui fare la richiesta
+        var url = "ProdottoControl?action=removeFromCart&Tipo=" + tipo + "&Id=" + id;
+
+        // Dati da inviare al servlet
+        var data = {
+            Tipo: tipo,
+            Id: id
+        };
+
+        // Esegui la richiesta AJAX
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                // Otteniamo gli oggetti dalla risposta
+                var nuovaQuantita = response.nuovaQuantita;
+                var formattedPrezzoTotale = response.formattedPrezzoTotale;
+
+                // Aggiorna le quantità per il tipo di prodotto
+                aggiornaQuantita(tipo, nuovaQuantita);
+
+                // Ora puoi fare ciò che vuoi con i valori
+                var idQuantita = "quantita_" + tipo + "_" + id;
+                $("#" + idQuantita).text("Quantità: " + nuovaQuantita);
+                $("#prezzoTotaleCarrello").text("Prezzo totale: " + formattedPrezzoTotale + "€");
+
+                if (nuovaQuantita === 0) {
+                    $("#" + tipo + "_" + id).hide();
+                }
+
+                if (Math.abs(formattedPrezzoTotale - 0.00) < 0.001) {
+                    window.location.reload(); // Ricarica la pagina
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Errore durante la richiesta:", status, error);
+            }
+        });
+    }
+
+</script>
+
 </body>
 </html>

@@ -102,6 +102,23 @@ public class CarrelloBean implements Serializable {
         }
     }
 
+    public void eliminaDalCarrello(int id) {
+        for (Object prod : listaCarrello) {
+            boolean rimuovi = prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id
+                    || prod instanceof PopBean && ((PopBean) prod).getIdPop() == id
+                    || prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id;
+
+            if (rimuovi) {
+                if(prod instanceof MangaBean && ((MangaBean) prod).getIdManga() == id
+                        || prod instanceof PopBean && ((PopBean) prod).getIdPop() == id
+                        || prod instanceof FigureBean && ((FigureBean) prod).getIdFigure() == id){
+                    this.listaCarrello.remove(prod);
+                }
+                break;
+            }
+        }
+    }
+
     public int isPresente(Object prodotto) {
         for(Object prod : this.listaCarrello) {
             if(prodotto instanceof MangaBean && prod instanceof MangaBean && ((MangaBean) prodotto).getIdManga() == ((MangaBean) prod).getIdManga()) {

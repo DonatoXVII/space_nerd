@@ -3,6 +3,7 @@ package com.example.space_nerd.control;
 import com.google.gson.Gson;
 import com.example.space_nerd.model.*;
 import com.example.space_nerd.utility.CarrelloBean;
+import com.google.gson.JsonObject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @WebServlet("/ProdottoControl")
 public class ProdottoControl extends HttpServlet {
@@ -50,8 +52,14 @@ public class ProdottoControl extends HttpServlet {
                     case "aggiungialcarrello":
                         aggiungiAlCarrello(req, resp);
                         break;
-                    case "rimuovidalcarrello":
-                        rimuoviDalCarrello(req, resp);
+                    case "addtocart":
+                        addToCart(req, resp);
+                        break;
+                    case "removefromcart":
+                        removeFromCart(req, resp);
+                        break;
+                    case "eliminadalcarrello":
+                        eliminaDalCarrello(req, resp);
                         break;
                     case "svuotacarrello":
                         svuotaCarrello(req, resp);
@@ -217,11 +225,119 @@ public class ProdottoControl extends HttpServlet {
         }
     }
 
-    private void rimuoviDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void addToCart(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            CarrelloBean carrelloBean = getCarrelloBeanFromSession(request);
+            String tipo = request.getParameter("Tipo");
+            int id = Integer.parseInt(request.getParameter("Id"));
+            int nuovaQuantita = 0;
+            float prezzoTotale;
+            if (tipo.equalsIgnoreCase(mangaParameter)) {
+                if(mangaModel.verificaDisponibilita(id)) {
+                    carrelloBean.aggiungiProdotto(mangaModel.getById(id));
+                    nuovaQuantita = carrelloBean.isPresente(mangaModel.getById(id));
+                }
+            }else if (tipo.equalsIgnoreCase("pop")) {
+                if(popModel.verificaDisponibilita(id)) {
+                    carrelloBean.aggiungiProdotto(popModel.getById(id));
+                    nuovaQuantita = carrelloBean.isPresente(popModel.getById(id));
+                }
+            } else if (tipo.equalsIgnoreCase(figureParameter) && figureModel.verificaDisponibilita(id)) {
+                carrelloBean.aggiungiProdotto(figureModel.getById(id));
+                nuovaQuantita = carrelloBean.isPresente(figureModel.getById(id));
+            }
+            prezzoTotale = carrelloBean.getPrezzoTotale();
+            Locale.setDefault(Locale.US);
+            String formattedPrezzoTotale = String.format("%.2f", prezzoTotale);
+            Locale.setDefault(Locale.ITALY);
+            request.getSession().setAttribute(carrelloParameter, carrelloBean);
+
+            // Esempio di creazione di due oggetti da restituire
+            JsonObject risultato = new JsonObject();
+            risultato.addProperty("nuovaQuantita", nuovaQuantita);
+            risultato.addProperty("formattedPrezzoTotale", formattedPrezzoTotale);
+
+            // Conversione della risposta in formato JSON
+            Gson gson = new Gson();
+            String jsonRisultato = gson.toJson(risultato);
+
+            // Impostazione del tipo di contenuto della risposta
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Scrittura della risposta JSON
+            PrintWriter out = response.getWriter();
+            out.print(jsonRisultato);
+            out.flush();
+
+        } catch (IOException e) {
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log(ERROR_MESSAGE_TWO, ex);
+            }
+        }
+    }
+
+    private void removeFromCart(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            CarrelloBean carrelloBean = getCarrelloBeanFromSession(request);
+            String tipo = request.getParameter("Tipo");
+            int id = Integer.parseInt(request.getParameter("Id"));
+            int nuovaQuantita = 0;
+            float prezzoTotale;
+            carrelloBean.rimuoviProdotto(id);
+            request.getSession().setAttribute(carrelloParameter, carrelloBean);
+
+            if (tipo.equalsIgnoreCase(mangaParameter)) {
+                nuovaQuantita = carrelloBean.isPresente(mangaModel.getById(id));
+            }else if (tipo.equalsIgnoreCase("pop")) {
+                nuovaQuantita = carrelloBean.isPresente(popModel.getById(id));
+            } else if (tipo.equalsIgnoreCase(figureParameter)) {
+                nuovaQuantita = carrelloBean.isPresente(figureModel.getById(id));
+            }
+
+            prezzoTotale = carrelloBean.getPrezzoTotale();
+            Locale.setDefault(Locale.US);
+            String formattedPrezzoTotale = String.format("%.2f", prezzoTotale);
+            Locale.setDefault(Locale.ITALY);
+
+            // Esempio di creazione di due oggetti da restituire
+            JsonObject risultato = new JsonObject();
+            risultato.addProperty("nuovaQuantita", nuovaQuantita);
+            risultato.addProperty("formattedPrezzoTotale", formattedPrezzoTotale);
+
+            // Conversione della risposta in formato JSON
+            Gson gson = new Gson();
+            String jsonRisultato = gson.toJson(risultato);
+
+            // Impostazione del tipo di contenuto della risposta
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Scrittura della risposta JSON
+            PrintWriter out = response.getWriter();
+            out.print(jsonRisultato);
+            out.flush();
+
+        } catch (IOException e) {
+            request.setAttribute(ERROR_PARAMETER, ERROR_MESSAGE + e);
+            RequestDispatcher errorDispatcher = getServletContext().getRequestDispatcher(ERROR_PAGE);
+            try {
+                errorDispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                log(ERROR_MESSAGE_TWO, ex);
+            }
+        }
+    }
+
+    private void eliminaDalCarrello(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             CarrelloBean carrelloBean = getCarrelloBeanFromSession(req);
             int id = Integer.parseInt(req.getParameter("Id"));
-            carrelloBean.rimuoviProdotto(id);
+            carrelloBean.eliminaDalCarrello(id);
             req.getSession().setAttribute(carrelloParameter, carrelloBean);
             resp.sendRedirect(carrelloJSP);
         } catch (IOException e) {
